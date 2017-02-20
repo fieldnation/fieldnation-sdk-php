@@ -1,0 +1,26 @@
+{
+  "name": "fieldnation/fieldnation-sdk",
+  "description": "An SDK for Getting Work Done",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Field Nation",
+      "email": "support@fieldnation.com"
+    }
+  ],
+  "minimum-stability": "beta",
+  "require-dev": {
+    "phpunit/phpunit": "5.7.14",
+    "phpunit/php-code-coverage": "4.0.5"
+  },
+  "require": {
+
+  },
+  "autoload": {
+    "psr-4": {
+      "FieldNation\\": "src/FieldNation/",
+      "FieldNation\\Tests\\": "tests/FieldNation/"
+    }
+  }
+}
