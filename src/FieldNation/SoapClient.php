@@ -10,24 +10,30 @@ use \SoapClient as PHPSoapClient;
 
 class SoapClient
 {
-    private static $SOAP_API_BASE = 'https://api.fieldnation.com/api/';
-    private static $WSDL_NAME = '/fieldnation.wsdl';
+    const SOAP_API_BASE = 'https://api.fieldnation.com/api/';
+    const WSDL_NAME = '/fieldnation.wsdl';
     private $wsdl;
     private $soapClient;
 
-    public function __construct($version, PHPSoapClient $client = NULL)
+    public function __construct($version, PHPSoapClient $client=NULL)
     {
-        // The FN api has a v prefix on the version
-        if (!ctype_alpha($version[0])) {
-            $version = 'v'.$version;
-        }
+        $this->setWSDL($version)
+             ->setSoapClient($client);
+    }
 
-        $this->setWSDL($version);
+    /**
+     * Initialize the SoapClient
+     * @param SoapClient|Null $client
+     * @return $this
+     */
+    private function setSoapClient($client=NULL)
+    {
         if ($client) {
             $this->soapClient = $client;
         } else {
             $this->soapClient = new PHPSoapClient($this->getWSDL());
         }
+        return $this;
     }
 
     /**
@@ -37,7 +43,10 @@ class SoapClient
      */
     private function setWSDL($version)
     {
-        $this->wsdl = self::$SOAP_API_BASE . $version . self::$WSDL_NAME;
+        // The FN api has a v prefix on the version
+        if (!ctype_alpha($version[0]))
+            $version = 'v'.$version;
+        $this->wsdl = self::SOAP_API_BASE . $version . self::WSDL_NAME;
         return $this;
     }
 

@@ -9,7 +9,7 @@ namespace FieldNation;
 
 class SDK
 {
-    private static $CURRENT_STABLE_SOAP_VERSION = '3.15';
+    const CURRENT_STABLE_SOAP_VERSION = '3.15';
     protected $version;
 
     /**
@@ -17,11 +17,9 @@ class SDK
      * Access the Field Nation SDK, defaulting to CURRENT_STABLE_SOAP_VERSION
      * @param string $version
      */
-    public function __construct($version='')
+    public function __construct($version=self::CURRENT_STABLE_SOAP_VERSION)
     {
-        $this->version = empty($version)
-            ? self::$CURRENT_STABLE_SOAP_VERSION
-            : $version;
+        $this->version = $version;
     }
 
     /**
@@ -30,7 +28,22 @@ class SDK
      */
     public function getCurrentStableSoapVersion()
     {
-        return self::$CURRENT_STABLE_SOAP_VERSION;
+        return self::CURRENT_STABLE_SOAP_VERSION;
+    }
+
+    /**
+     * Get the possible versions to target
+     * @return string[]
+     */
+    public function getVersions()
+    {
+        return array(
+            '3.11',
+            '3.12',
+            '3.13',
+            '3.14',
+            '3.15'
+        );
     }
 
     /**

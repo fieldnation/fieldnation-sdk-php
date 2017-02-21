@@ -39,4 +39,9 @@ class FieldNationSDKTest extends TestCase
         $this->sdk->setVersion('3.11');
         $this->assertEquals('3.11', $this->sdk->getVersion());
     }
+
+    public function testVersionsCanBeRead()
+    {
+        $this->assertContains($this->sdk->getCurrentStableSoapVersion(), $this->sdk->getVersions());
+    }
 }

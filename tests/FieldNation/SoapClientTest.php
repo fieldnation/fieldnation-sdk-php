@@ -50,4 +50,13 @@ class SoapClientTest extends TestCase
         $this->phpSoapClient->method('__getFunctions')->willReturn(array('foo' => 'bar'));
         $this->assertTrue(is_array($this->client->describe()));
     }
+
+    /**
+     * @uses \SoapClient
+     */
+    public function testCanCreateItsOwnSoapClient()
+    {
+        $this->client = new SoapClient('3.15');
+        $this->assertInstanceOf(SoapClient::class, $this->client);
+    }
 }
