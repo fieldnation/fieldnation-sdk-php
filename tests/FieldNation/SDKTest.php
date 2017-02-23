@@ -9,15 +9,18 @@ namespace FieldNation\Tests;
 
 use PHPUnit\Framework\TestCase;
 use FieldNation\SDK;
+use FieldNation\LoginCredentials;
 
 
 class FieldNationSDKTest extends TestCase
 {
     private $sdk;
+    private $login;
 
     public function setUp()
     {
-        $this->sdk = new SDK();
+        $this->login = new LoginCredentials('foo', 'bar');
+        $this->sdk = new SDK($this->login);
     }
 
     public function testCanBeCreatedWithNoVersionDefined()
@@ -28,7 +31,7 @@ class FieldNationSDKTest extends TestCase
 
     public function testCanBeCreatedWithAVersionDefined()
     {
-        $this->sdk = new SDK('3.11');
+        $this->sdk = new SDK($this->login, '3.11');
         $this->assertInstanceOf(SDK::class, $this->sdk);
         $this->assertEquals('3.11', $this->sdk->getVersion());
     }

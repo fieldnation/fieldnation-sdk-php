@@ -7,18 +7,20 @@
 namespace FieldNation;
 
 
-class SDK
+class SDK implements SDKInterface
 {
     const CURRENT_STABLE_SOAP_VERSION = '3.15';
-    protected $version;
+    private $version;
+    private $login;
 
     /**
      * FieldNation\SDK constructor.
      * Access the Field Nation SDK, defaulting to CURRENT_STABLE_SOAP_VERSION
      * @param string $version
      */
-    public function __construct($version=self::CURRENT_STABLE_SOAP_VERSION)
+    public function __construct(LoginCredentialsInterface $login, $version=self::CURRENT_STABLE_SOAP_VERSION)
     {
+        $this->login = $login;
         $this->version = $version;
     }
 

@@ -7,6 +7,8 @@
 namespace FieldNation\Tests;
 
 use PHPUnit\Framework\TestCase;
+use FieldNation\LoginCredentials;
+use FieldNation\SDK;
 use FieldNation\SoapClient;
 
 
@@ -17,7 +19,8 @@ class SoapClientTest extends TestCase
 
     public function setUp()
     {
-        $sdk = new \FieldNation\SDK();
+        $login = new LoginCredentials('foo', 'bar');
+        $sdk = new SDK($login);
         $version = $sdk->getCurrentStableSoapVersion();
         $this->phpSoapClient = $this->getMockFromWsdl(__DIR__ . '/../Fixtures/fieldnation.wsdl');
         $this->client = new SoapClient($version, $this->phpSoapClient);
