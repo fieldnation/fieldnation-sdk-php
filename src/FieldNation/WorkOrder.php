@@ -172,7 +172,7 @@ class WorkOrder implements WorkOrderInterface
 
     /**
      * Occasionally it is beneficial to get everything about a work order.
-     * @return WorkOrder
+     * @return WorkOrderInterface
      */
     public function get()
     {
@@ -195,7 +195,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getStatus()
     {
-        // TODO: Implement getStatus() method.
+        return $this->client->getWorkOrderStatus($this->getId());
     }
 
     /**
@@ -205,7 +205,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getAssignedProvider()
     {
-        // TODO: Implement getAssignedProvider() method.
+        return $this->client->getWorkOrderAssignedProvider($this->getId());
     }
 
     /**
@@ -215,7 +215,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getProgress()
     {
-        // TODO: Implement getProgress() method.
+        return $this->client->getWorkOrderProgress($this->getId());
     }
 
     /**
@@ -225,7 +225,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getPayment()
     {
-        // TODO: Implement getPayment() method.
+        return $this->client->getWorkOrderPayment($this->getId());
     }
 
     /**
@@ -235,7 +235,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getMessages()
     {
-        // TODO: Implement getMessages() method.
+        return $this->client->getWorkOrderMessages($this->getId());
     }
 
     /**
@@ -245,7 +245,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getAttachedDocuments()
     {
-        // TODO: Implement getAttachedDocuments() method.
+        return $this->client->getWorkOrderAttachedDocuments($this->getId());
     }
 
     /**
@@ -255,7 +255,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getShipments()
     {
-        // TODO: Implement getShipments() method.
+        return $this->client->getWorkOrderShipments($this->getId());
     }
 
     /**
@@ -265,7 +265,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function create()
     {
-        // TODO: Implement create() method.
+        return $this->client->createWorkOrder($this, false);
     }
 
     /**
@@ -275,7 +275,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function publish()
     {
-        // TODO: Implement publish() method.
+        return $this->client->publishWorkOrder($this->getId());
     }
 
     /**
@@ -286,7 +286,18 @@ class WorkOrder implements WorkOrderInterface
      */
     public function routeTo(RecipientInterface $recipient)
     {
-        // TODO: Implement routeTo() method.
+        if ($recipient->isGroup()) {
+            return $this->client->routeWorkOrderToGroup($this->getId(), $recipient->getId());
+        } else if ($recipient->isProvider()) {
+            return $this->client->routeWorkOrderToProvider($this->getId(), $recipient->getId());
+        }
+
+        // Don't know how else to respond -- Failure!
+        $result = new FailureResult();
+        $result->setMessage('The work order routing recipient is unrecognized.')
+               ->setWorkOrderId($this->getId());
+
+        return $result;
     }
 
     /**
@@ -296,7 +307,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function approve()
     {
-        // TODO: Implement approve() method.
+        return $this->client->approveWorkOrder($this->getId());
     }
 
     /**
@@ -304,9 +315,9 @@ class WorkOrder implements WorkOrderInterface
      *
      * @return ResultInterface
      */
-    public function cancel()
+    public function cancel($willAcceptFees, $reason=NULL)
     {
-        // TODO: Implement cancel() method.
+        return $this->client->cancelWorkOrder($this->getId(), $willAcceptFees, $reason);
     }
 
     /**
@@ -317,7 +328,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function attach(DocumentInterface $document)
     {
-        // TODO: Implement attach() method.
+        return $this->client->attachDocumentToWorkOrder($this->getId(), $document->getId());
     }
 
     /**
@@ -328,7 +339,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function detach(DocumentInterface $document)
     {
-        // TODO: Implement detach() method.
+        return $this->client->detachDocumentFromWorkOrder($this->getId(), $document->getId());
     }
 
     /**
@@ -339,7 +350,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function addMessage(MessageInterface $message)
     {
-        // TODO: Implement addMessage() method.
+        return $this->client->addMessageToWorkOrder($this->getId(), $message->getMessage(), $message->getMode());
     }
 
     /**
@@ -350,7 +361,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function addAdditionalField(AdditionalFieldInterface $field)
     {
-        // TODO: Implement addCustomField() method.
+        return $this->client->setCustomFieldOnWorkOrder($this->getId(), $field->getName(), $field->getValue());
     }
 
     /**
@@ -362,7 +373,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function addLabel($labelName)
     {
-        // TODO: Implement addLabel() method.
+        return $this->client->setLabelOnWorkOrder($this->getId(), $labelName);
     }
 
     /**
@@ -373,7 +384,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function removeLabel($labelName)
     {
-        // TODO: Implement removeLabel() method.
+        return $this->client->unsetLabelOnWorkOrder($this->getId(), $labelName);
     }
 
     /**
@@ -384,7 +395,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function satisfyCloseoutRequest($name)
     {
-        // TODO: Implement satisfyCloseoutRequest() method.
+        return $this->client->satisfyCloseoutOnWorkOrder($this->getId(), $name);
     }
 
     /**
@@ -395,7 +406,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function deleteShipment(ShipmentInterface $shipment)
     {
-        // TODO: Implement deleteShipment() method.
+        return $this->client->deleteShipment($shipment->getId());
     }
 
     /**
@@ -406,7 +417,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function addShipment(ShipmentInterface $shipment)
     {
-        // TODO: Implement addShipment() method.
+        return $this->client->addShipment($this->getId(), $shipment);
     }
 
     /**
@@ -417,7 +428,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function updateSchedule(ScheduleInterface $schedule)
     {
-        // TODO: Implement updateSchedule() method.
+        return $this->client->updateWorkOrderSchedule($this->getId(), $schedule);
     }
 
     /**
@@ -428,7 +439,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setId($id)
     {
-        // TODO: Implement setId() method.
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -438,6 +450,6 @@ class WorkOrder implements WorkOrderInterface
      */
     public function getId()
     {
-        // TODO: Implement getId() method.
+        return $this->id;
     }
 }

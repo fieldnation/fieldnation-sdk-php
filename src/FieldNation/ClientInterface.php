@@ -262,8 +262,8 @@ interface ClientInterface
      * Update the schedule for a work order
      *
      * @param $workOrderId
-     * @param TimeRangeInterface $range
+     * @param ScheduleInterface $range
      * @return ResultInterface
      */
-    public function updateWorkOrderSchedule($workOrderId, TimeRangeInterface $range);
+    public function updateWorkOrderSchedule($workOrderId, ScheduleInterface $range);
 }

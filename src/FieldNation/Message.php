@@ -6,23 +6,35 @@
  */
 namespace FieldNation;
 
-
-interface MessageInterface
+class Message implements MessageInterface
 {
+    private $from;
+    private $fromType;
+    private $date;
+    private $messageBody;
+    private $mode;
+
     /**
      * Set who the message is from.
      *
      * @param string $from
      * @return self
      */
-    public function setFrom($from);
+    public function setFrom($from)
+    {
+        $this->from = $from;
+        return $this;
+    }
 
     /**
      * Get who the message is from.
      *
      * @return string
      */
-    public function getFrom();
+    public function getFrom()
+    {
+        return $this->from;
+    }
 
     /**
      * Set the type of user account the message is from.
@@ -30,14 +42,21 @@ interface MessageInterface
      * @param string $type
      * @return self
      */
-    public function setFromType($type);
+    public function setFromType($type)
+    {
+        $this->fromType = $type;
+        return $this;
+    }
 
     /**
      * Get the type of user account the message is from.
      *
      * @return string
      */
-    public function getFromType();
+    public function getFromType()
+    {
+        return $this->fromType;
+    }
 
     /**
      * Set the date the message was posted.
@@ -45,14 +64,21 @@ interface MessageInterface
      * @param string $date
      * @return self
      */
-    public function setDate($date);
+    public function setDate($date)
+    {
+        $this->date = $date;
+        return $this;
+    }
 
     /**
      * Get the date the message was posted.
      *
      * @return string
      */
-    public function getDate();
+    public function getDate()
+    {
+        return $this->date;
+    }
 
     /**
      * Set the contents of the message.
@@ -60,14 +86,21 @@ interface MessageInterface
      * @param string $message
      * @return self
      */
-    public function setMessage($message);
+    public function setMessage($message)
+    {
+        $this->messageBody = $message;
+        return $this;
+    }
 
     /**
      * Get the contents of the message.
      *
      * @return string
      */
-    public function getMessage();
+    public function getMessage()
+    {
+        return $this->messageBody;
+    }
 
     /**
      * Set the message mode
@@ -76,12 +109,24 @@ interface MessageInterface
      * @throws \TypeError if $mode is not a constant that exists on MessageModes
      * @return self
      */
-    public function setMode($mode);
+    public function setMode($mode)
+    {
+        $modes = MessageModes::getConstants();
+        if (!in_array($mode, $modes)) {
+            throw new \TypeError('Message Mode '. $mode .' is not recognized.');
+        }
+
+        $this->mode = $mode;
+        return $this;
+    }
 
     /**
      * Get the message mode
      *
      * @return integer
      */
-    public function getMode();
+    public function getMode()
+    {
+        return $this->mode;
+    }
 }

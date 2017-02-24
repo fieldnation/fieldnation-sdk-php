@@ -109,7 +109,7 @@ interface WorkOrderInterface extends IdentifiableInterface
 
     /**
      * Occasionally it is beneficial to get everything about a work order.
-     * @return WorkOrder
+     * @return WorkOrderInterface
      */
     public function get();
 
@@ -203,9 +203,11 @@ interface WorkOrderInterface extends IdentifiableInterface
     /**
      * If things did not go as planned, and you just want to cancel and start again, here's how.
      *
+     * @param boolean $willAcceptFees - Mark if you will accept cancellation fees or not
+     * @param string $revertRequestReason -q Optionally provide a reason you will revert the request after accepting fees.
      * @return ResultInterface
      */
-    public function cancel();
+    public function cancel($willAcceptFees, $revertRequestReason=NULL);
 
     /**
      * After creating a Work Order, you can attach any existing documents you want to. Here's how!

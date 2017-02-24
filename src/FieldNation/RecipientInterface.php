@@ -7,7 +7,19 @@
 namespace FieldNation;
 
 
-interface RecipientInterface
+interface RecipientInterface extends IdentifiableInterface
 {
+    /**
+     * Check if a recipient is a provider
+     *
+     * @return boolean
+     */
+    public function isProvider();
 
+    /**
+     * Check if a recipient is a group
+     *
+     * @return boolean
+     */
+    public function isGroup();
 }
