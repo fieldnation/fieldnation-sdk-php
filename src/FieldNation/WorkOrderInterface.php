@@ -7,7 +7,7 @@
 namespace FieldNation;
 
 
-interface WorkOrderInterface
+interface WorkOrderInterface extends IdentifiableInterface
 {
     /**
      * Set the name of the project the work order should be a member of.
@@ -24,18 +24,18 @@ interface WorkOrderInterface
     /**
      * Set the general descriptive information relevant to the job.
      *
-     * @param DescriptionInterface $description
+     * @param ServiceDescriptionInterface $description
      * @return self
      */
-    public function setDescription(DescriptionInterface $description);
+    public function setDescription(ServiceDescriptionInterface $description);
 
     /**
      * Set where the job site is located.
      *
-     * @param LocationInterface $location
+     * @param ServiceLocationInterface $location
      * @return self
      */
-    public function setLocation(LocationInterface $location);
+    public function setLocation(ServiceLocationInterface $location);
 
     /**
      * Set scheduling information for the Work Order, including any applicable end time.
@@ -43,7 +43,7 @@ interface WorkOrderInterface
      * @param TimeRangeInterface $timeRange
      * @return self
      */
-    public function setTime(TimeRangeInterface $timeRange);
+    public function setStartTime(TimeRangeInterface $timeRange);
 
     /**
      * Set payment details to be advertised on the Work Order.
@@ -234,10 +234,10 @@ interface WorkOrderInterface
     /**
      * Work Orders belong to you. Make them yours by adding a custom field.
      *
-     * @param CustomFieldInterface $field
+     * @param AdditionalFieldInterface $field
      * @return ResultInterface
      */
-    public function addCustomField(CustomFieldInterface $field);
+    public function addAdditionalField(AdditionalFieldInterface $field);
 
     /**
      * Add a label to your Work Order.

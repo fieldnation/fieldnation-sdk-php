@@ -55,4 +55,35 @@ class SDK implements SDKInterface
     {
         return $this->woService->getExisting($workOrderId);
     }
+
+    /**
+     * This method will give you a high level overview of all the projects your company has in Field Nation.
+     *
+     * @return ProjectInterface[]
+     */
+    public function getProjects()
+    {
+        // TODO: Implement getProjects() method.
+    }
+
+    /**
+     * Get the shipping ID from a tracking number
+     *
+     * @param string $trackingNumber
+     * @return TrackingToShipmentResultInterface
+     */
+    public function getShippingIdFrom($trackingNumber)
+    {
+        // TODO: Implement getShippingIdFrom() method.
+    }
+
+    /**
+     * Return an array of all your company documents, as well as some descriptive information.
+     *
+     * @return DocumentInterface[]
+     */
+    public function getDocuments()
+    {
+        // TODO: Implement getDocuments() method.
+    }
 }

@@ -9,5 +9,33 @@ namespace FieldNation;
 
 interface ScheduleInterface
 {
+    /**
+     * Set the start time.
+     *
+     * @param \DateTime $time
+     * @return self
+     */
+    public function setStartTime($time);
 
+    /**
+     * Get the start time.
+     *
+     * @return \DateTime
+     */
+    public function getStartTime();
+
+    /**
+     * Set the end time.
+     *
+     * @param \DateTime $time
+     * @return self
+     */
+    public function setEndTime($time);
+
+    /**
+     * Get the end time.
+     *
+     * @return \DateTime
+     */
+    public function getEndTime();
 }

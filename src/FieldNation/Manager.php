@@ -6,8 +6,7 @@
  */
 namespace FieldNation;
 
-
-interface DescriptionInterface
+class Manager extends User
 {
 
 }

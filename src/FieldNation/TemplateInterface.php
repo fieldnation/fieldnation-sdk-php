@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-interface CustomFieldInterface
+interface TemplateInterface extends DescribableInterface, IdentifiableInterface
 {
 
 }

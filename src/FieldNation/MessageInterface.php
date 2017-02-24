@@ -9,5 +9,63 @@ namespace FieldNation;
 
 interface MessageInterface
 {
+    /**
+     * Set who the message is from.
+     *
+     * @param string $from
+     * @return self
+     */
+    public function setFrom($from);
 
+    /**
+     * Get who the message is from.
+     *
+     * @return string
+     */
+    public function getFrom();
+
+    /**
+     * Set the type of user account the message is from.
+     *
+     * @param string $type
+     * @return self
+     */
+    public function setFromType($type);
+
+    /**
+     * Get the type of user account the message is from.
+     *
+     * @return string
+     */
+    public function getFromType();
+
+    /**
+     * Set the date the message was posted.
+     *
+     * @param string $date
+     * @return self
+     */
+    public function setDate($date);
+
+    /**
+     * Get the date the message was posted.
+     *
+     * @return string
+     */
+    public function getDate();
+
+    /**
+     * Set the contents of the message.
+     *
+     * @param string $message
+     * @return self
+     */
+    public function setMessage($message);
+
+    /**
+     * Get the contents of the message.
+     *
+     * @return string
+     */
+    public function getMessage();
 }

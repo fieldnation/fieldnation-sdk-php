@@ -9,5 +9,33 @@ namespace FieldNation;
 
 interface TimeRangeInterface
 {
+    /**
+     * Set the starting date and time.
+     *
+     * @param \DateTime $time
+     * @return self
+     */
+    public function setTimeBegin($time);
 
+    /**
+     * Get the starting date and time.
+     *
+     * @return \DateTime
+     */
+    public function getTimeBegin();
+
+    /**
+     * Set the ending date and time.
+     *
+     * @param \DateTime $time
+     * @return self
+     */
+    public function setTimeEnd($time);
+
+    /**
+     * Get the ending date and time.
+     *
+     * @return \DateTime
+     */
+    public function getTimeEnd();
 }

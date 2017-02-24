@@ -34,10 +34,10 @@ class WorkOrder implements WorkOrderInterface
     /**
      * Set the general descriptive information relevant to the job.
      *
-     * @param DescriptionInterface $description
+     * @param ServiceDescriptionInterface $description
      * @return self
      */
-    public function setDescription(DescriptionInterface $description)
+    public function setDescription(ServiceDescriptionInterface $description)
     {
         // TODO: Implement setDescription() method.
     }
@@ -45,10 +45,10 @@ class WorkOrder implements WorkOrderInterface
     /**
      * Set where the job site is located.
      *
-     * @param LocationInterface $location
+     * @param ServiceLocationInterface $location
      * @return self
      */
-    public function setLocation(LocationInterface $location)
+    public function setLocation(ServiceLocationInterface $location)
     {
         // TODO: Implement setLocation() method.
     }
@@ -59,7 +59,7 @@ class WorkOrder implements WorkOrderInterface
      * @param TimeRangeInterface $timeRange
      * @return self
      */
-    public function setTime(TimeRangeInterface $timeRange)
+    public function setStartTime(TimeRangeInterface $timeRange)
     {
         // TODO: Implement setTime() method.
     }
@@ -322,10 +322,10 @@ class WorkOrder implements WorkOrderInterface
     /**
      * Work Orders belong to you. Make them yours by adding a custom field.
      *
-     * @param CustomFieldInterface $field
+     * @param AdditionalFieldInterface $field
      * @return ResultInterface
      */
-    public function addCustomField(CustomFieldInterface $field)
+    public function addAdditionalField(AdditionalFieldInterface $field)
     {
         // TODO: Implement addCustomField() method.
     }
@@ -395,5 +395,26 @@ class WorkOrder implements WorkOrderInterface
     public function updateSchedule(ScheduleInterface $schedule)
     {
         // TODO: Implement updateSchedule() method.
+    }
+
+    /**
+     * Set the id
+     *
+     * @param integer $id
+     * @return self
+     */
+    public function setId($id)
+    {
+        // TODO: Implement setId() method.
+    }
+
+    /**
+     * Get the id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        // TODO: Implement getId() method.
     }
 }

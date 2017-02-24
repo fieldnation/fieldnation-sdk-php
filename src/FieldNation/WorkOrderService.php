@@ -38,7 +38,7 @@ class WorkOrderService
         $fnWo->setGroup($wo->getGroup())
              ->setDescription($wo->getDescription())
              ->setLocation($wo->getLocation())
-             ->setTime($wo->getStartTime())
+             ->setStartTime($wo->getStartTime())
              ->setPayInfo($wo->getPayInfo())
              ->setAllowTechUploads($wo->getAllowTechUploads())
              ->setWillAlertWhenPublished($wo->getWillAlertWhenPublished())
