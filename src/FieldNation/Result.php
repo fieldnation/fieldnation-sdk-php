@@ -6,22 +6,27 @@
  */
 namespace FieldNation;
 
-
-interface ResultInterface
+abstract class Result implements ResultInterface
 {
+    protected $message;
+    protected $workOrderId;
+
     /**
      * Was the request successful?
      *
      * @return boolean
      */
-    public function wasSuccessful();
+    abstract public function wasSuccessful();
 
     /**
      * A message that explains the success or failure.
      *
      * @return string
      */
-    public function getMessage();
+    public function getMessage()
+    {
+        return $this->message;
+    }
 
     /**
      * Set the message.
@@ -29,14 +34,21 @@ interface ResultInterface
      * @param $message
      * @return self
      */
-    public function setMessage($message);
+    public function setMessage($message)
+    {
+        $this->message = $message;
+        return $this;
+    }
 
     /**
      * Get to work order id, if applicable.
      *
      * @return integer|NULL
      */
-    public function getWorkOrderId();
+    public function getWorkOrderId()
+    {
+        return $this->workOrderId;
+    }
 
     /**
      * Set the work order id.
@@ -44,5 +56,9 @@ interface ResultInterface
      * @param integer $id
      * @return self
      */
-    public function setWorkOrderId($id);
+    public function setWorkOrderId($id)
+    {
+        $this->workOrderId = $id;
+        return $this;
+    }
 }
