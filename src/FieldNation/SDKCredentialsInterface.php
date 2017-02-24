@@ -7,7 +7,7 @@
 namespace FieldNation;
 
 
-interface LoginCredentialsInterface
+interface SDKCredentialsInterface
 {
     function __construct($customerId, $apiKey, $effectiveUser=NULL);
 

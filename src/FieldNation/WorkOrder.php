@@ -9,7 +9,19 @@ namespace FieldNation;
 
 class WorkOrder implements WorkOrderInterface
 {
+    private $id;
     private $client;
+    private $group;
+    private $description;
+    private $location;
+    private $startTime;
+    private $payInfo;
+    private $allowTechUploads;
+    private $willAlertWhenPublished;
+    private $isPrintable;
+    private $additionalFields;
+    private $labels;
+    private $closeoutRequirements;
 
     public function __construct(ClientInterface $client)
     {
@@ -28,7 +40,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setGroup($group)
     {
-        // TODO: Implement setGroup() method.
+        $this->group = $group;
+        return $this;
     }
 
     /**
@@ -39,7 +52,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setDescription(ServiceDescriptionInterface $description)
     {
-        // TODO: Implement setDescription() method.
+        $this->description = $description;
+        return $this;
     }
 
     /**
@@ -50,7 +64,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setLocation(ServiceLocationInterface $location)
     {
-        // TODO: Implement setLocation() method.
+        $this->location = $location;
+        return $this;
     }
 
     /**
@@ -61,7 +76,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setStartTime(TimeRangeInterface $timeRange)
     {
-        // TODO: Implement setTime() method.
+        $this->startTime = $timeRange;
+        return $this;
     }
 
     /**
@@ -71,7 +87,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setPayInfo(PayInfoInterface $payInfo)
     {
-        // TODO: Implement setPayInfo() method.
+        $this->payInfo = $payInfo;
+        return $this;
     }
 
     /**
@@ -84,7 +101,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setAllowTechUploads($areAllowed)
     {
-        // TODO: Implement setAreTechUploadsAllowed() method.
+        $this->allowTechUploads = $areAllowed;
+        return $this;
     }
 
     /**
@@ -96,7 +114,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setWillAlertWhenPublished($willAlert)
     {
-        // TODO: Implement setWillAlertWhenPublished() method.
+        $this->willAlertWhenPublished = $willAlert;
+        return $this;
     }
 
     /**
@@ -109,7 +128,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setIsPrintable($isPrintable)
     {
-        // TODO: Implement setIsPrintable() method.
+        $this->isPrintable;
+        return $this;
     }
 
     /**
@@ -120,7 +140,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setAdditionalFields($fields)
     {
-        // TODO: Implement setAdditionalFields() method.
+        $this->additionalFields = $fields;
+        return $this;
     }
 
     /**
@@ -132,7 +153,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setLabels($labels)
     {
-        // TODO: Implement setLabels() method.
+        $this->labels = $labels;
+        return $this;
     }
 
     /**
@@ -144,7 +166,8 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setCloseoutRequirements($requirements)
     {
-        // TODO: Implement setCloseoutRequirements() method.
+        $this->closeoutRequirements = $requirements;
+        return $this;
     }
 
     /**
@@ -153,7 +176,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function get()
     {
-        // TODO: Implement get() method.
+        return $this->client->getWorkOrder($this->getId());
     }
 
     /**

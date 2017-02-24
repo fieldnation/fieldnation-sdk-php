@@ -7,7 +7,7 @@
 namespace FieldNation;
 
 
-class LoginCredentials implements LoginCredentialsInterface
+class LoginCredentials implements SDKCredentialsInterface
 {
     private $apiKey;
     private $customerId;

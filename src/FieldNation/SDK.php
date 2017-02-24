@@ -9,17 +9,17 @@ namespace FieldNation;
 
 class SDK implements SDKInterface
 {
-    private $login;
+    private $credentials;
     private $woService;
 
     /**
      * FieldNation\SDK constructor.
      * Access the Field Nation SDK.
-     * @param LoginCredentialsInterface $login - Authenticate to the SDK
+     * @param SDKCredentialsInterface $credentials - Authenticate to the SDK
      */
-    public function __construct(LoginCredentialsInterface $login)
+    public function __construct(SDKCredentialsInterface $credentials)
     {
-        $this->login = $login;
+        $this->credentials = $credentials;
         $clientFactory = new SoapClientFactory();
         $this->woService = new WorkOrderService($clientFactory);
     }
