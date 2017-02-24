@@ -15,7 +15,7 @@
     "phpunit/php-code-coverage": "4.0.5"
   },
   "require": {
-
+    "php-di/php-di": "5.4.0"
   },
   "autoload": {
     "psr-4": {

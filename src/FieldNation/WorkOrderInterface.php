@@ -60,7 +60,7 @@ interface WorkOrderInterface
      * @param boolean $areAllowed
      * @return self
      */
-    public function setAreTechUploadsAllowed($areAllowed);
+    public function setAllowTechUploads($areAllowed);
 
     /**
      * Set whether to email any providers about the Work Order.

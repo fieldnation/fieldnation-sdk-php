@@ -8,8 +8,9 @@ namespace FieldNation;
 
 use \SoapClient as PHPSoapClient;
 
-class SoapClient
+class SoapClient implements ClientInterface
 {
+    const STABLE_SOAP_VERSION = '3.15';
     const SOAP_API_BASE = 'https://api.fieldnation.com/api/';
     const WSDL_NAME = '/fieldnation.wsdl';
     private $wsdl;

@@ -9,62 +9,50 @@ namespace FieldNation;
 
 class SDK implements SDKInterface
 {
-    const CURRENT_STABLE_SOAP_VERSION = '3.15';
-    private $version;
     private $login;
+    private $woService;
 
     /**
      * FieldNation\SDK constructor.
-     * Access the Field Nation SDK, defaulting to CURRENT_STABLE_SOAP_VERSION
-     * @param string $version
+     * Access the Field Nation SDK.
+     * @param LoginCredentialsInterface $login - Authenticate to the SDK
      */
-    public function __construct(LoginCredentialsInterface $login, $version=self::CURRENT_STABLE_SOAP_VERSION)
+    public function __construct(LoginCredentialsInterface $login)
     {
         $this->login = $login;
-        $this->version = $version;
+        $clientFactory = new SoapClientFactory();
+        $this->woService = new WorkOrderService($clientFactory);
     }
 
     /**
-     * Get the current stable version of the Field Nation SOAP API
-     * @return string
+     * Get all of your work orders
+     *
+     * @return WorkOrderInterface[]
      */
-    public function getCurrentStableSoapVersion()
+    public function getWorkOrders()
     {
-        return self::CURRENT_STABLE_SOAP_VERSION;
+        return $this->woService->getAll();
     }
 
     /**
-     * Get the possible versions to target
-     * @return string[]
+     * Create a new work order
+     *
+     * @param WorkOrderSerializerInterface $wo
+     * @return WorkOrderInterface
      */
-    public function getVersions()
+    public function createWorkOrder(WorkOrderSerializerInterface $wo)
     {
-        return array(
-            '3.11',
-            '3.12',
-            '3.13',
-            '3.14',
-            '3.15'
-        );
+        return $this->woService->createNew($wo);
     }
 
     /**
-     * Get the SOAP version the SDK is targeting
-     * @return string
+     * Get an existing work order
+     *
+     * @param $workOrderId
+     * @return WorkOrderInterface
      */
-    public function getVersion()
+    public function getExistingWorkOrder($workOrderId)
     {
-        return $this->version;
-    }
-
-    /**
-     * Set the SOAP version to target
-     * @param $value
-     * @return $this
-     */
-    public function setVersion($value)
-    {
-        $this->version = $value;
-        return $this;
+        return $this->woService->getExisting($workOrderId);
     }
 }
