@@ -11,18 +11,20 @@ use \SoapClient as PHPSoapClient;
 class SoapClient implements ClientInterface
 {
     const STABLE_SOAP_VERSION = '3.15';
-    const SOAP_API_BASE = 'https://api.fieldnation.com/api/';
+    const SOAP_API_BASE = 'https://api.fieldnation.com';
     const WSDL_NAME = '/fieldnation.wsdl';
     private $wsdl;
     private $client;
     private $credentials;
     private $version;
 
-    public function __construct(SDKCredentialsInterface $credentials, $version=NULL)
+    public function __construct(SDKCredentialsInterface $credentials, $version=NULL, $apiBase=NULL)
     {
         $this->credentials = $credentials;
         $this->version = $version;
+        $this->apiBase = ($apiBase ?: self::SOAP_API_BASE) . '/api';
         $this->setWSDL($version);
+        $this->setClient();
     }
 
     /**
@@ -35,7 +37,11 @@ class SoapClient implements ClientInterface
         if ($client) {
             $this->client = $client;
         } else {
-            $this->client = new PHPSoapClient($this->getWSDL());
+            $options = array (
+                'trace' => true
+            );
+            $this->client = new PHPSoapClient($this->getWSDL(), $options);
+            $this->client->__setLocation($this->apiBase . '/' . $this->version . '/');
         }
         return $this;
     }
@@ -48,9 +54,8 @@ class SoapClient implements ClientInterface
     private function setWSDL($version)
     {
         // The FN api has a v prefix on the version
-        if (!ctype_alpha($version[0]))
-            $version = 'v'.$version;
-        $this->wsdl = self::SOAP_API_BASE . $version . self::WSDL_NAME;
+        $this->_setVersion($version);
+        $this->wsdl = $this->apiBase . '/' . $this->version . self::WSDL_NAME;
         return $this;
     }
 
@@ -71,9 +76,19 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrders($status)
     {
-        // TODO: Implement getWorkOrders() method.
+        if (!$status) {
+            $status = null;
+        }
+        $listWorkOrderIds = $this->client->listWorkOrders($this->_getLogin(), $status);
+        $response = array();
+        foreach ($listWorkOrderIds as $id) {
+            $wo = new WorkOrder($this);
+            $wo->setId($id);
+            $response[] = $wo;
+        }
+        return $response;
     }
-
+    
     /**
      * Get a work order
      *
@@ -82,7 +97,97 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrder($workOrderId)
     {
-        // TODO: Implement getWorkOrder() method.
+        $wo = $this->client->getWorkOrder($this->_getLogin(), $workOrderId);
+        $woObj = new WorkOrder($this);
+        if ($wo) {
+            $woObj->setGroup($wo->group ?: '')
+                ->setAllowTechUploads((boolean)$wo->techUploads)
+                ->setWillAlertWhenPublished((boolean)$wo->alertWhenPublished)
+                ->setIsPrintable((boolean)$wo->printLink);
+            
+            $serviceDescriptionObj = new ServiceDescription();
+            $serviceDescriptionObj->setCategoryId($wo->description->category)
+                ->setTitle($wo->description->title)
+                ->setDescription($wo->description->description)
+                ->setInstruction($wo->description->instruction);
+            $woObj->setDescription($serviceDescriptionObj);
+
+            $serviceLocationObj = new ServiceLocation();
+            $serviceLocationObj->setType($wo->location->type)
+                ->setName($wo->location->name)
+                ->setAddress1($wo->location->address1)
+                ->setAddress2($wo->location->address2)
+                ->setCity($wo->location->city)
+                ->setState($wo->location->state)
+                ->setPostalCode($wo->location->zip)
+                ->setCountry($wo->location->country)
+                ->setContactName($wo->location->contactName)
+                ->setContactPhone($wo->location->contactPhone)
+                ->setContactEmail($wo->location->contactEmail);
+            $woObj->setLocation($serviceLocationObj);
+
+            $timeRangeObj = new TimeRange();
+            $timeRangeObj->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $wo->startTime->timeBegin, new \DateTimeZone('UTC')))
+                ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $wo->startTime->timeEnd, new \DateTimeZone('UTC')));
+            $woObj->setStartTime($timeRangeObj);
+
+            $payInfoObj = new PayInfo();
+            if ($wo->payInfo->perHour !== null) {
+                $payFixed = new FixedPay();
+                $payFixed->setAmount($wo->payInfo->fixed->amount);
+                $payInfoObj->setFixed($payFixed);
+            }
+            if ($wo->payInfo->perHour !== null) {
+                $payPreHour = new RatePay();
+                $payPreHour->setRate($wo->payInfo->perHour->rate);
+                $payPreHour->setMaxUnits($wo->payInfo->perHour->maxUnits);
+                $payInfoObj->setPerDevice($payPreHour);
+            }
+            if ($wo->payInfo->perDevice !== null) {
+                $payDevice = new RatePay();
+                $payDevice->setRate($wo->payInfo->perDevice->rate);
+                $payDevice->setMaxUnits($wo->payInfo->perDevice->maxUnits);
+                $payInfoObj->setPerDevice($payDevice);
+            }
+            if ($wo->payInfo->blended !== null) {
+                $payBlended = new BlendedPay();
+                $payBlended->setBaseAmount($wo->payInfo->blended->baseAmount);
+                $payBlended->setBaseHours($wo->payInfo->blended->baseHours);
+                $payBlended->setAdditionalHourlyRate($wo->payInfo->blended->additionalHourlyRate);
+                $payBlended->setMaxAdditionalHours($wo->payInfo->blended->maxAdditionalHours);
+                $payInfoObj->setBlended($payBlended);
+            }
+            $woObj->setPayInfo($payInfoObj);
+
+            $additionalFields = array();
+            if (is_array($wo->additionalFields)) {
+                foreach ($wo->additionalFields as $field) {
+                    $additionalField = new AdditionalField();
+                    $additionalField->setName($field->name);
+                    if ($field->value !== null) {
+                        $additionalField->setValue($field->name);
+                    }
+                    $additionalFields[] = $additionalField;
+                }
+                $woObj->setAdditionalFields($additionalFields);
+            }
+
+            $labels = array();
+            if (is_array($wo->labels)) {
+                foreach ($wo->labels as $label) {
+                    $labelObj = new Label();
+                    $labelObj->setId($label->labelId);
+                    $labelObj->setName($label->labelName);
+                    $labelObj->setHideFromTech((boolean)$label->hideFromTech);
+                    $labelObj->setTechCanEdit((boolean)$label->techCanEdit);
+                    $labels[] = $labelObj;
+                }
+                $woObj->setLabels($labels);
+            }
+
+            // TODO: array of CloseoutRequirement
+        }
+        return $woObj;
     }
 
     /**
@@ -399,8 +504,33 @@ class SoapClient implements ClientInterface
      * @param TimeRangeInterface $range
      * @return ResultInterface
      */
-    public function updateWorkOrderSchedule($workOrderId, TimeRangeInterface $range)
+    public function updateWorkOrderSchedule($workOrderId, ScheduleInterface $range)
     {
         // TODO: Implement updateWorkOrderSchedule() method.
+    }
+
+    /**
+     * set the version
+     *
+     * @param $version
+     * @return void
+     */
+    private function _setVersion($version)
+    {
+        $this->version = !ctype_alpha($version[0]) ? 'v'.$version : $version;
+    }
+
+    /**
+     * return the login credentials to use for api call
+     *
+     * @param $version
+     * @return stdClass
+     */
+    private function _getLogin() {
+        $login = new \stdClass();
+        $login->customerID = $this->credentials->getCustomerId();
+        $login->apiKey = $this->credentials->getApiKey();
+        $login->effectiveUser = $this->credentials->getEffectiveUser();
+        return $login;
     }
 }

@@ -13,9 +13,10 @@ interface ClientInterface
      * ClientInterface constructor.
      * @param SDKCredentialsInterface $credentials
      * @param null $version - The version the client should use. Not all client may support this.
+     * @param null $apiBase - base api location ex. https://api.fieldnation.com
      */
-    public function __construct(SDKCredentialsInterface $credentials, $version=NULL);
-
+    public function __construct(SDKCredentialsInterface $credentials, $version=NULL, $apiBase=NULL);
+    
     /**
      * Get all work orders by status
      *
