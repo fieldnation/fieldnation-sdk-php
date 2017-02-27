@@ -106,11 +106,11 @@ interface ClientInterface
     public function getProject($projectId);
 
     /**
-     * Convert a FN shipping id into a tracking number
+     * Convert a tracking number into FN shipping id
      * @param $shippingId
      * @return TrackingToShipmentResultInterface
      */
-    public function convertShippingIdToTrackingId($shippingId);
+    public function convertTrackingIdToShippingId($shippingId);
 
     /**
      * @param $shipmentId

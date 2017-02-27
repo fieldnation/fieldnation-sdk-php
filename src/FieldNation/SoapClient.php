@@ -98,8 +98,9 @@ class SoapClient implements ClientInterface
     public function getWorkOrder($workOrderId)
     {
         $wo = $this->client->getWorkOrder($this->_getLogin(), $workOrderId);
-        $woObj = new WorkOrder($this);
+        $woObj = null;
         if ($wo) {
+            $woObj = new WorkOrder($this);
             $woObj->setId($workOrderId);
             $woObj->setGroup($wo->group ?: '')
                 ->setAllowTechUploads($wo->techUploads)
@@ -157,9 +158,7 @@ class SoapClient implements ClientInterface
             }
             $woObj->setPayInfo($payInfoObj);
 
-            if (is_array($wo->additionalFields)) {
-                $woObj->setAdditionalFields($this->_responseToAdditionalFields($wo->additionalFields));
-            }
+            $woObj->setAdditionalFields($this->_responseToAdditionalFields($wo->additionalFields));
 
             $labels = array();
             if (is_array($wo->labels)) {
@@ -171,8 +170,8 @@ class SoapClient implements ClientInterface
                     $labelObj->setTechCanEdit($label->techCanEdit);
                     $labels[] = $labelObj;
                 }
-                $woObj->setLabels($labels);
             }
+            $woObj->setLabels($labels);
 
             $closeoutRequirements = array();
             if (is_array($wo->closeoutReqs)) {
@@ -183,8 +182,8 @@ class SoapClient implements ClientInterface
                     $closeoutRequirementObj->setOrder($reqs->closeout_requirement_order);
                     $closeoutRequirements[] = $closeoutRequirementObj;
                 }
-                $woObj->setCloseoutRequirements($closeoutRequirements);
             }
+            $woObj->setCloseoutRequirements($closeoutRequirements);
         }
         return $woObj;
     }
@@ -209,29 +208,60 @@ class SoapClient implements ClientInterface
     public function getWorkOrderAssignedProvider($workOrderId)
     {
         $provider = $this->client->getAssignedTech($this->_getLogin(), $workOrderId);
-        $providerObj = new Technician();
+        $providerObj = null;
         if ($provider) {
+            $providerObj = new Technician();
             $providerObj->setId($provider->uid);
             $providerObj->setFirstName($provider->firstName);
             $providerObj->setLastName($provider->lastName);
             $providerObj->setCity($provider->city);
             $providerObj->setState($provider->state);
             $providerObj->setPostalCode($provider->zip);
-            if (is_array($provider->additionalFields)) {
-                $providerObj->setAdditionalFields($this->_responseToAdditionalFields($provider->additionalFields));
-            }
+            $providerObj->setAdditionalFields($this->_responseToAdditionalFields($provider->additionalFields));
         }
+        return $providerObj;
     }
 
     /**
      * Get the progress of a workorder
      *
      * @param $workOrderId
+     * @param $providerId
      * @return ProgressInterface
      */
-    public function getWorkOrderProgress($workOrderId)
+    public function getWorkOrderProgress($workOrderId, $providerId)
     {
-        // TODO: Implement getWorkOrderProgress() method.
+        $progress = $this->client->getWorkOrderProgress($this->_getLogin(), $workOrderId, $providerId);
+        $progressObj = null;
+        if ($progress) {
+            $progressObj = new Progress();
+            $progressObj->setTotalDevices($progress->totalDevices);
+            $progressObj->setTotalHours($progress->totalHours);
+            $progressObj->setLoggedWork($progress->loggedWork);
+            $uploads = array();
+            if (is_array($progress->uploads)) {
+                foreach ($progress->uploads as $upload) {
+                    $uploadObj = new TechUpload();
+                    $uploadObj->setFileName($upload->filename);
+                    $uploadObj->setFileSize($upload->filesize);
+                    $uploadObj->setDownloadUrl($upload->downloadUrl);
+                    $uploads[] = $upload;
+                }
+            }
+            $progressObj->setUploads($uploads);
+            $progressObj->setWorkData($this->_responseToAdditionalFields($progress->workData));
+            $progressObj->setClosingNotes($progress->closingNotes);
+            $progressObj->setIsAssignmentConfirmed($progress->assignmentConfirmed);
+            $progressObj->setIsReadyToGo($progress->readyToGo);
+            $workSchedule = array();
+            if (is_array($progress->workSchedule)) {
+                foreach ($progress->workSchedule as $schedule) {
+                    $workSchedule[] = $this->_responseToTimeRange($schedule, 'startTime', 'endTime');
+                }
+            }
+            $progressObj->setWorkSchedule($workSchedule);
+        }
+        return $progressObj;
     }
 
     /**
@@ -300,13 +330,13 @@ class SoapClient implements ClientInterface
     }
 
     /**
-     * Convert a FN shipping id into a tracking number
+     * Convert a tracking number into FN shipping id
      * @param $shippingId
      * @return TrackingToShipmentResultInterface
      */
-    public function convertShippingIdToTrackingId($shippingId)
+    public function convertTrackingIdToShippingId($shippingId)
     {
-        // TODO: Implement convertShippingIdToTrackingId() method.
+        // TODO: Implement convertTrackingIdToShippingId() method.
     }
 
     /**
@@ -578,12 +608,14 @@ class SoapClient implements ClientInterface
      * return timeRangeResp converted into a TimeRange
      *
      * @param $additionalFieldsResp
+     * @param $startProp
+     * @param $endProp
      * @return TimeRangeInterface[]
      */
-    private function _responseToTimeRange($timeRangeResp) {
+    private function _responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd') {
         $timeRangeObj = new TimeRange();
-        $timeRangeObj->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->timeBegin, new \DateTimeZone('UTC')))
-            ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->timeEnd, new \DateTimeZone('UTC')));
+        $timeRangeObj->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$startProp, new \DateTimeZone('UTC')))
+            ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$endProp, new \DateTimeZone('UTC')));
         return $timeRangeObj;
     }
 }
