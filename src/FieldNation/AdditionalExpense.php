@@ -62,6 +62,26 @@ class AdditionalExpense implements AdditionalExpenseInterface
     }
 
     /**
+     * Set the quantity entered by the user who submitted the additional expense, if the Expense Manager was used.
+     *
+     * @param float $amount
+     * @return self
+     */
+    public function setQuantity($amount) {
+        $this->quantity = (float)$amount;
+        return $this;
+    }
+
+    /**
+     * Get the quantity
+     *
+     * @return float
+     */
+    public function getQuantity() {
+        return $this->quantity;
+    }
+
+    /**
      * Set the category of the expense from the following list:
      *      'Uncategorized',
      *      'Material Cost',

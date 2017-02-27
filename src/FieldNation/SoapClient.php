@@ -272,7 +272,47 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderPayment($workOrderId)
     {
-        // TODO: Implement getWorkOrderPayment() method.
+        $payment = $this->client->getWorkOrderTotalPayment($this->_getLogin(), $workOrderId);
+        $paymentObj = null;
+        if ($payment) {
+            $paymentObj = new Payment();
+
+            $expenses = array();
+            if (is_array($payment->expenses)) {
+                foreach ($payment->expenses as $expense) {
+                    $expenseObj = new AdditionalExpense();
+                    $expenseObj->setId($expense->expenseID);
+                    $expenseObj->setDescription($expense->description);
+                    $expenseObj->setExpenseCategory($expense->expenseCategory);
+                    $expenseObj->setAmount($expense->amount);
+                    $expenseObj->setIsApproved($expense->approved);
+                    $expenseObj->setQuantity($expense->quantity);
+                    $expenseObj->setCustomExpenseId($expense->customExpenseId);
+                    $expenseObj->setReasonDenied($expense->reasonDenied);
+                    $expenses[] = $expense;
+                }
+            }
+            $paymentObj->setExpenses($expenses);
+
+            $deductions = array();
+            if (is_array($payment->deductions)) {
+                foreach ($payment->deductions as $deduction) {
+                    $deductionObj = new PaymentDeduction();
+                    $deductionObj->setType($deduction->type);
+                    $deductionObj->setDescription($deduction->description);
+                    $deductionObj->setAmount($deduction->amount);
+                    $deductions[] = $deductionObj;
+                }
+            }
+            $paymentObj->setDeductions($deductions);
+
+            $paymentObj->setLaborEarned($payment->laborEarned);
+            $paymentObj->setTotalApprovedExpenses($payment->totalApprovedExpenses);
+            $paymentObj->setTotalDeductions($payment->totalDeductions);
+            $paymentObj->setPaymentAmount($payment->paymentAmount);
+            $paymentObj->setCancelFee($payment->cancelFee);
+        }
+        return $paymentObj;
     }
 
     /**
