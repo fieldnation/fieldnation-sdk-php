@@ -86,10 +86,10 @@ interface WorkLogInterface
     /**
      * Set if the provider enters check out data.
      *
-     * @param CheckInOutInterface $checkIn
+     * @param CheckInOutInterface $checkOut
      * @return self
      */
-    public function setCheckOutInfo(CheckInOutInterface $checkIn);
+    public function setCheckOutInfo(CheckInOutInterface $checkOut);
 
     /**
      * Get if the provider enters check out data.
