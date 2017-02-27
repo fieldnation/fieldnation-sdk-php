@@ -16,6 +16,10 @@
     
 ## Build Status
 
+| PHP 5.6 | PHP 7.0 | PHP 7.1 |  HHVM  |
+| :-----: | :-----: | :-----: | :----: |
+| shield  | shield  | shield  | shield |
+
 ## Installation
 
 ### Installation with Composer
