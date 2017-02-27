@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class CloseoutRequirement implements CloseoutRequirementInterface
 {
     private $name;
@@ -19,7 +18,8 @@ class CloseoutRequirement implements CloseoutRequirementInterface
      * @param string $name
      * @return self
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -29,7 +29,8 @@ class CloseoutRequirement implements CloseoutRequirementInterface
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -39,7 +40,8 @@ class CloseoutRequirement implements CloseoutRequirementInterface
      * @param integer $order
      * @return self
      */
-    public function setOrder($order) {
+    public function setOrder($order)
+    {
         $this->order = $order;
         return $this;
     }
@@ -49,7 +51,8 @@ class CloseoutRequirement implements CloseoutRequirementInterface
      *
      * @return integer
      */
-    public function getOrder() {
+    public function getOrder()
+    {
         return $this->order;
     }
 
@@ -59,7 +62,8 @@ class CloseoutRequirement implements CloseoutRequirementInterface
      * @param string $description
      * @return self
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
         return $this;
     }
@@ -69,7 +73,8 @@ class CloseoutRequirement implements CloseoutRequirementInterface
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 }

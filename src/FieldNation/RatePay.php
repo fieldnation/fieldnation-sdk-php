@@ -16,7 +16,8 @@ class RatePay implements RatePayInterface
      * @param float $rate
      * @return self
      */
-    public function setRate($rate) {
+    public function setRate($rate)
+    {
         $this->rate = $rate;
         return $this;
     }
@@ -26,7 +27,8 @@ class RatePay implements RatePayInterface
      *
      * @return float
      */
-    public function getRate() {
+    public function getRate()
+    {
         return $this->rate;
     }
 
@@ -36,7 +38,8 @@ class RatePay implements RatePayInterface
      * @param float $units
      * @return self
      */
-    public function setMaxUnits($units) {
+    public function setMaxUnits($units)
+    {
         $this->maxUntis = $units;
         return $this;
     }
@@ -45,7 +48,8 @@ class RatePay implements RatePayInterface
      * Get the maximum units of payment allowed.
      * @return float
      */
-    public function getMaxUnits() {
+    public function getMaxUnits()
+    {
         return $this->maxUntis;
     }
 }

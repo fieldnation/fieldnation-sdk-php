@@ -17,7 +17,8 @@ class PaymentDeduction implements PaymentDeductionInterface
      * @param string $type
      * @return self
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -27,7 +28,8 @@ class PaymentDeduction implements PaymentDeductionInterface
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -37,7 +39,8 @@ class PaymentDeduction implements PaymentDeductionInterface
      * @param string $description
      * @return self
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
         return $this;
     }
@@ -47,7 +50,8 @@ class PaymentDeduction implements PaymentDeductionInterface
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
@@ -56,7 +60,8 @@ class PaymentDeduction implements PaymentDeductionInterface
      * @param string $amount
      * @return self
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = (float)$amount;
         return $this;
     }
@@ -66,7 +71,8 @@ class PaymentDeduction implements PaymentDeductionInterface
      *
      * @return float
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 }

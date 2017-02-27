@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 interface WorkOrderInterface extends IdentifiableInterface
 {
     /**
@@ -91,7 +90,8 @@ interface WorkOrderInterface extends IdentifiableInterface
 
     /**
      * Set labels that are set on the work order.
-     * TODO: this is currently ignored during creation of a Work Order, and you need to call setLabelOnWorkorder after creation to set labels on new Work Orders.
+     * TODO: this is currently ignored during creation of a Work Order,
+     *       and you need to call setLabelOnWorkorder after creation to set labels on new Work Orders.
      *
      * @param array $labels
      * @return self
@@ -203,11 +203,11 @@ interface WorkOrderInterface extends IdentifiableInterface
     /**
      * If things did not go as planned, and you just want to cancel and start again, here's how.
      *
-     * @param boolean $willAcceptFees - Mark if you will accept cancellation fees or not
-     * @param string $revertRequestReason -q Optionally provide a reason you will revert the request after accepting fees.
+     * @param boolean $willAcceptFees      Mark if you will accept cancellation fees or not
+     * @param string $revertRequestReason  Optionally provide a reason you will revert the request after accepting fees.
      * @return ResultInterface
      */
-    public function cancel($willAcceptFees, $revertRequestReason=NULL);
+    public function cancel($willAcceptFees, $revertRequestReason = null);
 
     /**
      * After creating a Work Order, you can attach any existing documents you want to. Here's how!

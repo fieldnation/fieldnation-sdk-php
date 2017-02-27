@@ -8,7 +8,9 @@ namespace FieldNation;
 
 class LocationTypes
 {
-    private function __construct() { }
+    private function __construct()
+    {
+    }
 
     const COMMERCIAL = 'Commercial';
     const GOVERNMENTAL = 'Governmental';

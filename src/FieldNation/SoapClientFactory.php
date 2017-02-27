@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class SoapClientFactory implements ClientFactoryInterface
 {
     private $credentials;
@@ -21,7 +20,7 @@ class SoapClientFactory implements ClientFactoryInterface
      *
      * @return ClientInterface
      */
-    public function getClient($version=NULL)
+    public function getClient($version = null)
     {
         $version = $version || SoapClient::STABLE_SOAP_VERSION;
         return new SoapClient($this->credentials, $version);

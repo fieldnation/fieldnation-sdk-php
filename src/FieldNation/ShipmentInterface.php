@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 interface ShipmentInterface extends IdentifiableInterface, DescribableInterface
 {
     /**

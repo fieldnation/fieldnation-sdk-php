@@ -6,10 +6,9 @@
  */
 namespace FieldNation;
 
-
 interface SDKCredentialsInterface
 {
-    function __construct($customerId, $apiKey, $effectiveUser=NULL);
+    public function __construct($customerId, $apiKey, $effectiveUser = null);
 
     /**
      * Set your company ID assigned by Field Nation.
@@ -18,12 +17,12 @@ interface SDKCredentialsInterface
      * @param $id
      * @return self
      */
-    function setCustomerId($id);
+    public function setCustomerId($id);
 
     /**
      * @return string|NULL
      */
-    function getCustomerId();
+    public function getCustomerId();
 
     /**
      * Set your unique API key.
@@ -32,12 +31,12 @@ interface SDKCredentialsInterface
      * @param $key
      * @return self
      */
-    function setApiKey($key);
+    public function setApiKey($key);
 
     /**
      * @return string|NULL
      */
-    function getApiKey();
+    public function getApiKey();
 
     /**
      * Set which user to do the actions on behalf of.
@@ -46,11 +45,11 @@ interface SDKCredentialsInterface
      * @param $user
      * @return self
      */
-    function setEffectiveUser($user);
+    public function setEffectiveUser($user);
 
     /**
      * Get the effective user.
      * @return string|NULL
      */
-    function getEffectiveUser();
+    public function getEffectiveUser();
 }

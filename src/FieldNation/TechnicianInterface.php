@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 interface TechnicianInterface extends IdentifiableInterface
 {
     /**

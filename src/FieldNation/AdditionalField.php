@@ -6,8 +6,7 @@
  */
 namespace FieldNation;
 
-
-class AdditionalField implements  AdditionalFieldInterface
+class AdditionalField implements AdditionalFieldInterface
 {
     private $name;
     private $value;
@@ -18,7 +17,8 @@ class AdditionalField implements  AdditionalFieldInterface
      * @param string $name
      * @return self
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -28,7 +28,8 @@ class AdditionalField implements  AdditionalFieldInterface
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -38,7 +39,8 @@ class AdditionalField implements  AdditionalFieldInterface
      * @param string $value
      * @return self
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $this->value = $value;
         return $this;
     }
@@ -48,7 +50,8 @@ class AdditionalField implements  AdditionalFieldInterface
      *
      * @return string
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 }

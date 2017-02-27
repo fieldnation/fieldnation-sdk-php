@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class WorkOrderService extends AbstractService
 {
     /**
@@ -15,7 +14,7 @@ class WorkOrderService extends AbstractService
      * @param $status - Should be a status from WorkOrderStatuses
      * @return WorkOrderInterface[]
      */
-    public function getAll($status=NULL)
+    public function getAll($status = null)
     {
         return $this->client->getWorkOrders($status);
     }

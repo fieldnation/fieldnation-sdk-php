@@ -23,7 +23,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param integer $id
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -33,7 +34,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -43,7 +45,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param string $description
      * @return self
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
         return $this;
     }
@@ -53,7 +56,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
@@ -87,7 +91,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param string $expenseCategory
      * @return self
      */
-    public function setExpenseCategory($expenseCategory) {
+    public function setExpenseCategory($expenseCategory)
+    {
         $this->category = $expenseCategory;
         return $this;
     }
@@ -97,7 +102,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return string
      */
-    public function getExpenseCategory() {
+    public function getExpenseCategory()
+    {
         return $this->category;
     }
 
@@ -107,7 +113,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param float $amount
      * @return self
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = (float)$amount;
         return $this;
     }
@@ -117,7 +124,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return float
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
@@ -127,7 +135,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param boolean $isApproved
      * @return self
      */
-    public function setIsApproved($isApproved) {
+    public function setIsApproved($isApproved)
+    {
         $this->approved = (boolean)$isApproved;
         return $this;
     }
@@ -137,7 +146,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return boolean
      */
-    public function getIsApproved() {
+    public function getIsApproved()
+    {
         return $this->approved;
     }
 
@@ -147,7 +157,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param string $expenseId
      * @return self
      */
-    public function setCustomExpenseId($expenseId) {
+    public function setCustomExpenseId($expenseId)
+    {
         $this->customId = $expenseId;
         return $this;
     }
@@ -157,7 +168,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return string
      */
-    public function getCustomExpenseId() {
+    public function getCustomExpenseId()
+    {
         return $this->customId;
     }
 
@@ -167,7 +179,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param string $reason
      * @return self
      */
-    public function setReasonDenied($reason) {
+    public function setReasonDenied($reason)
+    {
         $this->reasonDenied = $reason;
         return $this;
     }
@@ -177,7 +190,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return string
      */
-    public function getReasonDenied() {
+    public function getReasonDenied()
+    {
         return $this->reasonDenied;
     }
 }

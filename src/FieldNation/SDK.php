@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class SDK implements SDKInterface
 {
     private $credentials;
@@ -36,7 +35,7 @@ class SDK implements SDKInterface
      * @param string $status Should be a const from WorkOrderStatuses
      * @return WorkOrderInterface[]
      */
-    public function getWorkOrders($status=NULL)
+    public function getWorkOrders($status = null)
     {
         return $this->woService->getAll($status);
     }

@@ -18,7 +18,7 @@ class SoapClient implements ClientInterface
     private $credentials;
     private $version;
 
-    public function __construct(SDKCredentialsInterface $credentials, $version=NULL, $apiBase=NULL)
+    public function __construct(SDKCredentialsInterface $credentials, $version = null, $apiBase = null)
     {
         $this->credentials = $credentials;
         $this->version = $version;
@@ -32,7 +32,7 @@ class SoapClient implements ClientInterface
      * @param $client
      * @return $this
      */
-    public function setClient($client=NULL)
+    public function setClient($client = null)
     {
         if ($client) {
             $this->client = $client;
@@ -54,7 +54,7 @@ class SoapClient implements ClientInterface
     private function setWSDL($version)
     {
         // The FN api has a v prefix on the version
-        $this->_setVersion($version);
+        $this->setVersion($version);
         $this->wsdl = $this->apiBase . '/' . $this->version . self::WSDL_NAME;
         return $this;
     }
@@ -79,7 +79,7 @@ class SoapClient implements ClientInterface
         if (!$status) {
             $status = null;
         }
-        $listWorkOrderIds = $this->client->listWorkOrders($this->_getLogin(), $status);
+        $listWorkOrderIds = $this->client->listWorkOrders($this->getLogin(), $status);
         $response = array();
         foreach ($listWorkOrderIds as $id) {
             $wo = new WorkOrder($this);
@@ -97,7 +97,7 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrder($workOrderId)
     {
-        $wo = $this->client->getWorkOrder($this->_getLogin(), $workOrderId);
+        $wo = $this->client->getWorkOrder($this->getLogin(), $workOrderId);
         $woObj = null;
         if ($wo) {
             $woObj = new WorkOrder($this);
@@ -128,7 +128,7 @@ class SoapClient implements ClientInterface
                 ->setContactEmail($wo->location->contactEmail);
             $woObj->setLocation($serviceLocationObj);
 
-            $woObj->setStartTime($this->_responseToTimeRange($wo->startTime));
+            $woObj->setStartTime($this->responseToTimeRange($wo->startTime));
 
             $payInfoObj = new PayInfo();
             if ($wo->payInfo->perHour !== null) {
@@ -158,7 +158,7 @@ class SoapClient implements ClientInterface
             }
             $woObj->setPayInfo($payInfoObj);
 
-            $woObj->setAdditionalFields($this->_responseToAdditionalFields($wo->additionalFields));
+            $woObj->setAdditionalFields($this->responseToAdditionalFields($wo->additionalFields));
 
             $labels = array();
             if (is_array($wo->labels)) {
@@ -196,7 +196,7 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderStatus($workOrderId)
     {
-        return $this->client->getWorkOrderStatus($this->_getLogin(), $workOrderId);
+        return $this->client->getWorkOrderStatus($this->getLogin(), $workOrderId);
     }
 
     /**
@@ -207,7 +207,7 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderAssignedProvider($workOrderId)
     {
-        $provider = $this->client->getAssignedTech($this->_getLogin(), $workOrderId);
+        $provider = $this->client->getAssignedTech($this->getLogin(), $workOrderId);
         $providerObj = null;
         if ($provider) {
             $providerObj = new Technician();
@@ -217,7 +217,7 @@ class SoapClient implements ClientInterface
             $providerObj->setCity($provider->city);
             $providerObj->setState($provider->state);
             $providerObj->setPostalCode($provider->zip);
-            $providerObj->setAdditionalFields($this->_responseToAdditionalFields($provider->additionalFields));
+            $providerObj->setAdditionalFields($this->responseToAdditionalFields($provider->additionalFields));
         }
         return $providerObj;
     }
@@ -231,7 +231,7 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderProgress($workOrderId, $providerId)
     {
-        $progress = $this->client->getWorkOrderProgress($this->_getLogin(), $workOrderId, $providerId);
+        $progress = $this->client->getWorkOrderProgress($this->getLogin(), $workOrderId, $providerId);
         $progressObj = null;
         if ($progress) {
             $progressObj = new Progress();
@@ -249,14 +249,14 @@ class SoapClient implements ClientInterface
                 }
             }
             $progressObj->setUploads($uploads);
-            $progressObj->setWorkData($this->_responseToAdditionalFields($progress->workData));
+            $progressObj->setWorkData($this->responseToAdditionalFields($progress->workData));
             $progressObj->setClosingNotes($progress->closingNotes);
             $progressObj->setIsAssignmentConfirmed($progress->assignmentConfirmed);
             $progressObj->setIsReadyToGo($progress->readyToGo);
             $workSchedule = array();
             if (is_array($progress->workSchedule)) {
                 foreach ($progress->workSchedule as $schedule) {
-                    $workSchedule[] = $this->_responseToTimeRange($schedule, 'startTime', 'endTime');
+                    $workSchedule[] = $this->responseToTimeRange($schedule, 'startTime', 'endTime');
                 }
             }
             $progressObj->setWorkSchedule($workSchedule);
@@ -596,7 +596,7 @@ class SoapClient implements ClientInterface
      * @param $version
      * @return void
      */
-    private function _setVersion($version)
+    private function setVersion($version)
     {
         $this->version = !ctype_alpha($version[0]) ? 'v'.$version : $version;
     }
@@ -607,7 +607,8 @@ class SoapClient implements ClientInterface
      * @param $version
      * @return stdClass
      */
-    private function _getLogin() {
+    private function getLogin()
+    {
         $login = new \stdClass();
         $login->customerID = $this->credentials->getCustomerId();
         $login->apiKey = $this->credentials->getApiKey();
@@ -621,7 +622,8 @@ class SoapClient implements ClientInterface
      * @param $additionalFieldResp
      * @return AdditionalFieldInterface
      */
-    private function _responseToAdditionalField($additionalFieldResp) {
+    private function responseToAdditionalField($additionalFieldResp)
+    {
         $additionalField = new AdditionalField();
         $additionalField->setName($additionalFieldResp->name);
         if ($additionalFieldResp->value !== null) {
@@ -636,10 +638,11 @@ class SoapClient implements ClientInterface
      * @param $additionalFieldsResp
      * @return AdditionalFieldInterface[]
      */
-    private function _responseToAdditionalFields($additionalFieldsResp) {
+    private function responseToAdditionalFields($additionalFieldsResp)
+    {
         $additionalFields = array();
         foreach ($additionalFieldsResp as $field) {
-            $additionalFields[] = $this->_responseToAdditionalField($field);
+            $additionalFields[] = $this->responseToAdditionalField($field);
         }
         return $additionalFields;
     }
@@ -652,10 +655,13 @@ class SoapClient implements ClientInterface
      * @param $endProp
      * @return TimeRangeInterface[]
      */
-    private function _responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd') {
+    private function responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd')
+    {
         $timeRangeObj = new TimeRange();
-        $timeRangeObj->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$startProp, new \DateTimeZone('UTC')))
-            ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$endProp, new \DateTimeZone('UTC')));
+        $utc = new \DateTimeZone('UTC');
+        $timeRangeObj
+            ->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$startProp, $utc))
+            ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$endProp, $utc));
         return $timeRangeObj;
     }
 }

@@ -16,7 +16,8 @@ class FixedPay implements FixedPayInterface
      * @param float $amount
      * @return self
      */
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
         return $this;
     }
@@ -26,7 +27,8 @@ class FixedPay implements FixedPayInterface
      *
      * @return float
      */
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 }

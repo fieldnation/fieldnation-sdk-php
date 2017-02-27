@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 /**
  * Interface WorkOrderSerializerInterface
  * @package FieldNation

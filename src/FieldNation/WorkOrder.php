@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
 {
     private $id;
@@ -146,7 +145,8 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
 
     /**
      * Set labels that are set on the work order.
-     * TODO: this is currently ignored during creation of a Work Order, and you need to call setLabelOnWorkorder after creation to set labels on new Work Orders.
+     * TODO: this is currently ignored during creation of a Work Order.
+     * FIXME: you need to call setLabelOnWorkorder after creation to set labels on new Work Orders.
      *
      * @param array $labels
      * @return self
@@ -215,7 +215,7 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
      */
     public function getProgress()
     {
-        return $this->client->getWorkOrderProgress($this->getId());
+        return $this->client->getWorkOrderProgress($this->getId(), $this->getAssignedProvider()->getId());
     }
 
     /**
@@ -288,7 +288,7 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
     {
         if ($recipient->isGroup()) {
             return $this->client->routeWorkOrderToGroup($this->getId(), $recipient->getId());
-        } else if ($recipient->isProvider()) {
+        } elseif ($recipient->isProvider()) {
             return $this->client->routeWorkOrderToProvider($this->getId(), $recipient->getId());
         }
 
@@ -315,7 +315,7 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
      *
      * @return ResultInterface
      */
-    public function cancel($willAcceptFees, $reason=NULL)
+    public function cancel($willAcceptFees, $reason = null)
     {
         return $this->client->cancelWorkOrder($this->getId(), $willAcceptFees, $reason);
     }

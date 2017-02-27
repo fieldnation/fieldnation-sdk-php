@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-class BlendedPay implements  BlendedPayInterface
+class BlendedPay implements BlendedPayInterface
 {
     private $baseAmount;
     private $baseHours;
@@ -19,7 +19,8 @@ class BlendedPay implements  BlendedPayInterface
      * @param float $amount
      * @return self
      */
-    public function setBaseAmount($amount) {
+    public function setBaseAmount($amount)
+    {
         $this->baseAmount = $amount;
         return $this;
     }
@@ -29,7 +30,8 @@ class BlendedPay implements  BlendedPayInterface
      *
      * @return float
      */
-    public function getBaseAmount() {
+    public function getBaseAmount()
+    {
         return $this->baseAmount;
     }
 
@@ -39,7 +41,8 @@ class BlendedPay implements  BlendedPayInterface
      * @param float $hours
      * @return self
      */
-    public function setBaseHours($hours) {
+    public function setBaseHours($hours)
+    {
         $this->baseHours = $hours;
         return $this;
     }
@@ -49,7 +52,8 @@ class BlendedPay implements  BlendedPayInterface
      *
      * @return float
      */
-    public function getBaseHours() {
+    public function getBaseHours()
+    {
         return $this->baseHours;
     }
 
@@ -59,7 +63,8 @@ class BlendedPay implements  BlendedPayInterface
      * @param float $rate
      * @return self
      */
-    public function setAdditionalHourlyRate($rate) {
+    public function setAdditionalHourlyRate($rate)
+    {
         $this->additionalHourlyRate = $rate;
         return $this;
     }
@@ -69,7 +74,8 @@ class BlendedPay implements  BlendedPayInterface
      *
      * @return float
      */
-    public function getAdditionalHourlyRate() {
+    public function getAdditionalHourlyRate()
+    {
         return $this->additionalHourlyRate;
     }
 
@@ -79,7 +85,8 @@ class BlendedPay implements  BlendedPayInterface
      * @param float $hours
      * @return self
      */
-    public function setMaxAdditionalHours($hours) {
+    public function setMaxAdditionalHours($hours)
+    {
         $this->maxAdditionalHours = $hours;
         return $this;
     }
@@ -89,7 +96,8 @@ class BlendedPay implements  BlendedPayInterface
      *
      * @return float
      */
-    public function getMaxAdditionalHours() {
+    public function getMaxAdditionalHours()
+    {
         return $this->maxAdditionalHours;
     }
 }
