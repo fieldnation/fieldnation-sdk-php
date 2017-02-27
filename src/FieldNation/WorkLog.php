@@ -21,7 +21,8 @@ class WorkLog implements WorkLogInterface
      * @param \DateTime $time
      * @return self
      */
-    public function setTimeBegin($time) {
+    public function setTimeBegin($time)
+    {
         $this->timeBegin = $time;
         return $this;
     }
@@ -31,7 +32,8 @@ class WorkLog implements WorkLogInterface
      *
      * @return \DateTime
      */
-    public function getTimeBegin() {
+    public function getTimeBegin()
+    {
         return $this->timeEnd;
     }
 
@@ -41,7 +43,8 @@ class WorkLog implements WorkLogInterface
      * @param \DateTime $time
      * @return self
      */
-    public function setTimeEnd($time) {
+    public function setTimeEnd($time)
+    {
         $this->timeEnd = $time;
         return $this;
     }
@@ -51,7 +54,8 @@ class WorkLog implements WorkLogInterface
      *
      * @return \DateTime
      */
-    public function getTimeEnd() {
+    public function getTimeEnd()
+    {
         return $this->timeEnd;
     }
 
@@ -61,7 +65,8 @@ class WorkLog implements WorkLogInterface
      * @param float $hours
      * @return self
      */
-    public function setHours($hours) {
+    public function setHours($hours)
+    {
         $this->hours = (float)$hours;
         return $this;
     }
@@ -71,7 +76,8 @@ class WorkLog implements WorkLogInterface
      *
      * @return float
      */
-    public function getHours() {
+    public function getHours()
+    {
         return $this->hours;
     }
 
@@ -81,7 +87,8 @@ class WorkLog implements WorkLogInterface
      * @param integer $devices
      * @return self
      */
-    public function setDevices($devices) {
+    public function setDevices($devices)
+    {
         $this->devices = (integer)$devices;
         return $this;
     }
@@ -91,7 +98,8 @@ class WorkLog implements WorkLogInterface
      *
      * @return integer
      */
-    public function getDevices() {
+    public function getDevices()
+    {
         return $this->devices;
     }
 
@@ -101,7 +109,8 @@ class WorkLog implements WorkLogInterface
      * @param CheckInOutInterface $checkIn
      * @return self
      */
-    public function setCheckInInfo(CheckInOutInterface $checkIn) {
+    public function setCheckInInfo(CheckInOutInterface $checkIn)
+    {
         $this->checkInInfo = $checkIn;
         return $this;
     }
@@ -111,7 +120,8 @@ class WorkLog implements WorkLogInterface
      *
      * @return CheckInOutInterface
      */
-    public function getCheckInInfo() {
+    public function getCheckInInfo()
+    {
         return $this->checkInInfo;
     }
 
@@ -121,7 +131,8 @@ class WorkLog implements WorkLogInterface
      * @param CheckInOutInterface $checkOut
      * @return self
      */
-    public function setCheckOutInfo(CheckInOutInterface $checkOut) {
+    public function setCheckOutInfo(CheckInOutInterface $checkOut)
+    {
         $this->checkOutInfo = $checkOut;
         return $this;
     }
@@ -131,7 +142,8 @@ class WorkLog implements WorkLogInterface
      *
      * @return CheckInOutInterface
      */
-    public function getCheckOutInfo() {
+    public function getCheckOutInfo()
+    {
         return $this->checkOutInfo;
     }
 }

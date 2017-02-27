@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class TimeRange implements TimeRangeInterface
 {
     private $timeBegin;
@@ -18,7 +17,8 @@ class TimeRange implements TimeRangeInterface
      * @param \DateTime $time
      * @return self
      */
-    public function setTimeBegin($time) {
+    public function setTimeBegin($time)
+    {
         $this->timeBegin = $time;
         return $this;
     }
@@ -28,7 +28,8 @@ class TimeRange implements TimeRangeInterface
      *
      * @return \DateTime
      */
-    public function getTimeBegin() {
+    public function getTimeBegin()
+    {
         return $this->timeEnd;
     }
 
@@ -38,7 +39,8 @@ class TimeRange implements TimeRangeInterface
      * @param \DateTime $time
      * @return self
      */
-    public function setTimeEnd($time) {
+    public function setTimeEnd($time)
+    {
         $this->timeEnd = $time;
         return $this;
     }
@@ -48,7 +50,8 @@ class TimeRange implements TimeRangeInterface
      *
      * @return \DateTime
      */
-    public function getTimeEnd() {
+    public function getTimeEnd()
+    {
         return $this->timeEnd;
     }
 }

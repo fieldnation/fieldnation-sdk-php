@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class ServiceDescription implements ServiceDescriptionInterface
 {
     private $categoryId;
@@ -20,7 +19,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      * @param integer $categoryId
      * @return self
      */
-    public function setCategoryId($categoryId) {
+    public function setCategoryId($categoryId)
+    {
         $this->categoryId = $categoryId;
         return $this;
     }
@@ -30,7 +30,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      *
      * @return integer
      */
-    public function getCategoryId() {
+    public function getCategoryId()
+    {
         return $this->categoryId;
     }
 
@@ -40,7 +41,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      * @param string $title
      * @return self
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
         return $this;
     }
@@ -50,7 +52,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
@@ -60,7 +63,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      * @param string $instruction
      * @return self
      */
-    public function setInstruction($instruction) {
+    public function setInstruction($instruction)
+    {
         $this->instruction = $instruction;
         return $this;
     }
@@ -70,7 +74,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      *
      * @return string
      */
-    public function getInstruction() {
+    public function getInstruction()
+    {
         return $this->instruction;
     }
 
@@ -80,7 +85,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      * @param string $description
      * @return self
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
         return $this;
     }
@@ -90,7 +96,8 @@ class ServiceDescription implements ServiceDescriptionInterface
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 }

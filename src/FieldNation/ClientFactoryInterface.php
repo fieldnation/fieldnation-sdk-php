@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 interface ClientFactoryInterface
 {
     /**
@@ -21,5 +20,5 @@ interface ClientFactoryInterface
      * @param string $version - Optional client version. May not be supported by all clients
      * @return ClientInterface
      */
-    public function getClient($version=NULL);
+    public function getClient($version = null);
 }

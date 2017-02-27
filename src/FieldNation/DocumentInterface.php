@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 interface DocumentInterface extends DescribableInterface, IdentifiableInterface
 {
     /**

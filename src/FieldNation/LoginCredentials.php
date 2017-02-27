@@ -6,18 +6,17 @@
  */
 namespace FieldNation;
 
-
 class LoginCredentials implements SDKCredentialsInterface
 {
     private $apiKey;
     private $customerId;
     private $effectiveUser;
 
-    public function __construct($customerId, $apiKey, $effectiveUser = NULL)
+    public function __construct($customerId, $apiKey, $effectiveUser = null)
     {
-       $this->apiKey = $apiKey;
-       $this->customerId = $customerId;
-       $this->effectiveUser = $effectiveUser;
+        $this->apiKey = $apiKey;
+        $this->customerId = $customerId;
+        $this->effectiveUser = $effectiveUser;
     }
 
     public function setApiKey($key)

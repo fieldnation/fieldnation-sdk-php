@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class Payment implements PaymentInterface
 {
     private $expenses;
@@ -23,7 +22,8 @@ class Payment implements PaymentInterface
      * @param AdditionalExpenseInterface[] $expenses
      * @return self
      */
-    public function setExpenses($expenses) {
+    public function setExpenses($expenses)
+    {
         $this->expenses = $expenses;
         return $this;
     }
@@ -33,7 +33,8 @@ class Payment implements PaymentInterface
      *
      * @return AdditionalExpenseInterface[]
      */
-    public function getExpenses() {
+    public function getExpenses()
+    {
         return $this->expenses;
     }
 
@@ -43,7 +44,8 @@ class Payment implements PaymentInterface
      * @param PaymentDeductionInterface[] $deductions
      * @return self
      */
-    public function setDeductions($deductions) {
+    public function setDeductions($deductions)
+    {
         $this->deductions = $deductions;
         return $this;
     }
@@ -53,7 +55,8 @@ class Payment implements PaymentInterface
      *
      * @return PaymentDeductionInterface[]
      */
-    public function getDeduction() {
+    public function getDeduction()
+    {
         return $this->deductions;
     }
 
@@ -63,7 +66,8 @@ class Payment implements PaymentInterface
      * @param float $amount
      * @return self
      */
-    public function setLaborEarned($amount) {
+    public function setLaborEarned($amount)
+    {
         $this->laborEarned = $amount;
         return $this;
     }
@@ -73,7 +77,8 @@ class Payment implements PaymentInterface
      *
      * @return float
      */
-    public function getLaborEarned() {
+    public function getLaborEarned()
+    {
         return $this->laborEarned;
     }
 
@@ -83,7 +88,8 @@ class Payment implements PaymentInterface
      * @param $amount
      * @return self
      */
-    public function setTotalApprovedExpenses($amount) {
+    public function setTotalApprovedExpenses($amount)
+    {
         $this->totalApprovedExpenses = (float)$amount;
         return $this;
     }
@@ -93,7 +99,8 @@ class Payment implements PaymentInterface
      *
      * @return float
      */
-    public function getTotalApprovedExpenses() {
+    public function getTotalApprovedExpenses()
+    {
         return $this->totalApprovedExpenses;
     }
 
@@ -103,7 +110,8 @@ class Payment implements PaymentInterface
      * @param $amount
      * @return self
      */
-    public function setTotalDeductions($amount) {
+    public function setTotalDeductions($amount)
+    {
         $this->totalDeductions = (float)$amount;
         return $this;
     }
@@ -113,7 +121,8 @@ class Payment implements PaymentInterface
      *
      * @return float
      */
-    public function getTotalDeductions() {
+    public function getTotalDeductions()
+    {
         return $this->totalDeductions;
     }
 
@@ -123,7 +132,8 @@ class Payment implements PaymentInterface
      * @param $amount
      * @return self
      */
-    public function setPaymentAmount($amount) {
+    public function setPaymentAmount($amount)
+    {
         $this->paymentAmount = (float)$amount;
         return $this;
     }
@@ -133,7 +143,8 @@ class Payment implements PaymentInterface
      *
      * @return float
      */
-    public function getPaymentAmount() {
+    public function getPaymentAmount()
+    {
         return $this->paymentAmount;
     }
 
@@ -143,7 +154,8 @@ class Payment implements PaymentInterface
      * @param $amount
      * @return self
      */
-    public function setCancelFee($amount) {
+    public function setCancelFee($amount)
+    {
         $this->cancelFee = (float)$amount;
         return $this;
     }
@@ -153,7 +165,8 @@ class Payment implements PaymentInterface
      *
      * @return float
      */
-    public function getCancelFee() {
+    public function getCancelFee()
+    {
         return $this->cancelFee;
     }
 }

@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class Progress implements ProgressInterface
 {
     private $totalDevices;
@@ -25,7 +24,8 @@ class Progress implements ProgressInterface
      * @param integer $deviceCount
      * @return self
      */
-    public function setTotalDevices($deviceCount) {
+    public function setTotalDevices($deviceCount)
+    {
         $this->totalDevices = (integer)$deviceCount;
         return $this;
     }
@@ -35,7 +35,8 @@ class Progress implements ProgressInterface
      *
      * @return integer
      */
-    public function getTotalDevices() {
+    public function getTotalDevices()
+    {
         return $this->totalDevices;
     }
 
@@ -45,7 +46,8 @@ class Progress implements ProgressInterface
      * @param float $hours
      * @return self
      */
-    public function setTotalHours($hours) {
+    public function setTotalHours($hours)
+    {
         $this->totalHours = (float)$hours;
         return $this;
     }
@@ -55,7 +57,8 @@ class Progress implements ProgressInterface
      *
      * @return float
      */
-    public function getTotalHours() {
+    public function getTotalHours()
+    {
         return $this->totalHours;
     }
 
@@ -65,7 +68,8 @@ class Progress implements ProgressInterface
      * @param WorkLogInterface[] $loggedWork
      * @return self
      */
-    public function setLoggedWork($loggedWork) {
+    public function setLoggedWork($loggedWork)
+    {
         $this->loggedWork = $loggedWork;
         return $this;
     }
@@ -74,7 +78,8 @@ class Progress implements ProgressInterface
      * Get the breakdown of the time(s) the provider has logged.
      * @return WorkLogInterface[]
      */
-    public function getLoggedWork() {
+    public function getLoggedWork()
+    {
         return $this->loggedWork;
     }
 
@@ -84,7 +89,8 @@ class Progress implements ProgressInterface
      * @param TechUploadInterface[] $uploads
      * @return self
      */
-    public function setUploads($uploads) {
+    public function setUploads($uploads)
+    {
         $this->uploads = $uploads;
         return $this;
     }
@@ -94,7 +100,8 @@ class Progress implements ProgressInterface
      *
      * @return TechUploadInterface[]
      */
-    public function getUploads() {
+    public function getUploads()
+    {
         return $this->uploads;
     }
 
@@ -104,7 +111,8 @@ class Progress implements ProgressInterface
      * @param AdditionalFieldInterface[] $data
      * @return self
      */
-    public function setWorkData($data) {
+    public function setWorkData($data)
+    {
         $this->workData = $data;
         return $this;
     }
@@ -114,7 +122,8 @@ class Progress implements ProgressInterface
      *
      * @return AdditionalFieldInterface[]
      */
-    public function getWorkData() {
+    public function getWorkData()
+    {
         return $this->workData;
     }
 
@@ -124,7 +133,8 @@ class Progress implements ProgressInterface
      * @param string $closingNotes
      * @return self
      */
-    public function setClosingNotes($closingNotes) {
+    public function setClosingNotes($closingNotes)
+    {
         $this->closingNotes = $closingNotes;
         return $this;
     }
@@ -134,7 +144,8 @@ class Progress implements ProgressInterface
      *
      * @return string
      */
-    public function getClosingNotes() {
+    public function getClosingNotes()
+    {
         $this->closingNotes;
         return $this;
     }
@@ -145,7 +156,8 @@ class Progress implements ProgressInterface
      * @param boolean $isConfirmed
      * @return self
      */
-    public function setIsAssignmentConfirmed($isConfirmed) {
+    public function setIsAssignmentConfirmed($isConfirmed)
+    {
         $this->assignmentConfirmed = (boolean)$isConfirmed;
         return $this;
     }
@@ -155,7 +167,8 @@ class Progress implements ProgressInterface
      *
      * @return boolean
      */
-    public function getIsAssignmentConfirmed() {
+    public function getIsAssignmentConfirmed()
+    {
         return $this->assignmentConfirmed;
     }
 
@@ -165,7 +178,8 @@ class Progress implements ProgressInterface
      * @param boolean $isReady
      * @return self
      */
-    public function setIsReadyToGo($isReady) {
+    public function setIsReadyToGo($isReady)
+    {
         $this->readyToGo = (boolean)$isReady;
         return $this;
     }
@@ -175,7 +189,8 @@ class Progress implements ProgressInterface
      *
      * @return boolean
      */
-    public function getIsReadyToGo() {
+    public function getIsReadyToGo()
+    {
         return $this->readyToGo;
     }
 
@@ -185,7 +200,8 @@ class Progress implements ProgressInterface
      * @param TimeRangeInterface[] $workSchedule
      * @return self
      */
-    public function setWorkSchedule($workSchedule) {
+    public function setWorkSchedule($workSchedule)
+    {
         $this->workSchedule = $workSchedule;
         return $this;
     }
@@ -194,7 +210,8 @@ class Progress implements ProgressInterface
      * Get the schedule the provider indicated to complete the work order.
      * @return TimeRangeInterface[]
      */
-    public function getWorkSchedule() {
+    public function getWorkSchedule()
+    {
         return $this->workSchedule;
     }
 }

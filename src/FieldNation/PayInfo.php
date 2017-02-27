@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class PayInfo implements PayInfoInterface
 {
     private $fixed;
@@ -20,7 +19,8 @@ class PayInfo implements PayInfoInterface
      * @param FixedPayInterface $pay
      * @return self
      */
-    public function setFixed(FixedPayInterface $pay) {
+    public function setFixed(FixedPayInterface $pay)
+    {
         $this->fixed = $pay;
         return $this;
     }
@@ -30,7 +30,8 @@ class PayInfo implements PayInfoInterface
      *
      * @return FixedPayInterface|NULL
      */
-    public function getFixed() {
+    public function getFixed()
+    {
         return $this->fixed;
     }
 
@@ -40,7 +41,8 @@ class PayInfo implements PayInfoInterface
      * @param RatePayInterface $pay
      * @return self
      */
-    public function setPerHour(RatePayInterface $pay) {
+    public function setPerHour(RatePayInterface $pay)
+    {
         $this->perHour = $pay;
         return $this;
     }
@@ -50,7 +52,8 @@ class PayInfo implements PayInfoInterface
      *
      * @return RatePayInterface|NULL
      */
-    public function getPerHour() {
+    public function getPerHour()
+    {
         return $this->perHour;
     }
 
@@ -60,7 +63,8 @@ class PayInfo implements PayInfoInterface
      * @param RatePayInterface $pay
      * @return self
      */
-    public function setPerDevice(RatePayInterface $pay) {
+    public function setPerDevice(RatePayInterface $pay)
+    {
         $this->perDevice = $pay;
         return $this;
     }
@@ -70,7 +74,8 @@ class PayInfo implements PayInfoInterface
      *
      * @return RatePayInterface|NULL
      */
-    public function getPerDevice() {
+    public function getPerDevice()
+    {
         return $this->perDevice;
     }
 
@@ -80,7 +85,8 @@ class PayInfo implements PayInfoInterface
      * @param BlendedPayInterface $pay
      * @return self
      */
-    public function setBlended(BlendedPayInterface $pay) {
+    public function setBlended(BlendedPayInterface $pay)
+    {
         $this->blended = $pay;
         return $this;
     }
@@ -90,7 +96,8 @@ class PayInfo implements PayInfoInterface
      *
      * @return BlendedPayInterface|NULL
      */
-    public function getBlended() {
+    public function getBlended()
+    {
         return $this->blended;
     }
 }

@@ -6,11 +6,9 @@
  */
 namespace FieldNation\Tests;
 
-
 use FieldNation\ClientInterface;
 use FieldNation\Message;
 use FieldNation\MessageInterface;
-use FieldNation\MessageModes;
 use FieldNation\PayInfo;
 use FieldNation\Payment;
 use FieldNation\PaymentInterface;
@@ -24,8 +22,6 @@ use FieldNation\TimeRange;
 use FieldNation\WorkOrder;
 use FieldNation\WorkOrderInterface;
 use FieldNation\WorkOrderStatuses;
-use Symfony\Component\Validator\Exception\MappingException;
-
 
 class WorkOrderTest extends \PHPUnit_Framework_TestCase
 {
@@ -191,8 +187,7 @@ class WorkOrderTest extends \PHPUnit_Framework_TestCase
         $actual = $wo->getMessages();
         $this->assertEquals($expected, $actual);
         $this->assertInternalType('array', $actual);
-        foreach ($actual as $message)
-        {
+        foreach ($actual as $message) {
             $this->assertInstanceOf(MessageInterface::class, $message);
         }
     }

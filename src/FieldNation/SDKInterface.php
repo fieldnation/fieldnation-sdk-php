@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 interface SDKInterface
 {
     /**
@@ -16,7 +15,7 @@ interface SDKInterface
      * @param string $status Should be a const from WorkOrderStatuses
      * @return WorkOrderInterface[]
      */
-    public function getWorkOrders($status=NULL);
+    public function getWorkOrders($status = null);
 
     /**
      * This method will give you a high level overview of all the projects your company has in Field Nation.

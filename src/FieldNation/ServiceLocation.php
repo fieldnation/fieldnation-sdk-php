@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class ServiceLocation implements ServiceLocationInterface
 {
     private $type;
@@ -28,7 +27,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $type
      * @return self
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -38,7 +38,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -48,7 +49,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $name
      * @return self
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -58,7 +60,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -68,7 +71,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $address1
      * @return self
      */
-    public function setAddress1($address1) {
+    public function setAddress1($address1)
+    {
         $this->address1 = $address1;
         return $this;
     }
@@ -78,9 +82,9 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getAddress1() {
+    public function getAddress1()
+    {
         return $this->address1;
-
     }
 
     /**
@@ -89,7 +93,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $address2
      * @return self
      */
-    public function setAddress2($address2) {
+    public function setAddress2($address2)
+    {
         $this->address2 = $address2;
         return $this;
     }
@@ -99,7 +104,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getAddress2() {
+    public function getAddress2()
+    {
         return $this->address2;
     }
 
@@ -109,7 +115,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $city
      * @return self
      */
-    public function setCity($city) {
+    public function setCity($city)
+    {
         $this->city = $city;
         return $this;
     }
@@ -119,7 +126,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getCity() {
+    public function getCity()
+    {
         return $this->city;
     }
 
@@ -129,7 +137,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $state
      * @return self
      */
-    public function setState($state) {
+    public function setState($state)
+    {
         $this->state = $state;
         return $this;
     }
@@ -139,7 +148,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getState() {
+    public function getState()
+    {
         return $this->state;
     }
 
@@ -149,7 +159,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $postalCode
      * @return self
      */
-    public function setPostalCode($postalCode) {
+    public function setPostalCode($postalCode)
+    {
         $this->getPostalCode = $postalCode;
         return $this;
     }
@@ -159,7 +170,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getPostalCode() {
+    public function getPostalCode()
+    {
         return $this->postalCode;
     }
 
@@ -169,7 +181,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $country
      * @return self
      */
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this;
     }
@@ -179,7 +192,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
 
@@ -189,7 +203,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $name
      * @return self
      */
-    public function setContactName($name) {
+    public function setContactName($name)
+    {
         $this->contactName = $name;
         return $this;
     }
@@ -199,7 +214,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getContactName() {
+    public function getContactName()
+    {
         return $this->contactName;
     }
 
@@ -209,7 +225,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $phone
      * @return self
      */
-    public function setContactPhone($phone) {
+    public function setContactPhone($phone)
+    {
         $this->contactPhone = $phone;
         return $this;
     }
@@ -219,7 +236,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getContactPhone() {
+    public function getContactPhone()
+    {
         return $this->contactPhone;
     }
 
@@ -229,7 +247,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param string $email
      * @return self
      */
-    public function setContactEmail($email) {
+    public function setContactEmail($email)
+    {
         $this->contactEmail = $email;
         return $this;
     }
@@ -239,7 +258,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return string
      */
-    public function getContactEmail() {
+    public function getContactEmail()
+    {
         return $this->contactEmail;
     }
 }

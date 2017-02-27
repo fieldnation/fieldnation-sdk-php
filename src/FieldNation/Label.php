@@ -19,7 +19,8 @@ class Label implements LabelInterface
      * @param integer $id
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -29,7 +30,8 @@ class Label implements LabelInterface
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -39,7 +41,8 @@ class Label implements LabelInterface
      * @param string $name
      * @return self
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -49,7 +52,8 @@ class Label implements LabelInterface
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -59,7 +63,8 @@ class Label implements LabelInterface
      * @param boolean $willHide
      * @return self
      */
-    public function setHideFromTech($willHide) {
+    public function setHideFromTech($willHide)
+    {
         $this->hideFromTech = (boolean)$willHide;
         return $this;
     }
@@ -69,7 +74,8 @@ class Label implements LabelInterface
      *
      * @return boolean
      */
-    public function hideFromTech() {
+    public function hideFromTech()
+    {
         return $this->hideFromTech;
     }
 
@@ -79,7 +85,8 @@ class Label implements LabelInterface
      * @param boolean $canEdit
      * @return self
      */
-    public function setTechCanEdit($canEdit) {
+    public function setTechCanEdit($canEdit)
+    {
         $this->techCanEdit = (boolean)$canEdit;
         return $this;
     }
@@ -89,7 +96,8 @@ class Label implements LabelInterface
      *
      * @return boolean
      */
-    public function techCanEdit() {
+    public function techCanEdit()
+    {
         return $this->techCanEdit;
     }
 }

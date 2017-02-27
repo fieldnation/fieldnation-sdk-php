@@ -18,7 +18,8 @@ class TechUpload implements TechUploadInterface
      * @param string $name
      * @return self
      */
-    public function setFileName($name) {
+    public function setFileName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -28,7 +29,8 @@ class TechUpload implements TechUploadInterface
      *
      * @return string
      */
-    public function getFileName() {
+    public function getFileName()
+    {
         return $this->name;
     }
 
@@ -38,7 +40,8 @@ class TechUpload implements TechUploadInterface
      * @param integer $size
      * @return self
      */
-    public function setFileSize($size) {
+    public function setFileSize($size)
+    {
         $this->size = (integer)$size;
         return $this;
     }
@@ -48,7 +51,8 @@ class TechUpload implements TechUploadInterface
      *
      * @return integer
      */
-    public function getFileSize() {
+    public function getFileSize()
+    {
         return $this->name;
     }
 
@@ -58,7 +62,8 @@ class TechUpload implements TechUploadInterface
      * @param string $url
      * @return self
      */
-    public function setDownloadUrl($url) {
+    public function setDownloadUrl($url)
+    {
         $this->url = $url;
         return $this;
     }
@@ -68,7 +73,8 @@ class TechUpload implements TechUploadInterface
      *
      * @return string
      */
-    public function getDownloadUrl() {
+    public function getDownloadUrl()
+    {
         return $this->url;
     }
 }

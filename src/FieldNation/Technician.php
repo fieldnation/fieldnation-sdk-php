@@ -6,7 +6,6 @@
  */
 namespace FieldNation;
 
-
 class Technician extends AbstractUser implements TechnicianInterface
 {
     private $firstName;
@@ -22,7 +21,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * @param integer $id
      * @return self
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
@@ -32,7 +32,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -42,7 +43,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * @param $firstName
      * @return self
      */
-    public function setFirstName($firstName) {
+    public function setFirstName($firstName)
+    {
         $this->firstName = $firstName;
         return $this;
     }
@@ -52,7 +54,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      *
      * @return string
      */
-    public function getFirstName() {
+    public function getFirstName()
+    {
         return $this->firstName;
     }
 
@@ -62,7 +65,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * @param $lastName
      * @return self
      */
-    public function setLastName($lastName) {
+    public function setLastName($lastName)
+    {
         $this->lastName = $lastName;
         return $this;
     }
@@ -72,7 +76,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      *
      * @return string
      */
-    public function getLastName() {
+    public function getLastName()
+    {
         return $this->lastName;
     }
 
@@ -93,7 +98,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * @param $city
      * @return self
      */
-    public function setCity($city) {
+    public function setCity($city)
+    {
         $this->city = $city;
         return $this;
     }
@@ -102,7 +108,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * Get the city the provider primarily resides in.
      * @return string
      */
-    public function getCity() {
+    public function getCity()
+    {
         return $this->city;
     }
 
@@ -111,7 +118,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * @param $state
      * @return self
      */
-    public function setState($state) {
+    public function setState($state)
+    {
         $this->state = $state;
         return $this;
     }
@@ -120,7 +128,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * Get the state the provider primarily resides in.
      * @return string
      */
-    public function getState() {
+    public function getState()
+    {
         return $this->state;
     }
 
@@ -130,10 +139,10 @@ class Technician extends AbstractUser implements TechnicianInterface
      * @param $postalCode
      * @return self
      */
-    public function setPostalCode($postalCode) {
+    public function setPostalCode($postalCode)
+    {
         $this->postalCode = $postalCode;
         return $this;
-
     }
 
     /**
@@ -141,7 +150,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      *
      * @return string
      */
-    public function getPostalCode() {
+    public function getPostalCode()
+    {
         return $this->postalCode;
     }
 
@@ -151,7 +161,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      * @param AdditionalFieldInterface[] $additionalFields
      * @return self
      */
-    public function setAdditionalFields($additionalFields) {
+    public function setAdditionalFields($additionalFields)
+    {
         $this->additionalFields = $additionalFields;
         return $this;
     }
@@ -161,7 +172,8 @@ class Technician extends AbstractUser implements TechnicianInterface
      *
      * @return AdditionalFieldInterface[]
      */
-    public function getAdditionalFields() {
+    public function getAdditionalFields()
+    {
         return $this->additionalFields;
     }
 }
