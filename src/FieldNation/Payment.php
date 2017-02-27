@@ -64,7 +64,7 @@ class Payment implements PaymentInterface
      * @return self
      */
     public function setLaborEarned($amount) {
-        $this->laborEarned = $amount;
+        $this->laborEarned = (float)$amount;
         return $this;
     }
 

@@ -58,6 +58,21 @@ interface AdditionalExpenseInterface extends DescribableInterface, IdentifiableI
     public function getIsApproved();
 
     /**
+     * Set the quantity entered by the user who submitted the additional expense, if the Expense Manager was used.
+     *
+     * @param float $amount
+     * @return self
+     */
+    public function setQuantity($amount);
+
+    /**
+     * Get the quantity
+     *
+     * @return float
+     */
+    public function getQuantity();
+
+    /**
      * Set the code of the expense item configured in the Expense Manager
      *
      * @param string $expenseId
