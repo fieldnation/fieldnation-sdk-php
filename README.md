@@ -391,7 +391,7 @@ $ phpcs -swp --standard=PSR2 ./src ./tests
 ```
 
 ## Changelog
-Please see the `CHANGELOG` or view the [releases](releases).
+Please see the `CHANGELOG` or view the [releases](https://github.com/fieldnation/fieldnation-sdk-php/releases).
 
 ## License
 [Apache 2.0](LICENSE) &copy; 2017 [Field Nation](https://www.fieldnation.com)
