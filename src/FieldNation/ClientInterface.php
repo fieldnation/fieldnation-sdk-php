@@ -53,9 +53,10 @@ interface ClientInterface
      * Get the progress of a workorder
      *
      * @param $workOrderId
+     * @param $providerId
      * @return ProgressInterface
      */
-    public function getWorkOrderProgress($workOrderId);
+    public function getWorkOrderProgress($workOrderId, $providerId);
 
     /**
      * Get the payment details for a work order
