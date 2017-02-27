@@ -215,7 +215,7 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
      */
     public function getProgress()
     {
-        return $this->client->getWorkOrderProgress($this->getId());
+        return $this->client->getWorkOrderProgress($this->getId(), $this->getAssignedProvider()->getId());
     }
 
     /**
