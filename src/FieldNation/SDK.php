@@ -11,6 +11,9 @@ class SDK implements SDKInterface
 {
     private $credentials;
     private $woService;
+    private $projectService;
+    private $shipmentService;
+    private $documentService;
 
     /**
      * FieldNation\SDK constructor.
@@ -20,18 +23,22 @@ class SDK implements SDKInterface
     public function __construct(SDKCredentialsInterface $credentials)
     {
         $this->credentials = $credentials;
-        $clientFactory = new SoapClientFactory();
+        $clientFactory = new SoapClientFactory($credentials);
         $this->woService = new WorkOrderService($clientFactory);
+        $this->projectService = new ProjectService($clientFactory);
+        $this->shipmentService = new ShipmentService($clientFactory);
+        $this->documentService = new DocumentService($clientFactory);
     }
 
     /**
      * Get all of your work orders
      *
+     * @param string $status Should be a const from WorkOrderStatuses
      * @return WorkOrderInterface[]
      */
-    public function getWorkOrders()
+    public function getWorkOrders($status=NULL)
     {
-        return $this->woService->getAll();
+        return $this->woService->getAll($status);
     }
 
     /**
@@ -63,7 +70,7 @@ class SDK implements SDKInterface
      */
     public function getProjects()
     {
-        // TODO: Implement getProjects() method.
+        return $this->projectService->getAll();
     }
 
     /**
@@ -74,7 +81,7 @@ class SDK implements SDKInterface
      */
     public function getShippingIdFrom($trackingNumber)
     {
-        // TODO: Implement getShippingIdFrom() method.
+        return $this->shipmentService->toShippingId($trackingNumber);
     }
 
     /**
@@ -84,6 +91,6 @@ class SDK implements SDKInterface
      */
     public function getDocuments()
     {
-        // TODO: Implement getDocuments() method.
+        return $this->documentService->getAll();
     }
 }

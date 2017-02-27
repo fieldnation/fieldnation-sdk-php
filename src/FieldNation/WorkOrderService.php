@@ -7,23 +7,17 @@
 namespace FieldNation;
 
 
-class WorkOrderService
+class WorkOrderService extends AbstractService
 {
-    private $client;
-
-    public function __construct(ClientFactoryInterface $factory)
-    {
-        $this->client = $factory->getClient();
-    }
-
     /**
      * Return all of the work orders for your company
      *
+     * @param $status - Should be a status from WorkOrderStatuses
      * @return WorkOrderInterface[]
      */
-    public function getAll()
+    public function getAll($status=NULL)
     {
-        // TODO: Implement stubbed function
+        return $this->client->getWorkOrders($status);
     }
 
     /**
@@ -58,6 +52,6 @@ class WorkOrderService
      */
     public function getExisting($workOrderId)
     {
-        // TODO: Implement getExisting() method.
+        return $this->client->getWorkOrder($workOrderId);
     }
 }

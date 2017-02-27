@@ -13,9 +13,10 @@ interface SDKInterface
      * Sometimes you just want to know all the Work Orders that are currently assigned,
      * but don't want to poll and check the status of each Work Order individually. Here's how!
      *
+     * @param string $status Should be a const from WorkOrderStatuses
      * @return WorkOrderInterface[]
      */
-    public function getWorkOrders();
+    public function getWorkOrders($status=NULL);
 
     /**
      * This method will give you a high level overview of all the projects your company has in Field Nation.

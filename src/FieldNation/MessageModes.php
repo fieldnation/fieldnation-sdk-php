@@ -6,18 +6,10 @@
  */
 namespace FieldNation;
 
-class MessageModes
+class MessageModes extends AbstractAttribute
 {
-    private function __construct() { }
-
     const INTERNAL_NOTE = 1;
     const ASSIGNED_TECH = 2;
     const REQUESTING_PROVIDERS = 3;
     const ROUTED_TO_PROVIDERS = 4;
-
-    public static function getConstants()
-    {
-        $klass = new \ReflectionClass(__CLASS__);
-        return $klass->getConstants();
-    }
 }

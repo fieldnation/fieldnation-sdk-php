@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-class Manager extends User
+class Manager extends AbstractUser
 {
 
 }

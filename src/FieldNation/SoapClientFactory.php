@@ -9,6 +9,12 @@ namespace FieldNation;
 
 class SoapClientFactory implements ClientFactoryInterface
 {
+    private $credentials;
+
+    public function __construct(SDKCredentialsInterface $credentials)
+    {
+        $this->credentials = $credentials;
+    }
 
     /**
      * Get a client to fulfil requests
@@ -18,6 +24,6 @@ class SoapClientFactory implements ClientFactoryInterface
     public function getClient($version=NULL)
     {
         $version = $version || SoapClient::STABLE_SOAP_VERSION;
-        return new SoapClient($version);
+        return new SoapClient($this->credentials, $version);
     }
 }

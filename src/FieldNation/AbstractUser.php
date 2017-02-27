@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-abstract class User implements UserInterface
+abstract class AbstractUser implements UserInterface
 {
     protected $id;
     protected $fullName;

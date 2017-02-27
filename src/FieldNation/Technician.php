@@ -7,9 +7,8 @@
 namespace FieldNation;
 
 
-class Technician implements TechnicianInterface
+class Technician extends AbstractUser implements TechnicianInterface
 {
-    private $id;
     private $firstName;
     private $lastName;
     private $city;
@@ -75,6 +74,17 @@ class Technician implements TechnicianInterface
      */
     public function getLastName() {
         return $this->lastName;
+    }
+
+    /**
+     * @override
+     * @param string $name
+     * @return $this
+     */
+    public function setFullName($name)
+    {
+        $this->fullName = $this->getFirstName() . ' ' . $this->getLastName();
+        return $this;
     }
 
     /**
