@@ -504,7 +504,7 @@ class SoapClient implements ClientInterface
      * @param TimeRangeInterface $range
      * @return ResultInterface
      */
-    public function updateWorkOrderSchedule($workOrderId, ScheduleInterface $range)
+    public function updateWorkOrderSchedule($workOrderId, TimeRangeInterface $range)
     {
         // TODO: Implement updateWorkOrderSchedule() method.
     }

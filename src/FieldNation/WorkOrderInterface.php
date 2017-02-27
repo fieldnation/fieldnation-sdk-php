@@ -285,8 +285,8 @@ interface WorkOrderInterface extends IdentifiableInterface
     /**
      * Maybe your schedule changed? Be sure to update the Work Order!
      *
-     * @param ScheduleInterface $schedule
+     * @param TimeRangeInterface $schedule
      * @return ResultInterface
      */
-    public function updateSchedule(ScheduleInterface $schedule);
+    public function updateSchedule(TimeRangeInterface $schedule);
 }

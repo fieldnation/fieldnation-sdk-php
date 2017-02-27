@@ -131,14 +131,14 @@ interface ProgressInterface
     /**
      * Set the schedule the provider indicated to complete the work order.
      *
-     * @param ScheduleInterface[] $workSchedule
+     * @param TimeRangeInterface[] $workSchedule
      * @return self
      */
     public function setWorkSchedule($workSchedule);
 
     /**
      * Get the schedule the provider indicated to complete the work order.
-     * @return ScheduleInterface[]
+     * @return TimeRangeInterface[]
      */
     public function getWorkSchedule();
 }

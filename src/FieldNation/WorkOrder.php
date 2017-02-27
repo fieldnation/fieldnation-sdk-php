@@ -7,7 +7,7 @@
 namespace FieldNation;
 
 
-class WorkOrder implements WorkOrderInterface
+class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
 {
     private $id;
     private $client;
@@ -128,7 +128,7 @@ class WorkOrder implements WorkOrderInterface
      */
     public function setIsPrintable($isPrintable)
     {
-        $this->isPrintable;
+        $this->isPrintable = $isPrintable;
         return $this;
     }
 
@@ -423,10 +423,10 @@ class WorkOrder implements WorkOrderInterface
     /**
      * Maybe your schedule changed? Be sure to update the Work Order!
      *
-     * @param ScheduleInterface $schedule
+     * @param TimeRangeInterface $schedule
      * @return ResultInterface
      */
-    public function updateSchedule(ScheduleInterface $schedule)
+    public function updateSchedule(TimeRangeInterface $schedule)
     {
         return $this->client->updateWorkOrderSchedule($this->getId(), $schedule);
     }
@@ -451,5 +451,60 @@ class WorkOrder implements WorkOrderInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    public function getPayInfo()
+    {
+        return $this->payInfo;
+    }
+
+    public function getAllowTechUploads()
+    {
+        return $this->allowTechUploads;
+    }
+
+    public function getWillAlertWhenPublished()
+    {
+        return $this->willAlertWhenPublished;
+    }
+
+    public function getIsPrintable()
+    {
+        return $this->isPrintable;
+    }
+
+    public function getAdditionalFields()
+    {
+        return $this->additionalFields;
+    }
+
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    public function getCloseoutRequirements()
+    {
+        return $this->closeoutRequirements;
     }
 }
