@@ -1,7 +1,7 @@
 ![Field Nation Logo](images/logo.png)
 # Field Nation PHP SDK
 * [Build Status](#build-status)
-* [Installation]($installation)
+* [Installation](#installation)
     * [Installation with Composer](#installation-with-composer)
 * [Usage](#usage)
     * [Authentication](#authentication)
@@ -74,6 +74,7 @@ class MyBusinessTicket implements WorkOrderSerializerInterface
     private $title;
     private $description;
     private $startDateTime;
+    private $fieldNationId;
     
     // ... setters and getters for the properties
     
@@ -259,14 +260,14 @@ $credentials = new \FieldNation\LoginCredentials($fnCompanyId, $fnApiKey, $fnEff
 $fn = new \FieldNation\SDK($credentials);
 
 $myTicket = new MyBusinessTicket();
-$myTicket->id = uniqid();
-$myTicket->title = 'Fix something at this place';
-$myTicket->description = 'Something went wrong. Fix it.';
-$myTicket->startDateTime = new \DateTime();
+$myTicket->setId(uniqid());
+$myTicket->setTitle('Fix something at this place');
+$myTicket->setDescription('Something went wrong. Fix it.');
+$myTicket->setStartDateTime(new \DateTime());
 
 // Returns a \FieldNation\WorkOrderInterface object
 $fnWorkOrder = $fn->createWorkOrder($myTicket);
-$myTicket->fnId = $fnWorkOrder->getId();
+$myTicket->setFieldNationId($fnWorkOrder->getId());
 ````
 
 ### Update a Work Order
@@ -285,14 +286,14 @@ $credentials = new \FieldNation\LoginCredentials($fnCompanyId, $fnApiKey, $fnEff
 $fn = new \FieldNation\SDK($credentials);
 
 $myTicket = new MyBusinessTicket();
-$myTicket->id = uniqid();
-$myTicket->title = 'Fix something at this place';
-$myTicket->description = 'Something went wrong. Fix it.';
-$myTicket->startDateTime = new \DateTime();
+$myTicket->setId(uniqid());
+$myTicket->setTitle('Fix something at this place');
+$myTicket->setDescription('Something went wrong. Fix it.');
+$myTicket->setStartDateTime(new \DateTime());
 
 // Returns a \FieldNation\WorkOrderInterface object
 $fnWorkOrder = $fn->createWorkOrder($myTicket);
-$myTicket->fnId = $fnWorkOrder->getId();
+$myTicket->setFieldNationId($fnWorkOrder->getId());
 
 // Fetching a work order after it was created
 $ticket = $db->getTicket(1234); // pseudo code for fetching your ticket
@@ -390,7 +391,7 @@ $ phpcs -swp --standard=PSR2 ./src ./tests
 ```
 
 ## Changelog
-Please see the `CHANGELOG` or view the [releases](https://github.com/fieldnation/fieldnation-sdk-php/releases).
+Please see the `CHANGELOG` or view the [releases](releases).
 
 ## License
-[Apache 2.0](LICENSE) &copy; 2017 [Field Nation](www.fieldnation.com)
+[Apache 2.0](LICENSE) &copy; 2017 [Field Nation](https://www.fieldnation.com)
