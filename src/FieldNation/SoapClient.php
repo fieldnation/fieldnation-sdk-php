@@ -128,7 +128,7 @@ class SoapClient implements ClientInterface
                 ->setContactEmail($wo->location->contactEmail);
             $woObj->setLocation($serviceLocationObj);
 
-            $woObj->setStartTime($this->responseToTimeRange($wo->startTime));
+            $woObj->setStartTime(self::responseToTimeRange($wo->startTime));
 
             $payInfoObj = new PayInfo();
             if ($wo->payInfo->perHour !== null) {
@@ -158,7 +158,7 @@ class SoapClient implements ClientInterface
             }
             $woObj->setPayInfo($payInfoObj);
 
-            $woObj->setAdditionalFields($this->responseToAdditionalFields($wo->additionalFields));
+            $woObj->setAdditionalFields(self::responseToAdditionalFields($wo->additionalFields));
 
             $labels = array();
             if (is_array($wo->labels)) {
@@ -217,7 +217,7 @@ class SoapClient implements ClientInterface
             $providerObj->setCity($provider->city);
             $providerObj->setState($provider->state);
             $providerObj->setPostalCode($provider->zip);
-            $providerObj->setAdditionalFields($this->responseToAdditionalFields($provider->additionalFields));
+            $providerObj->setAdditionalFields(self::responseToAdditionalFields($provider->additionalFields));
         }
         return $providerObj;
     }
@@ -249,14 +249,14 @@ class SoapClient implements ClientInterface
                 }
             }
             $progressObj->setUploads($uploads);
-            $progressObj->setWorkData($this->responseToAdditionalFields($progress->workData));
+            $progressObj->setWorkData(self::responseToAdditionalFields($progress->workData));
             $progressObj->setClosingNotes($progress->closingNotes);
             $progressObj->setIsAssignmentConfirmed($progress->assignmentConfirmed);
             $progressObj->setIsReadyToGo($progress->readyToGo);
             $workSchedule = array();
             if (is_array($progress->workSchedule)) {
                 foreach ($progress->workSchedule as $schedule) {
-                    $workSchedule[] = $this->responseToTimeRange($schedule, 'startTime', 'endTime');
+                    $workSchedule[] = self::responseToTimeRange($schedule, 'startTime', 'endTime');
                 }
             }
             $progressObj->setWorkSchedule($workSchedule);
@@ -272,7 +272,7 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderPayment($workOrderId)
     {
-        $payment = $this->client->getWorkOrderTotalPayment($this->_getLogin(), $workOrderId);
+        $payment = $this->client->getWorkOrderTotalPayment($this->getLogin(), $workOrderId);
         $paymentObj = null;
         if ($payment) {
             $paymentObj = new Payment();
@@ -323,7 +323,20 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderMessages($workOrderId)
     {
-        // TODO: Implement getWorkOrderMessages() method.
+        $messages = $this->client->getWorkOrderMessages($this->getLogin(), $workOrderId);
+
+        $response = array();
+        if (is_array($messages)) {
+            foreach ($messages as $message) {
+                $messageObj = new Message();
+                $messageObj->setFrom($message->from);
+                $messageObj->setFromType($message->fromType);
+                $messageObj->setDate($message->date);
+                $messageObj->setMessage($message->message);
+                $response[] = $messageObj;
+            }
+        }
+        return $response;
     }
 
     /**
@@ -334,7 +347,21 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderAttachedDocuments($workOrderId)
     {
-        // TODO: Implement getWorkOrderAttachedDocuments() method.
+        $documents = $this->client->listAttachedCompanyDocuments($this->getLogin(), $workOrderId);
+
+        $response = array();
+        if (is_array($documents)) {
+            foreach ($documents as $document) {
+                $documentObj = new Document();
+                $documentObj->setId($document->documentID);
+                $documentObj->setTitle($document->title);
+                $documentObj->setDescription($document->description);
+                $documentObj->setType($document->type);
+                $documentObj->setUpdatedTime(self::convertToDateTime($document->updatedTime));
+                $response[] = $documentObj;
+            }
+        }
+        return $response;
     }
 
     /**
@@ -345,7 +372,21 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderShipments($workOrderId)
     {
-        // TODO: Implement getWorkOrderShipments() method.
+        $shipments = $this->client->getWorkorderShipments($this->getLogin(), $workOrderId);
+
+        $response = array();
+        if (is_array($shipments)) {
+            foreach ($shipments as $shipment) {
+                $shipmentObj = new Shipment();
+                $shipmentObj->setId($shipment->shipmentTrackingId);
+                $shipmentObj->setVendor($shipment->vendor);
+                $shipmentObj->setDescription($shipment->description);
+                $shipmentObj->setStatus($shipment->status);
+                $shipmentObj->setLastActivityDate(self::convertToDateTime($shipment->lastActivityDate));
+                $response[] = $shipmentObj;
+            }
+        }
+        return $response;
     }
 
     /**
@@ -622,7 +663,7 @@ class SoapClient implements ClientInterface
      * @param $additionalFieldResp
      * @return AdditionalFieldInterface
      */
-    private function responseToAdditionalField($additionalFieldResp)
+    private static function responseToAdditionalField($additionalFieldResp)
     {
         $additionalField = new AdditionalField();
         $additionalField->setName($additionalFieldResp->name);
@@ -638,11 +679,11 @@ class SoapClient implements ClientInterface
      * @param $additionalFieldsResp
      * @return AdditionalFieldInterface[]
      */
-    private function responseToAdditionalFields($additionalFieldsResp)
+    private static function responseToAdditionalFields($additionalFieldsResp)
     {
         $additionalFields = array();
         foreach ($additionalFieldsResp as $field) {
-            $additionalFields[] = $this->responseToAdditionalField($field);
+            $additionalFields[] = self::responseToAdditionalField($field);
         }
         return $additionalFields;
     }
@@ -653,15 +694,24 @@ class SoapClient implements ClientInterface
      * @param $additionalFieldsResp
      * @param $startProp
      * @param $endProp
-     * @return TimeRangeInterface[]
+     * @return TimeRangeInterface
      */
-    private function responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd')
+    private static function responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd')
     {
         $timeRangeObj = new TimeRange();
-        $utc = new \DateTimeZone('UTC');
         $timeRangeObj
-            ->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$startProp, $utc))
-            ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->$endProp, $utc));
+            ->setTimeBegin(self::convertToDateTime($timeRangeResp->$startProp))
+            ->setTimeEnd(self::convertToDateTime($timeRangeResp->$endProp));
         return $timeRangeObj;
+    }
+
+    /**
+     * return a DateTime object from a given string in \DateTime::ATOM format
+     *
+     * @param $dateTime
+     * @return \DateTime
+     */
+    private static function convertToDateTime($dateTime) {
+        return \DateTime::createFromFormat(\DateTime::ATOM, $dateTime, new \DateTimeZone('UTC'));
     }
 }
