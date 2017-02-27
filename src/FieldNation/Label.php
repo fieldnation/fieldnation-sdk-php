@@ -60,7 +60,7 @@ class Label implements LabelInterface
      * @return self
      */
     public function setHideFromTech($willHide) {
-        $this->hideFromTech = $willHide;
+        $this->hideFromTech = (boolean)$willHide;
         return $this;
     }
 
@@ -80,7 +80,7 @@ class Label implements LabelInterface
      * @return self
      */
     public function setTechCanEdit($canEdit) {
-        $this->techCanEdit = $canEdit;
+        $this->techCanEdit = (boolean)$canEdit;
         return $this;
     }
 

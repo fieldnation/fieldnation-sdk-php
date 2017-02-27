@@ -100,10 +100,11 @@ class SoapClient implements ClientInterface
         $wo = $this->client->getWorkOrder($this->_getLogin(), $workOrderId);
         $woObj = new WorkOrder($this);
         if ($wo) {
+            $woObj->setId($workOrderId);
             $woObj->setGroup($wo->group ?: '')
-                ->setAllowTechUploads((boolean)$wo->techUploads)
-                ->setWillAlertWhenPublished((boolean)$wo->alertWhenPublished)
-                ->setIsPrintable((boolean)$wo->printLink);
+                ->setAllowTechUploads($wo->techUploads)
+                ->setWillAlertWhenPublished($wo->alertWhenPublished)
+                ->setIsPrintable($wo->printLink);
             
             $serviceDescriptionObj = new ServiceDescription();
             $serviceDescriptionObj->setCategoryId($wo->description->category)
@@ -126,10 +127,7 @@ class SoapClient implements ClientInterface
                 ->setContactEmail($wo->location->contactEmail);
             $woObj->setLocation($serviceLocationObj);
 
-            $timeRangeObj = new TimeRange();
-            $timeRangeObj->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $wo->startTime->timeBegin, new \DateTimeZone('UTC')))
-                ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $wo->startTime->timeEnd, new \DateTimeZone('UTC')));
-            $woObj->setStartTime($timeRangeObj);
+            $woObj->setStartTime($this->_responseToTimeRange($wo->startTime));
 
             $payInfoObj = new PayInfo();
             if ($wo->payInfo->perHour !== null) {
@@ -159,17 +157,8 @@ class SoapClient implements ClientInterface
             }
             $woObj->setPayInfo($payInfoObj);
 
-            $additionalFields = array();
             if (is_array($wo->additionalFields)) {
-                foreach ($wo->additionalFields as $field) {
-                    $additionalField = new AdditionalField();
-                    $additionalField->setName($field->name);
-                    if ($field->value !== null) {
-                        $additionalField->setValue($field->name);
-                    }
-                    $additionalFields[] = $additionalField;
-                }
-                $woObj->setAdditionalFields($additionalFields);
+                $woObj->setAdditionalFields($this->_responseToAdditionalFields($wo->additionalFields));
             }
 
             $labels = array();
@@ -178,14 +167,24 @@ class SoapClient implements ClientInterface
                     $labelObj = new Label();
                     $labelObj->setId($label->labelId);
                     $labelObj->setName($label->labelName);
-                    $labelObj->setHideFromTech((boolean)$label->hideFromTech);
-                    $labelObj->setTechCanEdit((boolean)$label->techCanEdit);
+                    $labelObj->setHideFromTech($label->hideFromTech);
+                    $labelObj->setTechCanEdit($label->techCanEdit);
                     $labels[] = $labelObj;
                 }
                 $woObj->setLabels($labels);
             }
 
-            // TODO: array of CloseoutRequirement
+            $closeoutRequirements = array();
+            if (is_array($wo->closeoutReqs)) {
+                foreach ($wo->closeoutReqs as $reqs) {
+                    $closeoutRequirementObj = new CloseoutRequirement();
+                    $closeoutRequirementObj->setName($reqs->closeout_requirement_name);
+                    $closeoutRequirementObj->setDescription($reqs->closeout_requirement_desc);
+                    $closeoutRequirementObj->setOrder($reqs->closeout_requirement_order);
+                    $closeoutRequirements[] = $closeoutRequirementObj;
+                }
+                $woObj->setCloseoutRequirements($closeoutRequirements);
+            }
         }
         return $woObj;
     }
@@ -198,7 +197,7 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderStatus($workOrderId)
     {
-        // TODO: Implement getWorkOrderStatus() method.
+        return $this->client->getWorkOrderStatus($this->_getLogin(), $workOrderId);
     }
 
     /**
@@ -209,7 +208,19 @@ class SoapClient implements ClientInterface
      */
     public function getWorkOrderAssignedProvider($workOrderId)
     {
-        // TODO: Implement getWorkOrderAssignedProvider() method.
+        $provider = $this->client->getAssignedTech($this->_getLogin(), $workOrderId);
+        $providerObj = new Technician();
+        if ($provider) {
+            $providerObj->setId($provider->uid);
+            $providerObj->setFirstName($provider->firstName);
+            $providerObj->setLastName($provider->lastName);
+            $providerObj->setCity($provider->city);
+            $providerObj->setState($provider->state);
+            $providerObj->setPostalCode($provider->zip);
+            if (is_array($provider->additionalFields)) {
+                $providerObj->setAdditionalFields($this->_responseToAdditionalFields($provider->additionalFields));
+            }
+        }
     }
 
     /**
@@ -532,5 +543,47 @@ class SoapClient implements ClientInterface
         $login->apiKey = $this->credentials->getApiKey();
         $login->effectiveUser = $this->credentials->getEffectiveUser();
         return $login;
+    }
+
+    /**
+     * return additionalFieldResp converted into an AdditionalField
+     *
+     * @param $additionalFieldResp
+     * @return AdditionalFieldInterface
+     */
+    private function _responseToAdditionalField($additionalFieldResp) {
+        $additionalField = new AdditionalField();
+        $additionalField->setName($additionalFieldResp->name);
+        if ($additionalFieldResp->value !== null) {
+            $additionalField->setValue($additionalFieldResp->value);
+        }
+        return $additionalField;
+    }
+
+    /**
+     * return additionalFieldsResp converted into an array AdditionalField
+     *
+     * @param $additionalFieldsResp
+     * @return AdditionalFieldInterface[]
+     */
+    private function _responseToAdditionalFields($additionalFieldsResp) {
+        $additionalFields = array();
+        foreach ($additionalFieldsResp as $field) {
+            $additionalFields[] = $this->_responseToAdditionalField($field);
+        }
+        return $additionalFields;
+    }
+
+    /**
+     * return timeRangeResp converted into a TimeRange
+     *
+     * @param $additionalFieldsResp
+     * @return TimeRangeInterface[]
+     */
+    private function _responseToTimeRange($timeRangeResp) {
+        $timeRangeObj = new TimeRange();
+        $timeRangeObj->setTimeBegin(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->timeBegin, new \DateTimeZone('UTC')))
+            ->setTimeEnd(\DateTime::createFromFormat(\DateTime::ATOM, $timeRangeResp->timeEnd, new \DateTimeZone('UTC')));
+        return $timeRangeObj;
     }
 }

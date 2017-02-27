@@ -101,7 +101,7 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
      */
     public function setAllowTechUploads($areAllowed)
     {
-        $this->allowTechUploads = $areAllowed;
+        $this->allowTechUploads = (boolean)$areAllowed;
         return $this;
     }
 
@@ -114,7 +114,7 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
      */
     public function setWillAlertWhenPublished($willAlert)
     {
-        $this->willAlertWhenPublished = $willAlert;
+        $this->willAlertWhenPublished = (boolean)$willAlert;
         return $this;
     }
 
@@ -128,7 +128,7 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
      */
     public function setIsPrintable($isPrintable)
     {
-        $this->isPrintable = $isPrintable;
+        $this->isPrintable = (boolean)$isPrintable;
         return $this;
     }
 
