@@ -6,11 +6,9 @@
  */
 namespace FieldNation\Tests;
 
-
 use PHPUnit\Framework\TestCase;
 use FieldNation\SDK;
 use FieldNation\LoginCredentials;
-
 
 class FieldNationSDKTest extends TestCase
 {
