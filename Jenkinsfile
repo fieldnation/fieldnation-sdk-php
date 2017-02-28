@@ -15,7 +15,6 @@ parallel(
                 sh 'make build'
 		sh 'make test'
 		}
-            }
         }
     },
     "5.6" : {
