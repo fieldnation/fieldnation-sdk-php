@@ -106,10 +106,10 @@ interface ClientInterface
 
     /**
      * Convert a tracking number into FN shipping id
-     * @param $shippingId
+     * @param $trackingId
      * @return TrackingToShipmentResultInterface
      */
-    public function convertTrackingIdToShippingId($shippingId);
+    public function convertTrackingIdToShippingId($trackingId);
 
     /**
      * @param $shipmentId

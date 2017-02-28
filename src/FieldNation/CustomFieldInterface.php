@@ -6,7 +6,21 @@
  */
 namespace FieldNation;
 
-interface CustomFieldInterface
+interface CustomFieldInterface extends IdentifiableInterface
 {
+    /**
+     * Set the name
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setName($name);
+
+    /**
+     * Get the name
+     *
+     * @return string
+     */
+    public function getName();
 
 }

@@ -13,6 +13,13 @@ interface ResultInterface
      *
      * @return boolean
      */
+    public function setSuccessful($success);
+
+    /**
+     * Was the request successful?
+     *
+     * @return boolean
+     */
     public function wasSuccessful();
 
     /**

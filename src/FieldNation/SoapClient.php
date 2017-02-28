@@ -37,10 +37,7 @@ class SoapClient implements ClientInterface
         if ($client) {
             $this->client = $client;
         } else {
-            $options = array (
-                'trace' => true
-            );
-            $this->client = new PHPSoapClient($this->getWSDL(), $options);
+            $this->client = new PHPSoapClient($this->getWSDL());
             $this->client->__setLocation($this->apiBase . '/' . $this->version . '/');
         }
         return $this;
@@ -324,7 +321,6 @@ class SoapClient implements ClientInterface
     public function getWorkOrderMessages($workOrderId)
     {
         $messages = $this->client->getWorkOrderMessages($this->getLogin(), $workOrderId);
-
         $response = array();
         if (is_array($messages)) {
             foreach ($messages as $message) {
@@ -348,7 +344,6 @@ class SoapClient implements ClientInterface
     public function getWorkOrderAttachedDocuments($workOrderId)
     {
         $documents = $this->client->listAttachedCompanyDocuments($this->getLogin(), $workOrderId);
-
         $response = array();
         if (is_array($documents)) {
             foreach ($documents as $document) {
@@ -373,7 +368,6 @@ class SoapClient implements ClientInterface
     public function getWorkOrderShipments($workOrderId)
     {
         $shipments = $this->client->getWorkorderShipments($this->getLogin(), $workOrderId);
-
         $response = array();
         if (is_array($shipments)) {
             foreach ($shipments as $shipment) {
@@ -396,7 +390,14 @@ class SoapClient implements ClientInterface
      */
     public function getProjects()
     {
-        // TODO: Implement getProjects() method.
+        $projects = $this->client->getProjects($this->getLogin());
+        $response = array();
+        if (is_array($projects)) {
+            foreach ($projects as $project) {
+                $response[] = self::responseToProject($this, $project);
+            }
+        }
+        return $response;
     }
 
     /**
@@ -407,17 +408,31 @@ class SoapClient implements ClientInterface
      */
     public function getProject($projectId)
     {
-        // TODO: Implement getProject() method.
+        $project = $this->client->getProjectDetails($this->getLogin(), $projectId);
+        $projectObj = null;
+        // getProjectDetails returning array instead of just Project
+        if ($project && count($project) == 1) {
+            $projectObj = self::responseToProject($this, $project[0]);
+        }
+        return $projectObj;
     }
 
     /**
      * Convert a tracking number into FN shipping id
-     * @param $shippingId
+     * @param $trackingId
      * @return TrackingToShipmentResultInterface
      */
-    public function convertTrackingIdToShippingId($shippingId)
+    public function convertTrackingIdToShippingId($trackingId)
     {
-        // TODO: Implement convertTrackingIdToShippingId() method.
+        $shippingId = $this->client->getShipmentIDFromVendorID($this->getLogin(), $trackingId);
+        $shippingIdObj = null;
+        if ($shippingId) {
+            $shippingIdObj = new TrackingToShipmentResult();
+            $shippingIdObj->setShipmentId($shippingId->workorderShipmentId);
+            $shippingIdObj->setWorkOrderId($shippingId->workorderId);
+            $shippingIdObj->setSuccessful($shippingId->found);
+        }
+        return $shippingIdObj;
     }
 
     /**
@@ -713,5 +728,51 @@ class SoapClient implements ClientInterface
      */
     private static function convertToDateTime($dateTime) {
         return \DateTime::createFromFormat(\DateTime::ATOM, $dateTime, new \DateTimeZone('UTC'));
+    }
+
+    /**
+     * return projectResp converted into Project
+     *
+     * @param ClientInterface $client
+     * @param $projectResp
+     * @return Project
+     */
+
+    private static function responseToProject(ClientInterface $client, $projectResp) {
+        $projectObj = new Project($client);
+        $projectObj->setId($projectResp->projectId);
+        $projectObj->setIsEnabled($projectResp->isEnabled);
+        $projectObj->setName($projectResp->projectName);
+        $templates = array();
+        if (!empty($projectResp->templates)) {
+            foreach ($projectResp->templates as $template) {
+                $templateObj = new Template();
+                $templateObj->setId($template->workorder_id);
+                $templateObj->setDescription($template->template_description);
+                $templates[] = $templateObj;
+            }
+        }
+        $projectObj->setTemplates($templates);
+        $managers = array();
+        if (is_array($projectResp->managers)) {
+            foreach ($projectResp->managers as $manager) {
+                $managerObj = new Manager();
+                $managerObj->setId($manager->user_id);
+                $managerObj->setFullName($manager->full_name);
+                $managers[] = $managerObj;
+            }
+        }
+        $projectObj->setManagers($managers);
+        $customFields = array();
+        if (is_array($projectResp->customFields)) {
+            foreach ($projectResp->customFields as $field) {
+                $fieldObj = new CustomField();
+                $fieldObj->setId($field->custom_field_id);
+                $fieldObj->setName($field->custom_field_name);
+                $customFields[] = $fieldObj;
+            }
+        }
+        $projectObj->setCustomFields($customFields);
+        return $projectObj;
     }
 }

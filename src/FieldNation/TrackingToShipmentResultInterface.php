@@ -9,6 +9,13 @@ namespace FieldNation;
 interface TrackingToShipmentResultInterface extends ResultInterface
 {
     /**
+     * Set the shipment id, as assigned by Field Nation
+     * @param $id
+     * @return string
+     */
+    public function setShipmentId($id);
+
+    /**
      * Get the shipment id, as assigned by Field Nation
      *
      * @return string

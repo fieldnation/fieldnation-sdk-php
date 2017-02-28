@@ -10,6 +10,17 @@ abstract class Result implements ResultInterface
 {
     protected $message;
     protected $workOrderId;
+    protected $success;
+
+    /**
+     * Set if request successful?
+     *
+     * @param $success
+     * @return self
+     */
+    public function setSuccessful($success) {
+        $this->success = (boolean) $success;
+    }
 
     /**
      * Was the request successful?

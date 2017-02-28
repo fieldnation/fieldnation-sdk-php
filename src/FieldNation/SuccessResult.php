@@ -8,6 +8,10 @@ namespace FieldNation;
 
 class SuccessResult extends Result
 {
+    public function __construct() {
+        $this->setSuccessful(true);
+    }
+
     /**
      * Was the request successful?
      *
@@ -15,6 +19,6 @@ class SuccessResult extends Result
      */
     public function wasSuccessful()
     {
-        return true;
+        return $this->success;
     }
 }
