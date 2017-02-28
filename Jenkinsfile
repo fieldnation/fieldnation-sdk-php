@@ -3,7 +3,7 @@ parallel(
         node('dind') {
 	    checkout scm
             docker.image('php:7.1.2-cli').inside {
-		sh 'apt-get update && apt-get install -y git'
+		sh 'apt-get update && apt-get install -y git zip'
 		sh 'make build'
 		sh 'make test'
             }
@@ -13,7 +13,7 @@ parallel(
         node('dind') {
 	    checkout scm
             docker.image('php:7.0.16-cli').inside {
-		sh 'apt-get update && apt-get install -y git'
+		sh 'apt-get update && apt-get install -y git zip'
                 sh 'make build'
 		sh 'make test'
 		}
@@ -23,7 +23,7 @@ parallel(
         node('dind') {
 	    checkout scm
             docker.image('php:5.6.30-cli').inside {
-		sh 'apt-get update && apt-get install -y git'
+		sh 'apt-get update && apt-get install -y git zip'
             	sh 'make build'
 		sh 'make test'
             }
