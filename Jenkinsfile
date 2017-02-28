@@ -29,7 +29,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: ./test-results.xml'])
+            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
         }
     },
     "5.6" : {
