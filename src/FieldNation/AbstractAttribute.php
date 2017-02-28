@@ -14,7 +14,7 @@ abstract class AbstractAttribute
 
     public static function getConstants()
     {
-        $klass = new \ReflectionClass(__CLASS__);
+        $klass = new \ReflectionClass(get_called_class());
         return $klass->getConstants();
     }
 }
