@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-class Group implements GroupInterface
+class Group implements GroupInterface, RecipientInterface
 {
     use IdentifiableTrait;
 
@@ -54,5 +54,25 @@ class Group implements GroupInterface
     public function getCount()
     {
         return $this->count;
+    }
+
+    /**
+     * Check if a recipient is a provider
+     *
+     * @return boolean
+     */
+    public function isProvider()
+    {
+        return false;
+    }
+
+    /**
+     * Check if a recipient is a group
+     *
+     * @return boolean
+     */
+    public function isGroup()
+    {
+        return true;
     }
 }
