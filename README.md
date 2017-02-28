@@ -14,7 +14,7 @@
 * [Changelog](#changelog)
 * [License](#license)
     
-## Build Status
+## Build Status [![Build Status](https://jnkns.fndev.net/job/fieldnation-php-sdk/badge/icon)](https://jnkns.fndev.net/job/fieldnation-php-sdk/)
 
 | PHP 5.6 | PHP 7.0 | PHP 7.1 |  HHVM  |
 | :-----: | :-----: | :-----: | :----: |
