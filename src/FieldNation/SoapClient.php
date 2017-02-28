@@ -344,19 +344,7 @@ class SoapClient implements ClientInterface
     public function getWorkOrderAttachedDocuments($workOrderId)
     {
         $documents = $this->client->listAttachedCompanyDocuments($this->getLogin(), $workOrderId);
-        $response = array();
-        if (is_array($documents)) {
-            foreach ($documents as $document) {
-                $documentObj = new Document();
-                $documentObj->setId($document->documentID);
-                $documentObj->setTitle($document->title);
-                $documentObj->setDescription($document->description);
-                $documentObj->setType($document->type);
-                $documentObj->setUpdatedTime(self::convertToDateTime($document->updatedTime));
-                $response[] = $documentObj;
-            }
-        }
-        return $response;
+        return self::responseToDocuments($documents);
     }
 
     /**
@@ -441,7 +429,27 @@ class SoapClient implements ClientInterface
      */
     public function getShipmentHistory($shipmentId)
     {
-        // TODO: Implement getShipmentHistory() method.
+        $shipmentHistory = $this->client->getWorkorderShipmentHistory($this->getLogin(), $shipmentId);
+        $shipmentHistoryObj = null;
+        if ($shipmentHistory) {
+            $shipmentHistoryObj = new ShipmentHistory();
+            $shipmentHistoryObj->setId($shipmentHistory->shipmentTrackingId);
+            $shipmentHistoryObj->setVendor($shipmentHistory->vendor);
+            $shipmentHistoryObj->setDescription($shipmentHistory->description);
+            $shipmentHistoryObj->setStatus($shipmentHistory->status);
+            $shipmentHistoryObj->setLastActivityDate(self::convertToDateTime($shipmentHistory->lastActivityDate));
+            $historys = array();
+            if (is_array($shipmentHistory->shipmentHistory)) {
+                foreach ($shipmentHistory->shipmentHistory as $history) {
+                    $historyObj = new History();
+                    $historyObj->setEntryDate($history->entry_date);
+                    $historyObj->setDescription($history->description);
+                    $historys[] = $historyObj;
+                }
+            }
+            $shipmentHistoryObj->setShipmentHistory($historys);
+        }
+        return $shipmentHistoryObj;
     }
 
     /**
@@ -451,7 +459,8 @@ class SoapClient implements ClientInterface
      */
     public function getDocuments()
     {
-        // TODO: Implement getDocuments() method.
+        $documents = $this->client->listCompanyDocuments($this->getLogin());
+        return self::responseToDocuments($documents);
     }
 
     /**
@@ -776,5 +785,28 @@ class SoapClient implements ClientInterface
         }
         $projectObj->setCustomFields($customFields);
         return $projectObj;
+    }
+
+    /**
+     * return documentsResp converted into Document[]
+     *
+     * @param ClientInterface $client
+     * @param $documentsResp
+     * @return Project[]
+     */
+    private static function responseToDocuments($documentsResp) {
+        $response = array();
+        if (is_array($documentsResp)) {
+            foreach ($documentsResp as $document) {
+                $documentObj = new Document();
+                $documentObj->setId($document->documentID);
+                $documentObj->setTitle($document->title);
+                $documentObj->setDescription($document->description);
+                $documentObj->setType($document->type);
+                $documentObj->setUpdatedTime(self::convertToDateTime($document->updatedTime));
+                $response[] = $documentObj;
+            }
+        }
+        return $response;
     }
 }
