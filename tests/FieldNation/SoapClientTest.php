@@ -11,7 +11,6 @@ use FieldNation\LoginCredentials;
 use FieldNation\SDK;
 use FieldNation\SoapClient;
 
-
 class SoapClientTest extends TestCase
 {
     protected $client;
