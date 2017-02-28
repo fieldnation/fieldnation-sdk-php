@@ -22,5 +22,4 @@ interface CustomFieldInterface extends IdentifiableInterface
      * @return string
      */
     public function getName();
-
 }

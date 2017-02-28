@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-class Technician extends AbstractUser implements TechnicianInterface
+class Technician extends AbstractUser implements TechnicianInterface, RecipientInterface
 {
     private $firstName;
     private $lastName;
@@ -14,28 +14,6 @@ class Technician extends AbstractUser implements TechnicianInterface
     private $state;
     private $postalCode;
     private $additionalFields;
-
-    /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set the first name of the provider.
@@ -175,5 +153,25 @@ class Technician extends AbstractUser implements TechnicianInterface
     public function getAdditionalFields()
     {
         return $this->additionalFields;
+    }
+
+    /**
+     * Check if a recipient is a provider
+     *
+     * @return boolean
+     */
+    public function isProvider()
+    {
+        return true;
+    }
+
+    /**
+     * Check if a recipient is a group
+     *
+     * @return boolean
+     */
+    public function isGroup()
+    {
+        return false;
     }
 }

@@ -726,7 +726,8 @@ class SoapClient implements ClientInterface
      * @param $dateTime
      * @return \DateTime
      */
-    private static function convertToDateTime($dateTime) {
+    private static function convertToDateTime($dateTime)
+    {
         return \DateTime::createFromFormat(\DateTime::ATOM, $dateTime, new \DateTimeZone('UTC'));
     }
 
@@ -738,7 +739,8 @@ class SoapClient implements ClientInterface
      * @return Project
      */
 
-    private static function responseToProject(ClientInterface $client, $projectResp) {
+    private static function responseToProject(ClientInterface $client, $projectResp)
+    {
         $projectObj = new Project($client);
         $projectObj->setId($projectResp->projectId);
         $projectObj->setIsEnabled($projectResp->isEnabled);

@@ -8,31 +8,12 @@ namespace FieldNation;
 
 class Shipment implements ShipmentInterface
 {
-    private $id;
+    use IdentifiableTrait;
+    use DescribableTrait;
+
     private $vendor;
-    private $description;
     private $status;
     private $lastActivityDate;
-
-    /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id) {
-        $this->id = (integer)$id;
-        return $this;
-    }
-
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId() {
-        return $this->id;
-    }
 
     /**
      * Set the shipping vendor.
@@ -40,7 +21,8 @@ class Shipment implements ShipmentInterface
      * @param string $vendor
      * @return self
      */
-    public function setVendor($vendor) {
+    public function setVendor($vendor)
+    {
         $this->vendor = $vendor;
         return $this;
     }
@@ -50,28 +32,9 @@ class Shipment implements ShipmentInterface
      *
      * @return string
      */
-    public function getVendor() {
+    public function getVendor()
+    {
         return $this->vendor;
-    }
-
-    /**
-     * Set the description.
-     *
-     * @param string $description
-     * @return self
-     */
-    public function setDescription($description) {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Get the description.
-     *
-     * @return string
-     */
-    public function getDescription() {
-        return $this->description;
     }
 
     /**
@@ -80,7 +43,8 @@ class Shipment implements ShipmentInterface
      * @param string $status
      * @return self
      */
-    public function setStatus($status) {
+    public function setStatus($status)
+    {
         $this->status = $status;
         return $this;
     }
@@ -90,7 +54,8 @@ class Shipment implements ShipmentInterface
      *
      * @return string
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->vendor;
     }
 
@@ -100,7 +65,8 @@ class Shipment implements ShipmentInterface
      * @param \DateTime $date
      * @return self
      */
-    public function setLastActivityDate($date) {
+    public function setLastActivityDate($date)
+    {
         $this->lastActivityDate = $date;
         return $this;
     }
@@ -110,7 +76,8 @@ class Shipment implements ShipmentInterface
      *
      * @return \DateTime
      */
-    public function getLastActivityDate() {
+    public function getLastActivityDate()
+    {
         return $this->lastActivityDate;
     }
 }

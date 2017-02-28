@@ -8,31 +8,12 @@ namespace FieldNation;
 
 class Document implements DocumentInterface
 {
-    private $id;
+    use IdentifiableTrait;
+    use DescribableTrait;
+
     private $title;
-    private $description;
     private $type;
     private $updatedTime;
-
-    /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id) {
-        $this->id = (integer)$id;
-        return $this;
-    }
-
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId() {
-        return $this->id;
-    }
 
     /**
      * Set the pragmatic representation of the document.
@@ -40,7 +21,8 @@ class Document implements DocumentInterface
      * @param string $title
      * @return self
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
         return $this;
     }
@@ -51,28 +33,9 @@ class Document implements DocumentInterface
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
-    }
-
-    /**
-     * Set the description.
-     *
-     * @param string $description
-     * @return self
-     */
-    public function setDescription($description) {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Get the description.
-     *
-     * @return string
-     */
-    public function getDescription() {
-        return $this->description;
     }
 
     /**
@@ -81,7 +44,8 @@ class Document implements DocumentInterface
      * @param $type
      * @return self
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
         return $this;
     }
@@ -93,7 +57,8 @@ class Document implements DocumentInterface
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -103,7 +68,8 @@ class Document implements DocumentInterface
      * @param \DateTime $time
      * @return self
      */
-    public function setUpdatedTime($time) {
+    public function setUpdatedTime($time)
+    {
         $this->updatedTime = $time;
         return $this;
     }
@@ -113,7 +79,8 @@ class Document implements DocumentInterface
      *
      * @return \DateTime
      */
-    public function getUpdatedTime() {
+    public function getUpdatedTime()
+    {
         return $this->updatedTime;
     }
 }

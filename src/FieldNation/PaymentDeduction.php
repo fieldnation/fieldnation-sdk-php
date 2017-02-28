@@ -8,8 +8,9 @@ namespace FieldNation;
 
 class PaymentDeduction implements PaymentDeductionInterface
 {
+    use DescribableTrait;
+
     private $type;
-    private $description;
     private $amount;
 
     /**
@@ -31,28 +32,6 @@ class PaymentDeduction implements PaymentDeductionInterface
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Set the description.
-     *
-     * @param string $description
-     * @return self
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Get the description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

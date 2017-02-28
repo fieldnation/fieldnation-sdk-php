@@ -8,28 +8,9 @@ namespace FieldNation;
 
 class CustomField implements CustomFieldInterface
 {
-    private $id;
-    private $name;
-    
-    /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id) {
-        $this->id = (integer)$id;
-        return $this;
-    }
+    use IdentifiableTrait;
 
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId() {
-        return $this->id;
-    }
+    private $name;
 
     /**
      * Set the name
@@ -37,7 +18,8 @@ class CustomField implements CustomFieldInterface
      * @param string $name
      * @return self
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -47,7 +29,8 @@ class CustomField implements CustomFieldInterface
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 }

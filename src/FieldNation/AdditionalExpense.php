@@ -8,58 +8,15 @@ namespace FieldNation;
 
 class AdditionalExpense implements AdditionalExpenseInterface
 {
-    private $id;
-    private $description;
+    use IdentifiableTrait;
+    use DescribableTrait;
+
     private $category;
     private $amount;
     private $approved;
     private $quantity;
     private $customId;
     private $reasonDenied;
-
-    /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the description.
-     *
-     * @param string $description
-     * @return self
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Get the description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
     /**
      * Set the quantity entered by the user who submitted the additional expense, if the Expense Manager was used.

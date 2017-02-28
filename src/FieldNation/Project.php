@@ -8,8 +8,9 @@ namespace FieldNation;
 
 class Project implements ProjectInterface
 {
+    use IdentifiableTrait;
+
     private $client;
-    private $id;
     private $enabled;
     private $name;
     private $templates;
@@ -22,32 +23,13 @@ class Project implements ProjectInterface
     }
 
     /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id) {
-        $this->id = (integer)$id;
-        return $this;
-    }
-
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
      * Set if the project is currently enabled.
      *
      * @param boolean $isEnabled
      * @return self
      */
-    public function setIsEnabled($isEnabled) {
+    public function setIsEnabled($isEnabled)
+    {
         $this->enabled = (boolean)$isEnabled;
         return $this;
     }
@@ -57,7 +39,8 @@ class Project implements ProjectInterface
      *
      * @return boolean
      */
-    public function isEnabled() {
+    public function isEnabled()
+    {
         return $this->enabled;
     }
 
@@ -67,7 +50,8 @@ class Project implements ProjectInterface
      * @param string $name
      * @return self
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -77,7 +61,8 @@ class Project implements ProjectInterface
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -87,7 +72,8 @@ class Project implements ProjectInterface
      * @param TemplateInterface[] $templates
      * @return self
      */
-    public function setTemplates($templates) {
+    public function setTemplates($templates)
+    {
         $this->templates = $templates;
         return $this;
     }
@@ -97,7 +83,8 @@ class Project implements ProjectInterface
      *
      * @return TemplateInterface[]
      */
-    public function getTemplates() {
+    public function getTemplates()
+    {
         return $this->templates;
     }
 
@@ -106,7 +93,8 @@ class Project implements ProjectInterface
      * @param UserInterface[] $managers
      * @return self
      */
-    public function setManagers($managers) {
+    public function setManagers($managers)
+    {
         $this->managers = $managers;
         return $this;
     }
@@ -116,7 +104,8 @@ class Project implements ProjectInterface
      *
      * @return UserInterface[]
      */
-    public function getManagers() {
+    public function getManagers()
+    {
         return $this->managers;
     }
 
@@ -126,7 +115,8 @@ class Project implements ProjectInterface
      * @see https://app.fieldnation.com/docs/soap/getProjectDetails
      * @return ProjectInterface
      */
-    public function getDetails() {
+    public function getDetails()
+    {
         return $this->client->getProject($this->getId());
     }
 
@@ -136,7 +126,8 @@ class Project implements ProjectInterface
      * @param CustomFieldInterface[] $fields
      * @return self
      */
-    public function setCustomFields($fields) {
+    public function setCustomFields($fields)
+    {
         $this->customFields = $fields;
         return $this;
     }
@@ -144,7 +135,8 @@ class Project implements ProjectInterface
     /**
      * @return CustomFieldInterface[]
      */
-    public function getCustomFields() {
+    public function getCustomFields()
+    {
         return $this->customFields;
     }
 }

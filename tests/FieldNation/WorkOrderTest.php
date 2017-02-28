@@ -7,6 +7,8 @@
 namespace FieldNation\Tests;
 
 use FieldNation\ClientInterface;
+use FieldNation\Document;
+use FieldNation\DocumentInterface;
 use FieldNation\Message;
 use FieldNation\MessageInterface;
 use FieldNation\PayInfo;
@@ -14,8 +16,12 @@ use FieldNation\Payment;
 use FieldNation\PaymentInterface;
 use FieldNation\Progress;
 use FieldNation\ProgressInterface;
+use FieldNation\ResultInterface;
 use FieldNation\ServiceDescription;
 use FieldNation\ServiceLocation;
+use FieldNation\Shipment;
+use FieldNation\ShipmentInterface;
+use FieldNation\SuccessResult;
 use FieldNation\Technician;
 use FieldNation\TechnicianInterface;
 use FieldNation\TimeRange;
@@ -26,7 +32,6 @@ use FieldNation\WorkOrderStatuses;
 class WorkOrderTest extends \PHPUnit_Framework_TestCase
 {
     private $clientMock;
-    private $wo;
     private $woId;
 
     public function setUp()
@@ -190,5 +195,83 @@ class WorkOrderTest extends \PHPUnit_Framework_TestCase
         foreach ($actual as $message) {
             $this->assertInstanceOf(MessageInterface::class, $message);
         }
+    }
+
+    public function testCanGetAttachedDocuments()
+    {
+        $wo = new WorkOrder($this->clientMock);
+        $wo->setId($this->woId);
+        $doc1 = new Document();
+        $doc2 = new Document();
+        $expected = array($doc1, $doc2);
+        $this->clientMock
+            ->expects($this->once())
+            ->method('getWorkOrderAttachedDocuments')
+            ->with($this->equalTo($this->woId))
+            ->willReturn($expected);
+        $actual = $wo->getAttachedDocuments();
+        $this->assertEquals($expected, $actual);
+        foreach ($actual as $attachment) {
+            $this->assertInstanceOf(DocumentInterface::class, $attachment);
+        }
+    }
+
+    public function testCanGetShipments()
+    {
+        $wo = new WorkOrder($this->clientMock);
+        $wo->setId($this->woId);
+        $ship1 = new Shipment();
+        $ship2 = new Shipment();
+        $expected = array($ship1, $ship2);
+        $this->clientMock
+            ->expects($this->once())
+            ->method('getWorkOrderShipments')
+            ->with($this->equalTo($this->woId))
+            ->willReturn($expected);
+        $actual = $wo->getShipments();
+        $this->assertEquals($expected, $actual);
+        foreach ($actual as $shipment) {
+            $this->assertInstanceOf(ShipmentInterface::class, $shipment);
+        }
+    }
+
+    public function testCanCreate()
+    {
+        $wo = new WorkOrder($this->clientMock);
+        $expected = $wo;
+        $this->clientMock
+            ->expects($this->once())
+            ->method('createWorkOrder')
+            ->with($this->equalTo($expected))
+            ->willReturn($expected);
+        $actual = $wo->create();
+        $this->assertEquals($expected, $actual);
+        $this->assertInstanceOf(WorkOrderInterface::class, $actual);
+    }
+
+    public function testCanPublish()
+    {
+        $wo = new WorkOrder($this->clientMock);
+        $expected = new SuccessResult('Published');
+        $this->clientMock
+            ->expects($this->once())
+            ->method('publishWorkOrder')
+            ->with($this->equalTo($wo->getId()))
+            ->willReturn($expected);
+        $actual = $wo->publish();
+        $this->assertEquals($expected, $actual);
+        $this->assertEquals('Published', $actual->getMessage());
+        $this->assertInstanceOf(ResultInterface::class, $actual);
+    }
+
+    public function testCanRouteToProvider()
+    {
+        $wo = new WorkOrder($this->clientMock);
+
+        $expected = new SuccessResult('Routed to Provider');
+    }
+
+    public function testCanRouteToGroup()
+    {
     }
 }

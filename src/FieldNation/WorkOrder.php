@@ -8,10 +8,11 @@ namespace FieldNation;
 
 class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
 {
-    private $id;
+    use IdentifiableTrait;
+    use DescribableTrait;
+
     private $client;
     private $group;
-    private $description;
     private $location;
     private $startTime;
     private $payInfo;
@@ -432,28 +433,6 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
     }
 
     /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Get the name of the project the work order should be a member of.
      *
      * If not present, the work order will not belong to a project (default behavior).
@@ -465,16 +444,6 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
     public function getGroup()
     {
         return $this->group;
-    }
-
-    /**
-     * Get the general descriptive information relevant to the job.
-     *
-     * @return ServiceDescriptionInterface
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

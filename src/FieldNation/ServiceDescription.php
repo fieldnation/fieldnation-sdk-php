@@ -8,10 +8,11 @@ namespace FieldNation;
 
 class ServiceDescription implements ServiceDescriptionInterface
 {
+    use DescribableTrait;
+
     private $categoryId;
     private $title;
     private $instruction;
-    private $description;
 
     /**
      * Set the category id
@@ -77,27 +78,5 @@ class ServiceDescription implements ServiceDescriptionInterface
     public function getInstruction()
     {
         return $this->instruction;
-    }
-
-    /**
-     * Set the description.
-     *
-     * @param string $description
-     * @return self
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Get the description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 }

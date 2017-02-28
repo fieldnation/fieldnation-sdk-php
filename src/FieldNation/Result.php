@@ -18,7 +18,8 @@ abstract class Result implements ResultInterface
      * @param $success
      * @return self
      */
-    public function setSuccessful($success) {
+    public function setSuccessful($success)
+    {
         $this->success = (boolean) $success;
     }
 

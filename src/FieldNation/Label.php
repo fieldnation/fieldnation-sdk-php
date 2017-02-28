@@ -8,32 +8,11 @@ namespace FieldNation;
 
 class Label implements LabelInterface
 {
-    private $id;
+    use IdentifiableTrait;
+    
     private $name;
     private $hideFromTech;
     private $techCanEdit;
-
-    /**
-     * Set the id
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get the id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set the name of the label.

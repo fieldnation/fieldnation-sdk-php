@@ -6,15 +6,15 @@
  */
 namespace FieldNation;
 
-class CloseoutRequirement implements CloseoutRequirementInterface
+class Group implements GroupInterface
 {
-    use DescribableTrait;
+    use IdentifiableTrait;
 
     private $name;
-    private $order;
+    private $count;
 
     /**
-     * Set name of the closeout requirement, with only alphanumeric characters and no spaces.
+     * Set the name of the group.
      *
      * @param string $name
      * @return self
@@ -26,7 +26,7 @@ class CloseoutRequirement implements CloseoutRequirementInterface
     }
 
     /**
-     * Get the name
+     * Get the name of the group.
      *
      * @return string
      */
@@ -36,24 +36,23 @@ class CloseoutRequirement implements CloseoutRequirementInterface
     }
 
     /**
-     * Set the order to display the results in the system; this does not enforce an order of completion.
+     * Set the number of individuals in the group.
      *
-     * @param integer $order
+     * @param integer $count
      * @return self
      */
-    public function setOrder($order)
+    public function setCount($count)
     {
-        $this->order = $order;
+        $this->count = (integer)$count;
         return $this;
     }
 
     /**
-     * Get the order
-     *
+     * Get the number of individuals in the group.
      * @return integer
      */
-    public function getOrder()
+    public function getCount()
     {
-        return $this->order;
+        return $this->count;
     }
 }

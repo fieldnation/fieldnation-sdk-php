@@ -17,7 +17,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      *
      * @return boolean
      */
-    public function setSuccessful($success) {
+    public function setSuccessful($success)
+    {
         $this->success = (boolean)$success;
         return $this;
     }
@@ -27,7 +28,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      *
      * @return boolean
      */
-    public function wasSuccessful() {
+    public function wasSuccessful()
+    {
         return $this->success;
     }
 
@@ -36,7 +38,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      *
      * @return string
      */
-    public function getMessage() {
+    public function getMessage()
+    {
         return '';
     }
 
@@ -46,7 +49,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      * @param $message
      * @return self
      */
-    public function setMessage($message) {
+    public function setMessage($message)
+    {
         // No messages expected
         return $this;
     }
@@ -56,7 +60,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      *
      * @return integer|NULL
      */
-    public function getWorkOrderId() {
+    public function getWorkOrderId()
+    {
         return $this->workorderId;
     }
 
@@ -66,7 +71,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      * @param integer $id
      * @return self
      */
-    public function setWorkOrderId($id) {
+    public function setWorkOrderId($id)
+    {
         $this->workorderId = (integer)$id;
         return $this;
     }
@@ -76,7 +82,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      *
      * @return string
      */
-    public function setShipmentId($id) {
+    public function setShipmentId($id)
+    {
         $this->shipmentId = (integer)$id;
         return $this;
     }
@@ -86,7 +93,8 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
      *
      * @return string
      */
-    public function getShipmentId() {
+    public function getShipmentId()
+    {
         return $this->shipmentId;
     }
 }

@@ -8,30 +8,9 @@ namespace FieldNation;
 
 abstract class AbstractUser implements UserInterface
 {
-    protected $id;
+    use IdentifiableTrait;
+
     protected $fullName;
-
-    /**
-     * Set the ID for a user.
-     *
-     * @param integer $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get the user ID.
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set the full name for the user.

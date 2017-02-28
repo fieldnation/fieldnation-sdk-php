@@ -8,8 +8,10 @@ namespace FieldNation;
 
 class FailureResult extends Result
 {
-    public function __construct() {
+    public function __construct($message = null)
+    {
         $this->setSuccessful(false);
+        $this->setMessage($message);
     }
 
     /**
