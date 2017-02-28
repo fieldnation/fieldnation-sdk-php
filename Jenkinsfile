@@ -7,7 +7,8 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-        }
+        },
+        step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
     },
     "7.1" : {
         node('dind') {
@@ -17,7 +18,8 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-        }
+        },
+        step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
     },
     "7.0" : {
         node('dind') {
@@ -27,7 +29,8 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-        }
+        },
+        step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
     },
     "5.6" : {
         node('dind') {
@@ -37,7 +40,8 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-        }
+        },
+        step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
     },
     "HHVM" : {
         node('dind') {
@@ -47,7 +51,8 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-        }
+        },
+        step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
     }
 )
 
