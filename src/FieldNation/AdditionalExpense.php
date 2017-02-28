@@ -67,7 +67,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      * @param float $amount
      * @return self
      */
-    public function setQuantity($amount) {
+    public function setQuantity($amount)
+    {
         $this->quantity = (float)$amount;
         return $this;
     }
@@ -77,7 +78,8 @@ class AdditionalExpense implements AdditionalExpenseInterface
      *
      * @return float
      */
-    public function getQuantity() {
+    public function getQuantity()
+    {
         return $this->quantity;
     }
 
