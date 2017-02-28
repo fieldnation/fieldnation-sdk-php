@@ -47,7 +47,7 @@ parallel(
         node('dind') {
             checkout scm
             docker.image('hhvm/hhvm').inside {
-                sh 'apt-get update && apt-get install -y git zip make > /dev/null'
+                sh 'apt-get update && apt-get install -y git zip make curl > /dev/null'
                 sh 'make build'
                 sh 'make test'
             }
