@@ -128,7 +128,7 @@ class SoapClient implements ClientInterface
             $woObj->setStartTime(self::responseToTimeRange($wo->startTime));
 
             $payInfoObj = new PayInfo();
-            if ($wo->payInfo->perHour !== null) {
+            if ($wo->payInfo->fixed !== null) {
                 $payFixed = new FixedPay();
                 $payFixed->setAmount($wo->payInfo->fixed->amount);
                 $payInfoObj->setFixed($payFixed);
@@ -472,7 +472,10 @@ class SoapClient implements ClientInterface
      */
     public function createWorkOrder(WorkOrderInterface $wo, $useTemplate)
     {
-        // TODO: Implement createWorkOrder() method.
+        $result = $this->client->createWorkOrder(
+            $this->getLogin(),
+            $wo
+        );
     }
 
     /**
@@ -483,7 +486,8 @@ class SoapClient implements ClientInterface
      */
     public function publishWorkOrder($workOrderId)
     {
-        // TODO: Implement publishWorkOrder() method.
+        $result = $this->client->publishWorkOrder($this->getLogin(), $workOrderId);
+        return self::responseToResult($result);
     }
 
     /**
@@ -495,7 +499,8 @@ class SoapClient implements ClientInterface
      */
     public function routeWorkOrderToGroup($workOrderId, $groupId)
     {
-        // TODO: Implement routeWorkOrderToGroup() method.
+        $result = $this->client->routeWorkOrderToGroup($this->getLogin(), $workOrderId, $groupId);
+        return self::responseToResult($result);
     }
 
     /**
@@ -507,7 +512,8 @@ class SoapClient implements ClientInterface
      */
     public function routeWorkOrderToProvider($workOrderId, $providerId)
     {
-        // TODO: Implement routeWorkOrderToProvider() method.
+        $result = $this->client->routeWorkOrderToGroup($this->getLogin(), $workOrderId, $providerId);
+        return self::responseToResult($result);
     }
 
     /**
@@ -518,7 +524,8 @@ class SoapClient implements ClientInterface
      */
     public function approveWorkOrder($workOrderId)
     {
-        // TODO: Implement approveWorkOrder() method.
+        $result = $this->client->approveWorkOrder($this->getLogin(), $workOrderId);
+        return self::responseToResult($result);
     }
 
     /**
@@ -531,7 +538,8 @@ class SoapClient implements ClientInterface
      */
     public function cancelWorkOrder($workOrderId, $willAcceptFees, $revertRequestReason)
     {
-        // TODO: Implement cancelWorkOrder() method.
+        $result = $this->client->cancelWorkOrder($this->getLogin(), $workOrderId, $willAcceptFees, $revertRequestReason);
+        return self::responseToResult($result);
     }
 
     /**
@@ -543,7 +551,8 @@ class SoapClient implements ClientInterface
      */
     public function attachDocumentToWorkOrder($workOrderId, $documentId)
     {
-        // TODO: Implement attachDocumentToWorkOrder() method.
+        $result = $this->client->attachCompanyDocument($this->getLogin(), $documentId, $workOrderId);
+        return self::responseToResult($result);
     }
 
     /**
@@ -555,7 +564,8 @@ class SoapClient implements ClientInterface
      */
     public function detachDocumentFromWorkOrder($workOrderId, $documentId)
     {
-        // TODO: Implement detachDocumentFromWorkOrder() method.
+        $result = $this->client->detachCompanyDocument($this->getLogin(), $documentId, $workOrderId);
+        return self::responseToResult($result);
     }
 
     /**
@@ -568,7 +578,8 @@ class SoapClient implements ClientInterface
      */
     public function addMessageToWorkOrder($workOrderId, $messageText, $messageMode)
     {
-        // TODO: Implement addMessageToWorkOrder() method.
+        $result = $this->client->addMessage($this->getLogin(), $workOrderId, $messageText, $messageMode);
+        return self::responseToResult($result);
     }
 
     /**
@@ -581,7 +592,8 @@ class SoapClient implements ClientInterface
      */
     public function setCustomFieldOnWorkOrder($workOrderId, $fieldName, $fieldValue)
     {
-        // TODO: Implement setCustomFieldOnWorkOrder() method.
+        $result = $this->client->setCustomField($this->getLogin(), $workOrderId, $fieldName, $fieldValue);
+        return self::responseToResult($result);
     }
 
     /**
@@ -593,7 +605,8 @@ class SoapClient implements ClientInterface
      */
     public function setLabelOnWorkOrder($workOrderId, $labelName)
     {
-        // TODO: Implement setLabelOnWorkOrder() method.
+        $result = $this->client->setLabelOnWorkorder($this->getLogin(), $workOrderId, $labelName);
+        return self::responseToResult($result);
     }
 
     /**
@@ -605,7 +618,8 @@ class SoapClient implements ClientInterface
      */
     public function unsetLabelOnWorkOrder($workOrderId, $labelName)
     {
-        // TODO: Implement unsetLabelOnWorkOrder() method.
+        $result = $this->client->setLabelOnWorkorder($this->getLogin(), $workOrderId, $labelName);
+        return self::responseToResult($result);
     }
 
     /**
@@ -617,7 +631,8 @@ class SoapClient implements ClientInterface
      */
     public function satisfyCloseoutOnWorkOrder($workOrderId, $closeoutName)
     {
-        // TODO: Implement satisfyCloseoutOnWorkOrder() method.
+        $result = $this->client->satisfyCloseout($this->getLogin(), $workOrderId, $closeoutName);
+        return self::responseToResult($result);
     }
 
     /**
@@ -628,7 +643,8 @@ class SoapClient implements ClientInterface
      */
     public function deleteShipment($shipmentId)
     {
-        // TODO: Implement deleteShipment() method.
+        $result = $this->client->deleteShipmentOnWorkorder($this->getLogin(), $shipmentId);
+        return self::responseToResult($result);
     }
 
     /**
@@ -640,7 +656,16 @@ class SoapClient implements ClientInterface
      */
     public function addShipment($workOrderId, ShipmentInterface $shipment)
     {
-        // TODO: Implement addShipment() method.
+        $result = $this->client->deleteShipmentOnWorkorder(
+            $this->getLogin(), 
+            $workOrderId, 
+            $shipment->getDescription(),
+            $shipment->getVendor(),
+            $shipment->getId(), // tracking id
+            null, // history entry description will default to 'New shipment added'
+            'to_site'
+        );
+        return self::responseToResult($result);
     }
 
     /**
@@ -652,7 +677,13 @@ class SoapClient implements ClientInterface
      */
     public function updateWorkOrderSchedule($workOrderId, TimeRangeInterface $range)
     {
-        // TODO: Implement updateWorkOrderSchedule() method.
+        $result = $this->client->updateSchedule(
+            $this->getLogin(),
+            $workOrderId,
+            $range->getTimeBegin()->format(\DATE_ATOM),
+            $range->getTimeEnd()->format(\DATE_ATOM)
+        );
+        return self::responseToResult($result);
     }
 
     /**
@@ -790,7 +821,6 @@ class SoapClient implements ClientInterface
     /**
      * return documentsResp converted into Document[]
      *
-     * @param ClientInterface $client
      * @param $documentsResp
      * @return Project[]
      */
@@ -809,5 +839,67 @@ class SoapClient implements ClientInterface
             }
         }
         return $response;
+    }
+
+    /**
+     * return resultResp converted into Result
+     *
+     * @param $resultResp
+     * @return Result[]
+     */
+    private static function responseToResult($resultResp) {
+        if (!$resultResp) {
+            return new FailureResult('No response revceived');
+        }
+        else {
+            if ($resultResp->success === true) {
+                return new SuccessResult($resultResp->message);
+            }
+            return new FailureResult($resultResp->message);
+        }
+    }
+
+    /**
+     * return wo converted into \stdClass
+     *
+     * @param WorkOrder $wo
+     * @return \stdClass
+     */
+    private static function workorderToStdClass(WorkOrder $wo)
+    {
+        $workorder = new \stdClass();
+        $workorder->group = $wo->getGroup();
+        $descriptionObj = $wo->getD;
+        $workorder->description = null;
+        if ($descriptionObj) {
+            $workorder->description->category = $descriptionObj->getCategoryId();
+            $workorder->description->title = $descriptionObj->getTitle();
+            $workorder->description->description = $descriptionObj->getDescription();
+            $workorder->description->instruction = $descriptionObj->getInstruction();
+        }
+
+        $locationObj = $wo->getLocation();
+        $locationObj->location = null;
+        if ($locationObj) {
+            $workorder->location->type = $locationObj->getType();
+            $workorder->location->name = $locationObj->getName();
+            $workorder->location->address1 = $locationObj->getAddress1();
+            $workorder->location->address2 = $locationObj->getAddress2();
+            $workorder->location->city = $locationObj->getCity();
+            $workorder->location->state = $locationObj->getState();
+            $workorder->location->zip = $locationObj->getPostalCode();
+            $workorder->location->country = $locationObj->getCountry();
+            $workorder->location->contactName = $locationObj->getContactName();
+            $workorder->location->contactPhone = $locationObj->getContactPhone();
+            $workorder->location->contactEmail = $locationObj->getContactEmail();
+        }
+        
+        $startTime = $wo->getStartTime();
+        if ($startTime) {
+            $workorder->startTime->timeBegin = $startTime->getTimeBegin()->format(\DATE_ATOM);
+            $workorder->startTime->timeEnd = $startTime->getTimeEnd()->format(\DATE_ATOM);
+        }
+        
+        return $workorder;
     }
 }
