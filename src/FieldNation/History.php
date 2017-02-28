@@ -8,15 +8,17 @@ namespace FieldNation;
 
 class History implements HistoryInterface
 {
+    use DescribableTrait;
+
     private $date;
-    private $description;
 
     /**
      * Set the entry date
      * @param \DateTime $date
      * @return self
      */
-    public function setEntryDate($date) {
+    public function setEntryDate($date)
+    {
         $this->date = $date;
         return $this;
     }
@@ -25,27 +27,8 @@ class History implements HistoryInterface
      * Get the entry date.
      * @return \DateTime
      */
-    public function getEntryDate() {
+    public function getEntryDate()
+    {
         return $this->date;
-    }
-
-    /**
-     * Set the description.
-     *
-     * @param string $description
-     * @return self
-     */
-    public function setDescription($description) {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Get the description.
-     *
-     * @return string
-     */
-    public function getDescription() {
-        return $this->description;
     }
 }

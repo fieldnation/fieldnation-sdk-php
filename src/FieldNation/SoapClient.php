@@ -794,7 +794,8 @@ class SoapClient implements ClientInterface
      * @param $documentsResp
      * @return Project[]
      */
-    private static function responseToDocuments($documentsResp) {
+    private static function responseToDocuments($documentsResp)
+    {
         $response = array();
         if (is_array($documentsResp)) {
             foreach ($documentsResp as $document) {

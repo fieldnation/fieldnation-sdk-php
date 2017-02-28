@@ -16,7 +16,8 @@ class ShipmentHistory extends Shipment
      * @param HistoryInterface[] $history
      * @return self
      */
-    public function setShipmentHistory($history) {
+    public function setShipmentHistory($history)
+    {
         $this->history = $history;
         return $this;
     }
@@ -26,7 +27,8 @@ class ShipmentHistory extends Shipment
      *
      * @return HistoryInterface[]
      */
-    public function getShipmentHistory() {
+    public function getShipmentHistory()
+    {
         return $this->history;
     }
 }
