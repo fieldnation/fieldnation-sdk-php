@@ -1,7 +1,7 @@
 .PHONY: test build
 
 build: composer
-	php composer.phar install
+	php composer.phar install --quiet
 
 composer:
 	./scripts/getComposer
