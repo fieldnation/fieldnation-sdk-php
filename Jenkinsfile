@@ -2,7 +2,7 @@ parallel(
     "7.1" : {
         node('dind') {
             docker.image('php:7.1.2-cli').inside {
-            	sh 'make composer '
+            	sh 'ls'
 		sh 'make build'
 		sh 'make test'
             }
