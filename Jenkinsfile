@@ -7,7 +7,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
+            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
         }
     },
     "7.1" : {
@@ -18,7 +18,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
+            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
         }
     },
     "7.0" : {
@@ -29,7 +29,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
+            step([$class: 'JUnitResultArchiver', testResults: ./test-results.xml'])
         }
     },
     "5.6" : {
@@ -40,7 +40,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
+            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
         }
     },
     "HHVM" : {
@@ -51,7 +51,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: '/tmp/test-results.xml'])
+            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
         }
     }
 )
