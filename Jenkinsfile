@@ -7,7 +7,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
+            step([$class: 'JUnitResultArchiver', allowEmptyResults: true, testResults: '*.xml'])
         }
     },
     "7.1" : {
@@ -18,7 +18,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
+            step([$class: 'JUnitResultArchiver', allowEmptyResults: true, testResults: '*.xml'])
         }
     },
     "7.0" : {
@@ -29,7 +29,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
+            step([$class: 'JUnitResultArchiver', allowEmptyResults: true, testResults: '*.xml'])
         }
     },
     "5.6" : {
@@ -39,11 +39,8 @@ parallel(
                 sh 'apt-get update && apt-get install -y git zip > /dev/null'
                 sh 'make build'
                 sh 'make test'
-                echo "----- Inside container -----"
-                sh 'ls -al'
             }
-            sh 'ls -al'
-            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
+            step([$class: 'JUnitResultArchiver', allowEmptyResults: true, testResults: '*.xml'])
         }
     },
     "HHVM" : {
@@ -54,7 +51,7 @@ parallel(
                 sh 'make build'
                 sh 'make test'
             }
-            step([$class: 'JUnitResultArchiver', testResults: './test-results.xml'])
+            step([$class: 'JUnitResultArchiver', allowEmptyResults: true, testResults: '*.xml'])
         }
     }
 )
