@@ -2,6 +2,7 @@
 # Field Nation PHP SDK
 * [Build Status](#build-status)
 * [Installation](#installation)
+    * [PHP Requirements](#php-requirements)
     * [Installation with Composer](#installation-with-composer)
 * [Usage](#usage)
     * [Authentication](#authentication)
@@ -21,6 +22,10 @@
 | shield  | shield  | shield  | shield |
 
 ## Installation
+
+### PHP Requirements
+Your php version needs to have [Soap](http://php.net/manual/en/book.soap.php) enabled.
+Follow the [installation instructions](http://php.net/manual/en/soap.setup.php) for enabling the Soap module.
 
 ### Installation with Composer
 Require the `fieldnation/fieldnation-sdk` package in your project.

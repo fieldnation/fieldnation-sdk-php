@@ -19,7 +19,6 @@ use FieldNation\ShipmentServiceInterface;
 use FieldNation\WorkOrderInterface;
 use FieldNation\WorkOrderSerializerInterface;
 use FieldNation\WorkOrderServiceInterface;
-use phpDocumentor\Plugin\Scrybe\Converter\RestructuredText\Roles\Doc;
 
 class SDKTest extends \PHPUnit_Framework_TestCase
 {
