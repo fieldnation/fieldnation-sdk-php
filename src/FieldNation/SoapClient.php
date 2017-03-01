@@ -538,7 +538,9 @@ class SoapClient implements ClientInterface
      */
     public function cancelWorkOrder($workOrderId, $willAcceptFees, $revertRequestReason)
     {
-        $result = $this->client->cancelWorkOrder($this->getLogin(), $workOrderId, $willAcceptFees, $revertRequestReason);
+        $result = $this
+            ->client
+            ->cancelWorkOrder($this->getLogin(), $workOrderId, $willAcceptFees, $revertRequestReason);
         return self::responseToResult($result);
     }
 
@@ -657,8 +659,8 @@ class SoapClient implements ClientInterface
     public function addShipment($workOrderId, ShipmentInterface $shipment)
     {
         $result = $this->client->deleteShipmentOnWorkorder(
-            $this->getLogin(), 
-            $workOrderId, 
+            $this->getLogin(),
+            $workOrderId,
             $shipment->getDescription(),
             $shipment->getVendor(),
             $shipment->getId(), // tracking id
@@ -847,11 +849,11 @@ class SoapClient implements ClientInterface
      * @param $resultResp
      * @return Result[]
      */
-    private static function responseToResult($resultResp) {
+    private static function responseToResult($resultResp)
+    {
         if (!$resultResp) {
             return new FailureResult('No response revceived');
-        }
-        else {
+        } else {
             if ($resultResp->success === true) {
                 return new SuccessResult($resultResp->message);
             }

@@ -21,4 +21,19 @@ interface ClientFactoryInterface
      * @return ClientInterface
      */
     public function getClient($version = null);
+
+    /**
+     * Set the version of the client
+     *
+     * @param $version
+     * @return self
+     */
+    public function setClientVersion($version);
+
+    /**
+     * Get the version of the client
+     *
+     * @return string|NULL
+     */
+    public function getClientVersion();
 }

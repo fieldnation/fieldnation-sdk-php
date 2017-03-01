@@ -18,15 +18,15 @@ class SDK implements SDKInterface
      * FieldNation\SDK constructor.
      * Access the Field Nation SDK.
      * @param SDKCredentialsInterface $credentials - Authenticate to the SDK
+     * @param FactoryInjectorInterface $factoryInjector - Optionally inject a factory to resolve dependencies
      */
-    public function __construct(SDKCredentialsInterface $credentials)
-    {
+    public function __construct(
+        SDKCredentialsInterface $credentials,
+        FactoryInjectorInterface $factoryInjector = null
+    ) {
+    
         $this->credentials = $credentials;
-        $clientFactory = new SoapClientFactory($credentials);
-        $this->woService = new WorkOrderService($clientFactory);
-        $this->projectService = new ProjectService($clientFactory);
-        $this->shipmentService = new ShipmentService($clientFactory);
-        $this->documentService = new DocumentService($clientFactory);
+        $this->load($factoryInjector);
     }
 
     /**
@@ -91,5 +91,23 @@ class SDK implements SDKInterface
     public function getDocuments()
     {
         return $this->documentService->getAll();
+    }
+
+    private function load(FactoryInjectorInterface $factoryInjector = null)
+    {
+        if ($factoryInjector) {
+            $clientFactory = $factoryInjector->getClientFactory();
+            $servicesFactory = $factoryInjector->getServicesFactory();
+            $this->woService = $servicesFactory->getWorkOrderService($clientFactory);
+            $this->projectService = $servicesFactory->getProjectService($clientFactory);
+            $this->shipmentService = $servicesFactory->getShipmentService($clientFactory);
+            $this->documentService = $servicesFactory->getDocumentService($clientFactory);
+        } else {
+            $clientFactory = new SoapClientFactory($this->credentials);
+            $this->woService = new WorkOrderService($clientFactory);
+            $this->projectService = new ProjectService($clientFactory);
+            $this->shipmentService = new ShipmentService($clientFactory);
+            $this->documentService = new DocumentService($clientFactory);
+        }
     }
 }

@@ -12,4 +12,14 @@ class ShipmentService extends AbstractService
     {
         return $this->client->convertTrackingIdToShippingId($trackingNumber);
     }
+
+    /**
+     * Get all of the type managed by the service
+     *
+     * @return mixed
+     */
+    public function getAll()
+    {
+        return false;
+    }
 }

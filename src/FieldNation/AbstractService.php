@@ -6,12 +6,25 @@
  */
 namespace FieldNation;
 
-abstract class AbstractService
+abstract class AbstractService implements ServiceInterface
 {
     protected $client;
+    private $factory;
 
-    public function __construct(ClientFactoryInterface $factory)
+    public function __construct(ClientFactoryInterface $factory = null)
     {
-        $this->client = $factory->getClient();
+        $this->setClientFactory($factory);
+        $this->client = $this->getClientFactory()->getClient();
+    }
+
+    public function setClientFactory(ClientFactoryInterface $factory)
+    {
+        $this->factory = $factory;
+        return $this;
+    }
+
+    private function getClientFactory()
+    {
+        return $this->factory;
     }
 }
