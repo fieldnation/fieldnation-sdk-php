@@ -857,10 +857,15 @@ class SoapClient implements ClientInterface
         if (!$resultResp) {
             return new FailureResult('No response revceived');
         } else {
+            $response = null;
             if ($resultResp->success === true) {
-                return new SuccessResult($resultResp->message);
+                $response = new SuccessResult($resultResp->message);
             }
-            return new FailureResult($resultResp->message);
+            $response = new FailureResult($resultResp->message);
+            if ($resultResp->workorderID) {
+                $response->setWorkOrderId($resultResp->workorderID);
+            }
+            return $response;
         }
     }
 
