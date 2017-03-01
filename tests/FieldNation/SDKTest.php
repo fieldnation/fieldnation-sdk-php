@@ -6,19 +6,17 @@
  */
 namespace FieldNation\Tests;
 
+use FieldNation\ClassMapFactoryInterface;
 use FieldNation\ClientFactoryInterface;
+use FieldNation\ClientInterface;
 use FieldNation\DocumentInterface;
 use FieldNation\FactoryInjectorInterface;
 use FieldNation\ProjectInterface;
 use FieldNation\SDKCredentialsInterface;
 use FieldNation\SDK;
 use FieldNation\SDKInterface;
-use FieldNation\ServiceInterface;
-use FieldNation\ServicesFactoryInterface;
-use FieldNation\ShipmentServiceInterface;
 use FieldNation\WorkOrderInterface;
 use FieldNation\WorkOrderSerializerInterface;
-use FieldNation\WorkOrderServiceInterface;
 
 class SDKTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,11 +24,8 @@ class SDKTest extends \PHPUnit_Framework_TestCase
     private $login;
     private $injector;
     private $clientFactory;
-    private $servicesFactory;
-    private $workOrderService;
-    private $projectService;
-    private $shipmentService;
-    private $documentService;
+    private $classMapFactory;
+    private $client;
 
     public function setUp()
     {
@@ -39,30 +34,12 @@ class SDKTest extends \PHPUnit_Framework_TestCase
         $this->login->setApiKey('foo');
         $this->login->setEffectiveUser('bar');
         $this->injector = $this->createMock(FactoryInjectorInterface::class);
+        $this->client = $this->createMock(ClientInterface::class);
         $this->clientFactory = $this->createMock(ClientFactoryInterface::class);
-        $this->servicesFactory = $this->createMock(ServicesFactoryInterface::class);
-        $this->workOrderService = $this->createMock(WorkOrderServiceInterface::class);
-        $this->projectService = $this->createMock(ServiceInterface::class);
-        $this->shipmentService = $this->createMock(ShipmentServiceInterface::class);
-        $this->documentService = $this->createMock(ServiceInterface::class);
-        $this->injector->method('getServicesFactory')->willReturn($this->servicesFactory);
+        $this->clientFactory->method('getClient')->willReturn($this->client);
+        $this->classMapFactory = $this->createMock(ClassMapFactoryInterface::class);
         $this->injector->method('getClientFactory')->willReturn($this->clientFactory);
-        $this->servicesFactory
-             ->method('getWorkOrderService')
-             ->with($this->injector->getClientFactory())
-             ->willReturn($this->workOrderService);
-        $this->servicesFactory
-             ->method('getProjectService')
-             ->with($this->injector->getClientFactory())
-             ->willReturn($this->projectService);
-        $this->servicesFactory
-             ->method('getShipmentService')
-             ->with($this->injector->getClientFactory())
-             ->willReturn($this->shipmentService);
-        $this->servicesFactory
-             ->method('getDocumentService')
-             ->with($this->injector->getClientFactory())
-             ->willReturn($this->documentService);
+        $this->injector->method('getClassMapFactory')->willReturn($this->classMapFactory);
         $this->sdk = new SDK($this->login, $this->injector);
     }
 
@@ -71,9 +48,9 @@ class SDKTest extends \PHPUnit_Framework_TestCase
         $wo1 = $this->createMock(WorkOrderInterface::class);
         $wo2 = $this->createMock(WorkOrderInterface::class);
         $expected = array ($wo1, $wo2);
-        $this->workOrderService
+        $this->client
              ->expects($this->once())
-             ->method('getAll')
+             ->method('getWorkOrders')
              ->willReturn($expected);
         $actual = $this->sdk->getWorkOrders();
         $this->assertEquals($expected, $actual);
@@ -86,9 +63,9 @@ class SDKTest extends \PHPUnit_Framework_TestCase
     {
         $wo = $this->createMock(WorkOrderSerializerInterface::class);
         $expected = $this->createMock(WorkOrderInterface::class);
-        $this->workOrderService
+        $this->client
              ->expects($this->once())
-             ->method('createNew')
+             ->method('createWorkOrder')
              ->with($wo)
              ->willReturn($expected);
         $actual = $this->sdk->createWorkOrder($wo);
@@ -101,9 +78,9 @@ class SDKTest extends \PHPUnit_Framework_TestCase
         $id = rand();
         $expected = $this->createMock(WorkOrderInterface::class);
         $expected->method('getId')->willReturn($id);
-        $this->workOrderService
+        $this->client
              ->expects($this->once())
-             ->method('getExisting')
+             ->method('getWorkOrder')
              ->with($id)
              ->willReturn($expected);
         $actual = $this->sdk->getExistingWorkOrder($id);
@@ -117,9 +94,9 @@ class SDKTest extends \PHPUnit_Framework_TestCase
         $project1 = $this->createMock(ProjectInterface::class);
         $project2 = $this->createMock(ProjectInterface::class);
         $expected = array($project1, $project2);
-        $this->projectService
+        $this->client
              ->expects($this->once())
-             ->method('getAll')
+             ->method('getProjects')
              ->willReturn($expected);
         $actual = $this->sdk->getProjects();
         $this->assertEquals($expected, $actual);
@@ -132,9 +109,9 @@ class SDKTest extends \PHPUnit_Framework_TestCase
     {
         $trackingNumber = rand();
         $shippingId = rand();
-        $this->shipmentService
+        $this->client
              ->expects($this->once())
-             ->method('toShippingId')
+             ->method('convertTrackingIdToShippingId')
              ->with($trackingNumber)
              ->willReturn($shippingId);
         $actual = $this->sdk->getShippingIdFrom($trackingNumber);
@@ -146,9 +123,9 @@ class SDKTest extends \PHPUnit_Framework_TestCase
         $doc1 = $this->createMock(DocumentInterface::class);
         $doc2 = $this->createMock(DocumentInterface::class);
         $expected = array($doc1, $doc2);
-        $this->documentService
+        $this->client
              ->expects($this->once())
-             ->method('getAll')
+             ->method('getDocuments')
              ->willReturn($expected);
         $actual = $this->sdk->getDocuments();
         $this->assertEquals($expected, $actual);

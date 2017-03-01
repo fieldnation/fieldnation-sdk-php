@@ -471,7 +471,7 @@ class SoapClient implements ClientInterface
      * @param $useTemplate
      * @return ResultInterface
      */
-    public function createWorkOrder(WorkOrderInterface $wo, $useTemplate)
+    public function createWorkOrder(WorkOrderSerializerInterface $wo, $useTemplate)
     {
         $result = $this->client->createWorkOrder(
             $this->getLogin(),

@@ -131,7 +131,7 @@ interface ClientInterface
      * @param $useTemplate
      * @return ResultInterface
      */
-    public function createWorkOrder(WorkOrderInterface $wo, $useTemplate);
+    public function createWorkOrder(WorkOrderSerializerInterface $wo, $useTemplate);
 
     /**
      * Publish a work order.

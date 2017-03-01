@@ -24,17 +24,17 @@ interface FactoryInjectorInterface
     public function getClientFactory();
 
     /**
-     * Set the services factory
+     * Set the client classes factory
      *
-     * @param ServicesFactoryInterface $factory
+     * @param ClassMapFactoryInterface $factory
      * @return self
      */
-    public function setServicesFactory(ServicesFactoryInterface $factory);
+    public function setClassMapFactory(ClassMapFactoryInterface $factory);
 
     /**
      * Get the services factory
      *
-     * @return ServicesFactoryInterface
+     * @return ClassMapFactoryInterface
      */
-    public function getServicesFactory();
+    public function getClassMapFactory();
 }

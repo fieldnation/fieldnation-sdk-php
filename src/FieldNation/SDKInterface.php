@@ -28,9 +28,10 @@ interface SDKInterface
      * Create a new work order
      *
      * @param WorkOrderSerializerInterface $wo
+     * @param boolean $useTemplate
      * @return WorkOrderInterface
      */
-    public function createWorkOrder(WorkOrderSerializerInterface $wo);
+    public function createWorkOrder(WorkOrderSerializerInterface $wo, $useTemplate = false);
 
     /**
      * Get an existing work order

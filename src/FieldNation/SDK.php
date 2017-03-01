@@ -9,10 +9,7 @@ namespace FieldNation;
 class SDK implements SDKInterface
 {
     private $credentials;
-    private $woService;
-    private $projectService;
-    private $shipmentService;
-    private $documentService;
+    private $client;
 
     /**
      * FieldNation\SDK constructor.
@@ -37,18 +34,19 @@ class SDK implements SDKInterface
      */
     public function getWorkOrders($status = null)
     {
-        return $this->woService->getAll($status);
+        return $this->client->getWorkOrders($status);
     }
 
     /**
      * Create a new work order
      *
      * @param WorkOrderSerializerInterface $wo
+     * @param  boolean $useTemplate
      * @return WorkOrderInterface
      */
-    public function createWorkOrder(WorkOrderSerializerInterface $wo)
+    public function createWorkOrder(WorkOrderSerializerInterface $wo, $useTemplate = false)
     {
-        return $this->woService->createNew($wo);
+        return $this->client->createWorkOrder($wo, $useTemplate);
     }
 
     /**
@@ -59,7 +57,7 @@ class SDK implements SDKInterface
      */
     public function getExistingWorkOrder($workOrderId)
     {
-        return $this->woService->getExisting($workOrderId);
+        return $this->client->getWorkOrder($workOrderId);
     }
 
     /**
@@ -69,7 +67,7 @@ class SDK implements SDKInterface
      */
     public function getProjects()
     {
-        return $this->projectService->getAll();
+        return $this->client->getProjects();
     }
 
     /**
@@ -80,7 +78,7 @@ class SDK implements SDKInterface
      */
     public function getShippingIdFrom($trackingNumber)
     {
-        return $this->shipmentService->toShippingId($trackingNumber);
+        return $this->client->convertTrackingIdToShippingId($trackingNumber);
     }
 
     /**
@@ -90,24 +88,16 @@ class SDK implements SDKInterface
      */
     public function getDocuments()
     {
-        return $this->documentService->getAll();
+        return $this->client->getDocuments();
     }
 
     private function load(FactoryInjectorInterface $factoryInjector = null)
     {
         if ($factoryInjector) {
-            $clientFactory = $factoryInjector->getClientFactory();
-            $servicesFactory = $factoryInjector->getServicesFactory();
-            $this->woService = $servicesFactory->getWorkOrderService($clientFactory);
-            $this->projectService = $servicesFactory->getProjectService($clientFactory);
-            $this->shipmentService = $servicesFactory->getShipmentService($clientFactory);
-            $this->documentService = $servicesFactory->getDocumentService($clientFactory);
+            $this->client = $factoryInjector->getClientFactory()->getClient();
         } else {
             $clientFactory = new SoapClientFactory($this->credentials);
-            $this->woService = new WorkOrderService($clientFactory);
-            $this->projectService = new ProjectService($clientFactory);
-            $this->shipmentService = new ShipmentService($clientFactory);
-            $this->documentService = new DocumentService($clientFactory);
+            $this->client = $clientFactory->getClient();
         }
     }
 }
