@@ -937,7 +937,7 @@ class SoapClient implements ClientInterface
                 $workorder->payInfo->perDevice->maxUnits = $payPerDevice->getMaxUnits();
             }
             $payBlended = $payInfo->getBlended();
-            $workorder->payInfo->blend = null;
+            $workorder->payInfo->blended = null;
             if ($payBlended) {
                 $workorder->payInfo->blended = new \stdClass();
                 $workorder->payInfo->blended->baseAmount = $payBlended->getBaseAmount();

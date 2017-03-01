@@ -30,7 +30,7 @@ class TimeRange implements TimeRangeInterface
      */
     public function getTimeBegin()
     {
-        return $this->timeEnd;
+        return $this->timeBegin;
     }
 
     /**
