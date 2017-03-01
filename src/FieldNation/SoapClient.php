@@ -474,8 +474,10 @@ class SoapClient implements ClientInterface
     {
         $result = $this->client->createWorkOrder(
             $this->getLogin(),
-            $wo
+            self::workorderToStdClass($wo),
+            $useTemplate
         );
+        return self::responseToResult($result);
     }
 
     /**
@@ -864,25 +866,31 @@ class SoapClient implements ClientInterface
     /**
      * return wo converted into \stdClass
      *
-     * @param WorkOrder $wo
+     * @param WorkOrderSerializerInterface $wo
      * @return \stdClass
      */
-    private static function workorderToStdClass(WorkOrder $wo)
+    private static function workorderToStdClass(WorkOrderSerializerInterface $wo)
     {
         $workorder = new \stdClass();
         $workorder->group = $wo->getGroup();
+        $workorder->techUploads = $wo->getAllowTechUploads();
+        $workorder->alertWhenPublished = $wo->getWillAlertWhenPublished();
+        $workorder->printLink = $wo->getIsPrintable();
+
         $descriptionObj = $wo->getDescription();
         $workorder->description = null;
         if ($descriptionObj) {
+            $workorder->description = new \stdClass();
             $workorder->description->category = $descriptionObj->getCategoryId();
             $workorder->description->title = $descriptionObj->getTitle();
             $workorder->description->description = $descriptionObj->getDescription();
-            $workorder->description->instruction = $descriptionObj->getInstruction();
+            $workorder->description->instructions = $descriptionObj->getInstruction();
         }
 
         $locationObj = $wo->getLocation();
-        $locationObj->location = null;
+        $workorder->location = null;
         if ($locationObj) {
+            $workorder->location = new \stdClass();
             $workorder->location->type = $locationObj->getType();
             $workorder->location->name = $locationObj->getName();
             $workorder->location->address1 = $locationObj->getAddress1();
@@ -897,33 +905,56 @@ class SoapClient implements ClientInterface
         }
         
         $startTime = $wo->getStartTime();
+        $workorder->startTime = null;
         if ($startTime) {
+            $workorder->startTime = new \stdClass();
             $workorder->startTime->timeBegin = $startTime->getTimeBegin()->format(\DATE_ATOM);
             $workorder->startTime->timeEnd = $startTime->getTimeEnd()->format(\DATE_ATOM);
         }
 
         $payInfo = $wo->getPayInfo();
+        $workorder->payInfo = null;
         if ($payInfo) {
+            $workorder->payInfo = new \stdClass();
             $payFixed = $payInfo->getFixed();
+            $workorder->payInfo->fixed = null;
             if ($payFixed) {
+                $workorder->payInfo->fixed = new \stdClass();
                 $workorder->payInfo->fixed->amount = $payFixed->getAmount();
             }
             $payPerHour = $payInfo->getPerHour();
+            $workorder->payInfo->perHour = null;
             if ($payPerHour) {
+                $workorder->payInfo->perHour = new \stdClass();
                 $workorder->payInfo->perHour->rate = $payPerHour->getRate();
                 $workorder->payInfo->perHour->maxUnits = $payPerHour->getMaxUnits();
             }
             $payPerDevice = $payInfo->getPerDevice();
+            $workorder->payInfo->perDevice = null;
             if ($payPerDevice) {
+                $workorder->payInfo->perDevice = new \stdClass();
                 $workorder->payInfo->perDevice->rate = $payPerDevice->getRate();
                 $workorder->payInfo->perDevice->maxUnits = $payPerDevice->getMaxUnits();
             }
             $payBlended = $payInfo->getBlended();
+            $workorder->payInfo->blend = null;
             if ($payBlended) {
+                $workorder->payInfo->blended = new \stdClass();
                 $workorder->payInfo->blended->baseAmount = $payBlended->getBaseAmount();
                 $workorder->payInfo->blended->baseHours = $payBlended->getBaseHours();
                 $workorder->payInfo->blended->additionalHourlyRate = $payBlended->getAdditionalHourlyRate();
                 $workorder->payInfo->blended->maxAdditionalHours = $payBlended->getMaxAdditionalHours();
+            }
+        }
+
+        $additionalFields = $wo->getAdditionalFields();
+        $workorder->additionalFields = array();
+        if (is_array($additionalFields)) {
+            foreach ($additionalFields as $fieldObj) {
+                $field = new \stdClass();
+                $field->name = $fieldObj->getName();
+                $field->value = $fieldObj->getValue();
+                $workorder->additionalFields[] = $field;
             }
         }
 
