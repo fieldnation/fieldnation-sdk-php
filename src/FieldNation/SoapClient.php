@@ -134,10 +134,10 @@ class SoapClient implements ClientInterface
                 $payInfoObj->setFixed($payFixed);
             }
             if ($wo->payInfo->perHour !== null) {
-                $payPreHour = new RatePay();
-                $payPreHour->setRate($wo->payInfo->perHour->rate);
-                $payPreHour->setMaxUnits($wo->payInfo->perHour->maxUnits);
-                $payInfoObj->setPerDevice($payPreHour);
+                $payPerHour = new RatePay();
+                $payPerHour->setRate($wo->payInfo->perHour->rate);
+                $payPerHour->setMaxUnits($wo->payInfo->perHour->maxUnits);
+                $payInfoObj->setPerHour($payPerHour);
             }
             if ($wo->payInfo->perDevice !== null) {
                 $payDevice = new RatePay();
@@ -172,11 +172,11 @@ class SoapClient implements ClientInterface
 
             $closeoutRequirements = array();
             if (is_array($wo->closeoutReqs)) {
-                foreach ($wo->closeoutReqs as $reqs) {
+                foreach ($wo->closeoutReqs as $req) {
                     $closeoutRequirementObj = new CloseoutRequirement();
-                    $closeoutRequirementObj->setName($reqs->closeout_requirement_name);
-                    $closeoutRequirementObj->setDescription($reqs->closeout_requirement_desc);
-                    $closeoutRequirementObj->setOrder($reqs->closeout_requirement_order);
+                    $closeoutRequirementObj->setName($req->closeout_requirement_name);
+                    $closeoutRequirementObj->setDescription($req->closeout_requirement_desc);
+                    $closeoutRequirementObj->setOrder($req->closeout_requirement_order);
                     $closeoutRequirements[] = $closeoutRequirementObj;
                 }
             }
@@ -871,7 +871,7 @@ class SoapClient implements ClientInterface
     {
         $workorder = new \stdClass();
         $workorder->group = $wo->getGroup();
-        $descriptionObj = $wo->getD;
+        $descriptionObj = $wo->getDescription();
         $workorder->description = null;
         if ($descriptionObj) {
             $workorder->description->category = $descriptionObj->getCategoryId();
@@ -901,7 +901,57 @@ class SoapClient implements ClientInterface
             $workorder->startTime->timeBegin = $startTime->getTimeBegin()->format(\DATE_ATOM);
             $workorder->startTime->timeEnd = $startTime->getTimeEnd()->format(\DATE_ATOM);
         }
-        
+
+        $payInfo = $wo->getPayInfo();
+        if ($payInfo) {
+            $payFixed = $payInfo->getFixed();
+            if ($payFixed) {
+                $workorder->payInfo->fixed->amount = $payFixed->getAmount();
+            }
+            $payPerHour = $payInfo->getPerHour();
+            if ($payPerHour) {
+                $workorder->payInfo->perHour->rate = $payPerHour->getRate();
+                $workorder->payInfo->perHour->maxUnits = $payPerHour->getMaxUnits();
+            }
+            $payPerDevice = $payInfo->getPerDevice();
+            if ($payPerDevice) {
+                $workorder->payInfo->perDevice->rate = $payPerDevice->getRate();
+                $workorder->payInfo->perDevice->maxUnits = $payPerDevice->getMaxUnits();
+            }
+            $payBlended = $payInfo->getBlended();
+            if ($payBlended) {
+                $workorder->payInfo->blended->baseAmount = $payBlended->getBaseAmount();
+                $workorder->payInfo->blended->baseHours = $payBlended->getBaseHours();
+                $workorder->payInfo->blended->additionalHourlyRate = $payBlended->getAdditionalHourlyRate();
+                $workorder->payInfo->blended->maxAdditionalHours = $payBlended->getMaxAdditionalHours();
+            }
+        }
+
+        $labels = $wo->getLabels();
+        $workorder->labels = array();
+        if (is_array($labels)) {
+            foreach ($labels as $labelObj) {
+                $label = new \stdClass();
+                $label->labelId = $labelObj->getId();
+                $label->labelName = $labelObj->getName();
+                $label->hideFromTech = $labelObj->getHideFromTech();
+                $label->techCanEdit = $labelObj->getTechCanEdit();
+                $workorder->labels[] = $label;
+            }
+        }
+
+        $closeoutRequirements = $wo->getCloseoutRequirements();
+        $workorder->closeoutReqs = array();
+        if (is_array($closeoutRequirements)) {
+            foreach ($closeoutRequirements as $closeoutRequirementObj) {
+                $req = new \stdClass();
+                $req->closeout_requirement_name = $closeoutRequirementObj->getName();
+                $req->closeout_requirement_desc = $closeoutRequirementObj->getDescription();
+                $req->closeout_requirement_order = $closeoutRequirementObj->getOrder();
+                $workorder->closeoutReqs[] = $req;
+            }
+        }
+
         return $workorder;
     }
 }
