@@ -3,7 +3,7 @@ parallel(
         node('dind') {
             checkout scm
             docker.image('php:latest').inside {
-                sh 'apt-get update && apt-get install -y git zip php-soap > /dev/null'
+                sh 'apt-get update && apt-get install -y git zip libxml2-dev php-soap > /dev/null'
                 sh 'docker-php-ext-install soap'
                 sh 'make build'
                 sh 'make lint'
@@ -16,7 +16,7 @@ parallel(
         node('dind') {
             checkout scm
             docker.image('php:7.1-cli').inside {
-                sh 'apt-get update && apt-get install -y git zip php-soap > /dev/null'
+                sh 'apt-get update && apt-get install -y git zip libxml2-dev php-soap > /dev/null'
                 sh 'docker-php-ext-install soap'
                 sh 'make build'
                 sh 'make lint'
@@ -29,7 +29,7 @@ parallel(
         node('dind') {
             checkout scm
             docker.image('php:7.0-cli').inside {
-                sh 'apt-get update && apt-get install -y git zip php-soap > /dev/null'
+                sh 'apt-get update && apt-get install -y git zip libxml2-dev php-soap > /dev/null'
                 sh 'docker-php-ext-install soap'
                 sh 'make build'
                 sh 'make lint'
@@ -42,7 +42,7 @@ parallel(
         node('dind') {
             checkout scm
             docker.image('php:5.6-cli').inside {
-                sh 'apt-get update && apt-get install -y git zip php-soap > /dev/null'
+                sh 'apt-get update && apt-get install -y git zip libxml2-dev php-soap > /dev/null'
                 sh 'docker-php-ext-install soap'
                 sh 'make build'
                 sh 'make lint'
