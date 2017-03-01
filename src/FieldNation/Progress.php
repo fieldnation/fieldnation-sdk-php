@@ -146,8 +146,7 @@ class Progress implements ProgressInterface
      */
     public function getClosingNotes()
     {
-        $this->closingNotes;
-        return $this;
+        return $this->closingNotes;
     }
 
     /**
