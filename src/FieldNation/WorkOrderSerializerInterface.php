@@ -86,7 +86,7 @@ interface WorkOrderSerializerInterface
     /**
      * Get labels that are set on the work order.
      *
-     * @return string[]
+     * @return Label[]
      */
     public function getLabels();
 

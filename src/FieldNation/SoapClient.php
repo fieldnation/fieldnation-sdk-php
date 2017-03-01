@@ -109,7 +109,7 @@ class SoapClient implements ClientInterface
             $serviceDescriptionObj->setCategoryId($wo->description->category)
                 ->setTitle($wo->description->title)
                 ->setDescription($wo->description->description)
-                ->setInstruction($wo->description->instruction);
+                ->setInstruction($wo->description->instructions);
             $woObj->setDescription($serviceDescriptionObj);
 
             $serviceLocationObj = new ServiceLocation();
@@ -478,7 +478,15 @@ class SoapClient implements ClientInterface
             self::workorderToStdClass($wo),
             $useTemplate
         );
-        return self::responseToResult($result);
+
+        $result = self::responseToResult($result);
+        $labels = $wo->getLabels();
+        if (count($labels) > 0 && $result->wasSuccessful()) {
+            foreach ($labels as $label) {
+                $this->setLabelOnWorkOrder($result->getWorkOrderId(), $label->getName());
+            }
+        }
+        return $result;
     }
 
     /**
@@ -515,7 +523,7 @@ class SoapClient implements ClientInterface
      */
     public function routeWorkOrderToProvider($workOrderId, $providerId)
     {
-        $result = $this->client->routeWorkOrderToGroup($this->getLogin(), $workOrderId, $providerId);
+        $result = $this->client->routeWorkOrderToProvider($this->getLogin(), $workOrderId, $providerId);
         return self::responseToResult($result);
     }
 
@@ -850,7 +858,7 @@ class SoapClient implements ClientInterface
      * return resultResp converted into Result
      *
      * @param $resultResp
-     * @return Result[]
+     * @return Result
      */
     private static function responseToResult($resultResp)
     {
@@ -861,8 +869,10 @@ class SoapClient implements ClientInterface
             if ($resultResp->success === true) {
                 $response = new SuccessResult($resultResp->message);
             }
-            $response = new FailureResult($resultResp->message);
-            if ($resultResp->workorderID) {
+            else {
+                $response = new FailureResult($resultResp->message);
+            }
+            if (isset($resultResp->workorderID)) {
                 $response->setWorkOrderId($resultResp->workorderID);
             }
             return $response;
@@ -971,8 +981,8 @@ class SoapClient implements ClientInterface
                 $label = new \stdClass();
                 $label->labelId = $labelObj->getId();
                 $label->labelName = $labelObj->getName();
-                $label->hideFromTech = $labelObj->getHideFromTech();
-                $label->techCanEdit = $labelObj->getTechCanEdit();
+                $label->hideFromTech = $labelObj->hideFromTech();
+                $label->techCanEdit = $labelObj->techCanEdit();
                 $workorder->labels[] = $label;
             }
         }
