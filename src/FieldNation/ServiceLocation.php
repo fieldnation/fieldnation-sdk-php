@@ -161,7 +161,7 @@ class ServiceLocation implements ServiceLocationInterface
      */
     public function setPostalCode($postalCode)
     {
-        $this->getPostalCode = $postalCode;
+        $this->postalCode = $postalCode;
         return $this;
     }
 

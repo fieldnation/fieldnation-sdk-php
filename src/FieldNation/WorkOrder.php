@@ -540,4 +540,14 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
     {
         return $this->closeoutRequirements;
     }
+
+    /**
+     * Get the description
+     *
+     * @return ServiceDescriptionInterface
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }

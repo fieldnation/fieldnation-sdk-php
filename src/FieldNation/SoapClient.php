@@ -17,6 +17,7 @@ class SoapClient implements ClientInterface
     private $client;
     private $credentials;
     private $version;
+    private $apiBase;
 
     public function __construct(SDKCredentialsInterface $credentials, $version = null, $apiBase = null)
     {
@@ -705,7 +706,7 @@ class SoapClient implements ClientInterface
      * return the login credentials to use for api call
      *
      * @param $version
-     * @return stdClass
+     * @return \stdClass
      */
     private function getLogin()
     {

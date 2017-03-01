@@ -46,6 +46,6 @@ class SoapClientFactory implements ClientFactoryInterface
      */
     public function getClientVersion()
     {
-        return $this->version || SoapClient::STABLE_SOAP_VERSION;
+        return $this->version ?: SoapClient::STABLE_SOAP_VERSION;
     }
 }

@@ -15,7 +15,7 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
     /**
      * Was the request successful?
      *
-     * @return boolean
+     * @return self
      */
     public function setSuccessful($success)
     {
@@ -80,7 +80,7 @@ class TrackingToShipmentResult implements TrackingToShipmentResultInterface
     /**
      * Set the shipment id, as assigned by Field Nation
      *
-     * @return string
+     * @return self
      */
     public function setShipmentId($id)
     {
