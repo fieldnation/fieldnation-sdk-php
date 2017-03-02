@@ -20,7 +20,14 @@
   },
   "autoload": {
     "psr-4": {
-      "FieldNation\\": "src/FieldNation/",
+      "FieldNation\\": "src/FieldNation/"
+    },
+    "files": [
+      "src/bootstrap.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
       "FieldNation\\Tests\\": "tests/FieldNation/"
     }
   },

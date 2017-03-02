@@ -15,20 +15,20 @@ interface ClassMapFactoryInterface
     public static function get();
 
     /**
-     * @param AdditionalExpenseInterface $additionalExpense
+     * @param $additionalExpense
      * @return self
      */
-    public function setAdditionalExpense(AdditionalExpenseInterface $additionalExpense);
+    public function setAdditionalExpense($additionalExpense);
     /**
      * @return AdditionalExpenseInterface::class
      */
     public function getAdditionalExpense();
 
     /**
-     * @param AdditionalFieldInterface $additionalField
+     * @param $additionalField
      * @return self
      */
-    public function setAdditionalField(AdditionalFieldInterface $additionalField);
+    public function setAdditionalField($additionalField);
 
     /**
      * @return AdditionalFieldInterface::class
@@ -36,10 +36,10 @@ interface ClassMapFactoryInterface
     public function getAdditionalField();
 
     /**
-     * @param BlendedPayInterface $blendedPay
+     * @param $blendedPay
      * @return self
      */
-    public function setBlendedPay(BlendedPayInterface $blendedPay);
+    public function setBlendedPay($blendedPay);
 
     /**
      * @return BlendedPayInterface::class
@@ -47,10 +47,10 @@ interface ClassMapFactoryInterface
     public function getBlendedPay();
 
     /**
-     * @param CheckInOutInterface $checkInOut
+     * @param $checkInOut
      * @return self
      */
-    public function setCheckInOut(CheckInOutInterface $checkInOut);
+    public function setCheckInOut($checkInOut);
 
     /**
      * @return CheckInOutInterface::class
@@ -58,10 +58,10 @@ interface ClassMapFactoryInterface
     public function getCheckInOut();
 
     /**
-     * @param CloseoutRequirementInterface $closeoutRequirement
+     * @param $closeoutRequirement
      * @return self
      */
-    public function setCloseoutRequirement(CloseoutRequirementInterface $closeoutRequirement);
+    public function setCloseoutRequirement($closeoutRequirement);
 
     /**
      * @return CloseoutRequirementInterface::class
@@ -69,10 +69,10 @@ interface ClassMapFactoryInterface
     public function getCloseoutRequirement();
 
     /**
-     * @param CustomFieldInterface $customField
+     * @param $customField
      * @return self
      */
-    public function setCustomField(CustomFieldInterface $customField);
+    public function setCustomField($customField);
 
     /**
      * @return CustomFieldInterface::class
@@ -80,10 +80,10 @@ interface ClassMapFactoryInterface
     public function getCustomField();
 
     /**
-     * @param DocumentInterface $document
+     * @param $document
      * @return self
      */
-    public function setDocument(DocumentInterface $document);
+    public function setDocument($document);
 
     /**
      * @return DocumentInterface::class
@@ -91,10 +91,10 @@ interface ClassMapFactoryInterface
     public function getDocument();
 
     /**
-     * @param FixedPayInterface $fixedPay
+     * @param $fixedPay
      * @return self
      */
-    public function setFixedPay(FixedPayInterface $fixedPay);
+    public function setFixedPay($fixedPay);
 
     /**
      * @return FixedPayInterface::class
@@ -102,10 +102,10 @@ interface ClassMapFactoryInterface
     public function getFixedPay();
 
     /**
-     * @param GroupInterface $group
+     * @param $group
      * @return self
      */
-    public function setGroup(GroupInterface $group);
+    public function setGroup($group);
 
     /**
      * @return GroupInterface::class
@@ -113,10 +113,10 @@ interface ClassMapFactoryInterface
     public function getGroup();
 
     /**
-     * @param HistoryInterface $history
+     * @param $history
      * @return self
      */
-    public function setHistory(HistoryInterface $history);
+    public function setHistory($history);
 
     /**
      * @return HistoryInterface::class
@@ -124,10 +124,10 @@ interface ClassMapFactoryInterface
     public function getHistory();
 
     /**
-     * @param LabelInterface $label
+     * @param $label
      * @return self
      */
-    public function setLabel(LabelInterface $label);
+    public function setLabel($label);
 
     /**
      * @return LabelInterface
@@ -135,10 +135,10 @@ interface ClassMapFactoryInterface
     public function getLabel();
 
     /**
-     * @param MessageInterface $message
+     * @param $message
      * @return self
      */
-    public function setMessage(MessageInterface $message);
+    public function setMessage($message);
 
     /**
      * @return MessageInterface::class
@@ -146,10 +146,10 @@ interface ClassMapFactoryInterface
     public function getMessage();
 
     /**
-     * @param PayInfoInterface $payInfo
+     * @param $payInfo
      * @return self
      */
-    public function setPayInfo(PayInfoInterface $payInfo);
+    public function setPayInfo($payInfo);
 
     /**
      * @return PayInfoInterface::class
@@ -157,10 +157,10 @@ interface ClassMapFactoryInterface
     public function getPayInfo();
 
     /**
-     * @param PaymentDeductionInterface $paymentDeduction
+     * @param $paymentDeduction
      * @return self
      */
-    public function setPaymentDeduction(PaymentDeductionInterface $paymentDeduction);
+    public function setPaymentDeduction($paymentDeduction);
 
     /**
      * @return PaymentDeductionInterface::class
@@ -168,10 +168,10 @@ interface ClassMapFactoryInterface
     public function getPaymentDeduction();
 
     /**
-     * @param PaymentInterface $payment
+     * @param $payment
      * @return self
      */
-    public function setPayment(PaymentInterface $payment);
+    public function setPayment($payment);
 
     /**
      * @return PaymentInterface::class
@@ -179,10 +179,10 @@ interface ClassMapFactoryInterface
     public function getPayment();
 
     /**
-     * @param ProblemInterface $problem
+     * @param $problem
      * @return mixed
      */
-    public function setProblem(ProblemInterface $problem);
+    public function setProblem($problem);
 
     /**
      * @return ProblemInterface::class
@@ -190,10 +190,10 @@ interface ClassMapFactoryInterface
     public function getProblem();
 
     /**
-     * @param ProgressInterface $progress
+     * @param $progress
      * @return self
      */
-    public function setProgress(ProgressInterface $progress);
+    public function setProgress($progress);
 
     /**
      * @return ProblemInterface::class
@@ -201,10 +201,10 @@ interface ClassMapFactoryInterface
     public function getProgress();
 
     /**
-     * @param ProjectInterface $project
+     * @param $project
      * @return self
      */
-    public function setProject(ProjectInterface $project);
+    public function setProject($project);
 
     /**
      * @return ProjectInterface::class
@@ -212,10 +212,10 @@ interface ClassMapFactoryInterface
     public function getProject();
 
     /**
-     * @param RatePayInterface $ratePay
+     * @param $ratePay
      * @return self
      */
-    public function setRatePay(RatePayInterface $ratePay);
+    public function setRatePay($ratePay);
 
     /**
      * @return RatePayInterface::class
@@ -223,10 +223,10 @@ interface ClassMapFactoryInterface
     public function getRatePay();
 
     /**
-     * @param ServiceDescriptionInterface $serviceDescription
+     * @param $serviceDescription
      * @return self
      */
-    public function setServiceDescription(ServiceDescriptionInterface $serviceDescription);
+    public function setServiceDescription($serviceDescription);
 
     /**
      * @return ServiceDescriptionInterface
@@ -234,10 +234,10 @@ interface ClassMapFactoryInterface
     public function getServiceDescription();
 
     /**
-     * @param ServiceLocationInterface $serviceLocation
+     * @param $serviceLocation
      * @return self
      */
-    public function setServiceLocation(ServiceLocationInterface $serviceLocation);
+    public function setServiceLocation($serviceLocation);
 
     /**
      * @return ServiceLocationInterface::class
@@ -245,10 +245,10 @@ interface ClassMapFactoryInterface
     public function getServiceLocation();
 
     /**
-     * @param ShipmentHistoryInterface $shipmentHistory
+     * @param $shipmentHistory
      * @return self
      */
-    public function setShipmentHistory(ShipmentHistoryInterface $shipmentHistory);
+    public function setShipmentHistory($shipmentHistory);
 
     /**
      * @return ShipmentHistoryInterface::class
@@ -256,10 +256,10 @@ interface ClassMapFactoryInterface
     public function getShipmentHistory();
 
     /**
-     * @param ShipmentInterface $shipment
+     * @param $shipment
      * @return self
      */
-    public function setShipment(ShipmentInterface $shipment);
+    public function setShipment($shipment);
 
     /**
      * @return ShipmentInterface::class
@@ -267,10 +267,10 @@ interface ClassMapFactoryInterface
     public function getShipment();
 
     /**
-     * @param TechnicianInterface $technician
+     * @param $technician
      * @return self
      */
-    public function setTechnician(TechnicianInterface $technician);
+    public function setTechnician($technician);
 
     /**
      * @return TechnicianInterface::class
@@ -278,10 +278,10 @@ interface ClassMapFactoryInterface
     public function getTechnician();
 
     /**
-     * @param TechUploadInterface $techUpload
+     * @param $techUpload
      * @return self
      */
-    public function setTechUpload(TechUploadInterface $techUpload);
+    public function setTechUpload($techUpload);
 
     /**
      * @return TechUploadInterface::class
@@ -289,10 +289,10 @@ interface ClassMapFactoryInterface
     public function getTechUpload();
 
     /**
-     * @param TemplateInterface $template
+     * @param $template
      * @return self
      */
-    public function setTemplate(TemplateInterface $template);
+    public function setTemplate($template);
 
     /**
      * @return TemplateInterface::class
@@ -300,10 +300,10 @@ interface ClassMapFactoryInterface
     public function getTemplate();
 
     /**
-     * @param TimeRangeInterface $timeRange
+     * @param $timeRange
      * @return self
      */
-    public function setTimeRange(TimeRangeInterface $timeRange);
+    public function setTimeRange($timeRange);
 
     /**
      * @return TimeRangeInterface::class
@@ -311,10 +311,10 @@ interface ClassMapFactoryInterface
     public function getTimeRange();
 
     /**
-     * @param WorkLogInterface $workLog
+     * @param $workLog
      * @return self
      */
-    public function setWorkLog(WorkLogInterface $workLog);
+    public function setWorkLog($workLog);
 
     /**
      * @return WorkLogInterface::class
@@ -322,10 +322,10 @@ interface ClassMapFactoryInterface
     public function getWorkLog();
 
     /**
-     * @param WorkOrderInterface $wo
+     * @param $wo
      * @return self
      */
-    public function setWorkOrder(WorkOrderInterface $wo);
+    public function setWorkOrder($wo);
 
     /**
      * @return WorkOrderInterface::class

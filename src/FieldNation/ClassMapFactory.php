@@ -47,10 +47,6 @@ class ClassMapFactory implements ClassMapFactoryInterface
     {
     }
 
-    private function __wakeup()
-    {
-    }
-
     public static function get()
     {
         if (self::$instance == null) {
@@ -61,10 +57,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param AdditionalExpenseInterface $additionalExpense
+     * @param $additionalExpense
      * @return self
      */
-    public function setAdditionalExpense(AdditionalExpenseInterface $additionalExpense)
+    public function setAdditionalExpense($additionalExpense)
     {
         $this->validateType(AdditionalExpenseInterface::class, $additionalExpense);
         $this->additionalExpense = $additionalExpense;
@@ -81,10 +77,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param AdditionalFieldInterface $additionalField
+     * @param $additionalField
      * @return self
      */
-    public function setAdditionalField(AdditionalFieldInterface $additionalField)
+    public function setAdditionalField($additionalField)
     {
         $this->validateType(AdditionalFieldInterface::class, $additionalField);
         $this->additionalField = $additionalField;
@@ -101,10 +97,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param BlendedPayInterface $blendedPay
+     * @param $blendedPay
      * @return self
      */
-    public function setBlendedPay(BlendedPayInterface $blendedPay)
+    public function setBlendedPay($blendedPay)
     {
         $this->validateType(BlendedPayInterface::class, $blendedPay);
         $this->blendedPay = $blendedPay;
@@ -121,10 +117,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param CheckInOutInterface $checkInOut
+     * @param $checkInOut
      * @return self
      */
-    public function setCheckInOut(CheckInOutInterface $checkInOut)
+    public function setCheckInOut($checkInOut)
     {
         $this->validateType(CheckInOutInterface::class, $checkInOut);
         $this->checkInOut = $checkInOut;
@@ -141,10 +137,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param CloseoutRequirementInterface $closeoutRequirement
+     * @param $closeoutRequirement
      * @return self
      */
-    public function setCloseoutRequirement(CloseoutRequirementInterface $closeoutRequirement)
+    public function setCloseoutRequirement($closeoutRequirement)
     {
         $this->validateType(CloseoutRequirementInterface::class, $closeoutRequirement);
         $this->closeoutRequirement = $closeoutRequirement;
@@ -161,10 +157,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param CustomFieldInterface $customField
+     * @param $customField
      * @return self
      */
-    public function setCustomField(CustomFieldInterface $customField)
+    public function setCustomField($customField)
     {
         $this->validateType(CustomFieldInterface::class, $customField);
         $this->customField = $customField;
@@ -181,10 +177,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param DocumentInterface $document
+     * @param $document
      * @return self
      */
-    public function setDocument(DocumentInterface $document)
+    public function setDocument($document)
     {
         $this->validateType(DocumentInterface::class, $document);
         $this->document = $document;
@@ -201,10 +197,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param FixedPayInterface $fixedPay
+     * @param $fixedPay
      * @return self
      */
-    public function setFixedPay(FixedPayInterface $fixedPay)
+    public function setFixedPay($fixedPay)
     {
         $this->validateType(FixedPayInterface::class, $fixedPay);
         $this->fixedPay = $fixedPay;
@@ -221,10 +217,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param GroupInterface $group
+     * @param $group
      * @return self
      */
-    public function setGroup(GroupInterface $group)
+    public function setGroup($group)
     {
         $this->validateType(GroupInterface::class, $group);
         $this->group = $group;
@@ -241,10 +237,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param HistoryInterface $history
+     * @param $history
      * @return self
      */
-    public function setHistory(HistoryInterface $history)
+    public function setHistory($history)
     {
         $this->validateType(HistoryInterface::class, $history);
         $this->history = $history;
@@ -261,10 +257,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param LabelInterface $label
+     * @param $label
      * @return self
      */
-    public function setLabel(LabelInterface $label)
+    public function setLabel($label)
     {
         $this->validateType(LabelInterface::class, $label);
         $this->label = $label;
@@ -281,10 +277,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param MessageInterface $message
+     * @param $message
      * @return self
      */
-    public function setMessage(MessageInterface $message)
+    public function setMessage($message)
     {
         $this->validateType(MessageInterface::class, $message);
         $this->message = $message;
@@ -301,10 +297,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param PayInfoInterface $payInfo
+     * @param $payInfo
      * @return self
      */
-    public function setPayInfo(PayInfoInterface $payInfo)
+    public function setPayInfo($payInfo)
     {
         $this->validateType(PayInfoInterface::class, $payInfo);
         $this->payInfo = $payInfo;
@@ -321,12 +317,12 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param PaymentDeductionInterface $paymentDeduction
+     * @param $paymentDeduction
      * @return self
      */
-    public function setPaymentDeduction(PaymentDeductionInterface $paymentDeduction)
+    public function setPaymentDeduction($paymentDeduction)
     {
-        $this->validateType(PaymentInterface::class, $paymentDeduction);
+        $this->validateType(PaymentDeductionInterface::class, $paymentDeduction);
         $this->paymentDeduction = $paymentDeduction;
         return $this;
     }
@@ -341,10 +337,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param PaymentInterface $payment
+     * @param $payment
      * @return self
      */
-    public function setPayment(PaymentInterface $payment)
+    public function setPayment($payment)
     {
         $this->validateType(PaymentInterface::class, $payment);
         $this->payment = $payment;
@@ -361,10 +357,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param ProblemInterface $problem
+     * @param $problem
      * @return mixed
      */
-    public function setProblem(ProblemInterface $problem)
+    public function setProblem($problem)
     {
         $this->validateType(ProblemInterface::class, $problem);
         $this->problem = $problem;
@@ -381,10 +377,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param ProgressInterface $progress
+     * @param $progress
      * @return self
      */
-    public function setProgress(ProgressInterface $progress)
+    public function setProgress($progress)
     {
         $this->validateType(ProgressInterface::class, $progress);
         $this->progress = $progress;
@@ -404,9 +400,9 @@ class ClassMapFactory implements ClassMapFactoryInterface
      * @param ProjectInterface $project
      * @return self
      */
-    public function setProject(ProjectInterface $project)
+    public function setProject($project)
     {
-        $this->validateType(ProblemInterface::class, $project);
+        $this->validateType(ProjectInterface::class, $project);
         $this->project = $project;
         return $this;
     }
@@ -421,10 +417,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param RatePayInterface $ratePay
+     * @param $ratePay
      * @return self
      */
-    public function setRatePay(RatePayInterface $ratePay)
+    public function setRatePay($ratePay)
     {
         $this->validateType(RatePayInterface::class, $ratePay);
         $this->ratePay = $ratePay;
@@ -441,10 +437,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param ServiceDescriptionInterface $serviceDescription
+     * @param $serviceDescription
      * @return self
      */
-    public function setServiceDescription(ServiceDescriptionInterface $serviceDescription)
+    public function setServiceDescription($serviceDescription)
     {
         $this->validateType(ServiceDescriptionInterface::class, $serviceDescription);
         $this->serviceDescription = $serviceDescription;
@@ -461,10 +457,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param ServiceLocationInterface $serviceLocation
+     * @param $serviceLocation
      * @return self
      */
-    public function setServiceLocation(ServiceLocationInterface $serviceLocation)
+    public function setServiceLocation($serviceLocation)
     {
         $this->validateType(ServiceLocationInterface::class, $serviceLocation);
         $this->serviceLocation = $serviceLocation;
@@ -481,10 +477,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param ShipmentHistoryInterface $shipmentHistory
+     * @param $shipmentHistory
      * @return self
      */
-    public function setShipmentHistory(ShipmentHistoryInterface $shipmentHistory)
+    public function setShipmentHistory($shipmentHistory)
     {
         $this->validateType(ShipmentInterface::class, $shipmentHistory);
         $this->shipmentHistory = $shipmentHistory;
@@ -504,7 +500,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      * @param ShipmentInterface $shipment
      * @return self
      */
-    public function setShipment(ShipmentInterface $shipment)
+    public function setShipment($shipment)
     {
         $this->validateType(ShipmentInterface::class, $shipment);
         $this->shipment = $shipment;
@@ -521,12 +517,12 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param TechnicianInterface $technician
+     * @param $technician
      * @return self
      */
-    public function setTechnician(TechnicianInterface $technician)
+    public function setTechnician($technician)
     {
-        $this->validateType(TechUploadInterface::class, $technician);
+        $this->validateType(TechnicianInterface::class, $technician);
         $this->technician = $technician;
         return $this;
     }
@@ -541,10 +537,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param TechUploadInterface $techUpload
+     * @param $techUpload
      * @return self
      */
-    public function setTechUpload(TechUploadInterface $techUpload)
+    public function setTechUpload($techUpload)
     {
         $this->validateType(TechUploadInterface::class, $techUpload);
         $this->techUpload = $techUpload;
@@ -564,7 +560,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      * @param TemplateInterface $template
      * @return self
      */
-    public function setTemplate(TemplateInterface $template)
+    public function setTemplate($template)
     {
         $this->validateType(TemplateInterface::class, $template);
         $this->template = $template;
@@ -581,10 +577,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param TimeRangeInterface $timeRange
+     * @param $timeRange
      * @return self
      */
-    public function setTimeRange(TimeRangeInterface $timeRange)
+    public function setTimeRange($timeRange)
     {
         $this->validateType(TimeRangeInterface::class, $timeRange);
         $this->timeRange = $timeRange;
@@ -601,10 +597,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param WorkLogInterface $workLog
+     * @param $workLog
      * @return self
      */
-    public function setWorkLog(WorkLogInterface $workLog)
+    public function setWorkLog($workLog)
     {
         $this->validateType(WorkLogInterface::class, $workLog);
         $this->workLog = $workLog;
@@ -621,10 +617,10 @@ class ClassMapFactory implements ClassMapFactoryInterface
 
     /**
      * @throws \TypeError
-     * @param WorkOrderInterface $wo
+     * @param $wo
      * @return self
      */
-    public function setWorkOrder(WorkOrderInterface $wo)
+    public function setWorkOrder($wo)
     {
         $this->validateType(WorkOrderInterface::class, $wo);
         $this->workOrder = $wo;
@@ -648,7 +644,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
     {
         $implementations = class_implements($actual);
         if (!in_array($expected, $implementations)) {
-            throw new \TypeError('The injected class ' . $expected . ' does not implement ' . $expected);
+            throw new \TypeError('The injected class ' . $actual . ' does not implement ' . $expected);
         }
     }
 }
