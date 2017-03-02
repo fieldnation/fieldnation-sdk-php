@@ -515,7 +515,7 @@ $result = $fnWorkOrder->addShipment($shipment);
 If a shipment no longer needs to be tracked delete it from your work order.
 ```php
 // If you don't have the Field Nation shipment id, you can get it with your tracking number
-$result = $sdk->getShippingIdFrom('my-tracking-number');
+$result = $fn->getShippingIdFrom('my-tracking-number');
 $shipment = new \FieldNation\Shipment();
 $shipment->setId($result->getShipmentId());
 
@@ -629,7 +629,7 @@ $status = \FieldNation\WorkOrderStatuses::PUBLISHED
 /**
  * @returns \FieldNation\WorkOrderInterface[]
  */
-$workOrders = $sdk->getWorkOrders($status);
+$workOrders = $fn->getWorkOrders($status);
 ```
 
 ### Get Your Projects
@@ -638,7 +638,7 @@ Use to get all of the projects for your company.
 /**
  * @returns \FieldNation\ProjectInterface[]
  */
-$projects = $sdk->getProjects();
+$projects = $fn->getProjects();
 ```
 
 ### Get Your Documents
@@ -647,7 +647,7 @@ Get all of the documents for your company.
 /**
  * @returns \FieldNation\DocumentInterface[]
  */
-$documents = $sdk->getDocuments();
+$documents = $fn->getDocuments();
 ```
 
 ### Convert a Tracking Number to a Shipping ID
@@ -657,7 +657,7 @@ but didn't save the Field Nation shipping ID you can get it here.
 /**
  * @returns string
  */
-$shippingId = $sdk->getShippingIdFrom('my-tracking-number');
+$shippingId = $fn->getShippingIdFrom('my-tracking-number');
 ```
 
 ### Using Your Classes
@@ -667,7 +667,7 @@ interfaces with plain ol' php objects as a set of defaults, but if your classes 
 configure the SDK to use your classes. The only hard rule we have is that your class _must_ implement the interface
 for the type you're trying to inject. If your class doesn't implement the interface we _will_ throw a `TypeError`.
 
-Example replacing our WorkOrder with your class that implements our WorkOrderInterface.
+Example replacing our `WorkOrder` with your class that implements our `WorkOrderInterface`.
 
 ```php
 use \FieldNation\SDK;
@@ -737,13 +737,13 @@ fixed on their own you will have to manually fix them. `composer lint:check` sho
 Please see the `CHANGELOG` or view the [releases](https://github.com/fieldnation/fieldnation-sdk-php/releases).
 
 ## License
-Copyright 2017 [Field Nation](https://www.fieldnation.com)
+Copyright &copy; 2017 [Field Nation](https://www.fieldnation.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+> [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

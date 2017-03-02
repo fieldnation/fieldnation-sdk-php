@@ -44,7 +44,8 @@ class Shipment implements ShipmentInterface
      * @param string $id
      * @return self
      */
-    public function setTrackingId($id) {
+    public function setTrackingId($id)
+    {
         $this->trackingId = $id;
         return $this;
     }
@@ -54,7 +55,8 @@ class Shipment implements ShipmentInterface
      *
      * @return string
      */
-    public function getTrackingId() {
+    public function getTrackingId()
+    {
         return $this->trackingId;
     }
 
