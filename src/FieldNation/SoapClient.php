@@ -672,12 +672,12 @@ class SoapClient implements ClientInterface
      * Delete a Field Nation shipment from a work order
      *
      * @param $shipmentId
-     * @return ResultInterface
+     * @return string
      */
     public function deleteShipment($shipmentId)
     {
         $result = $this->client->deleteShipmentOnWorkorder($this->getLogin(), $shipmentId);
-        return self::responseToResult($result);
+        return $result;
     }
 
     /**
@@ -689,7 +689,7 @@ class SoapClient implements ClientInterface
      */
     public function addShipment($workOrderId, ShipmentInterface $shipment)
     {
-        $result = $this->client->deleteShipmentOnWorkorder(
+        $result = $this->client->addShipmentOnWorkorder(
             $this->getLogin(),
             $workOrderId,
             $shipment->getDescription(),
@@ -698,7 +698,8 @@ class SoapClient implements ClientInterface
             null, // history entry description will default to 'New shipment added'
             'to_site'
         );
-        return self::responseToResult($result);
+        
+        return $result;
     }
 
     /**

@@ -251,7 +251,7 @@ interface ClientInterface
      * Delete a Field Nation shipment from a work order
      *
      * @param $shipmentId
-     * @return ResultInterface
+     * @return string
      */
     public function deleteShipment($shipmentId);
 
@@ -260,7 +260,7 @@ interface ClientInterface
      *
      * @param $workOrderId
      * @param ShipmentInterface $shipment
-     * @return ResultInterface
+     * @return string
      */
     public function addShipment($workOrderId, ShipmentInterface $shipment);
 
