@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
+class WorkOrder implements WorkOrderInterface, RequestableInterface
 {
     use IdentifiableTrait;
     use DescribableTrait;
@@ -22,11 +22,6 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
     private $additionalFields;
     private $labels;
     private $closeoutRequirements;
-
-    public function __construct(ClientInterface $client)
-    {
-        $this->client = $client;
-    }
 
     /**
      * Set the name of the project the work order should be a member of.
@@ -549,5 +544,23 @@ class WorkOrder implements WorkOrderInterface, WorkOrderSerializerInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param ClientInterface $client
+     * @return self
+     */
+    public function setClient(ClientInterface $client)
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    /**
+     * @return ClientInterface
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

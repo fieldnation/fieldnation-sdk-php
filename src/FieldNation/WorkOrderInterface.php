@@ -6,7 +6,7 @@
  */
 namespace FieldNation;
 
-interface WorkOrderInterface extends IdentifiableInterface
+interface WorkOrderInterface extends IdentifiableInterface, WorkOrderSerializerInterface
 {
     /**
      * Set the name of the project the work order should be a member of.

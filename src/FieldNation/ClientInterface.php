@@ -14,7 +14,12 @@ interface ClientInterface
      * @param null $version - The version the client should use. Not all client may support this.
      * @param null $apiBase - base api location ex. https://api.fieldnation.com
      */
-    public function __construct(SDKCredentialsInterface $credentials, $version = null, $apiBase = null);
+    public function __construct(
+        SDKCredentialsInterface $credentials,
+        ClassMapFactoryInterface $classMapFactory,
+        $version = null,
+        $apiBase = null
+    );
     
     /**
      * Get all work orders by status
@@ -267,4 +272,12 @@ interface ClientInterface
      * @return ResultInterface
      */
     public function updateWorkOrderSchedule($workOrderId, TimeRangeInterface $range);
+
+    /**
+     * Set the class map factory that can create the classes needed for the client's return types
+     *
+     * @param ClassMapFactoryInterface $factory
+     * @return self
+     */
+    public function setClassMapFactory(ClassMapFactoryInterface $factory);
 }

@@ -136,7 +136,7 @@ class SDKTest extends \PHPUnit_Framework_TestCase
 
     public function testCanCreateItsOwnDependencies()
     {
-        $sdk = new SDK($this->login);
+        $sdk = new SDK($this->login, $this->injector);
         $this->assertInstanceOf(SDKInterface::class, $sdk);
     }
 }

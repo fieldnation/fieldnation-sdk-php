@@ -11,8 +11,9 @@ interface ClientFactoryInterface
     /**
      * ClientFactoryInterface constructor. The client always needs credentials
      * @param SDKCredentialsInterface $credentials
+     * @param ClassMapFactoryInterface $factory
      */
-    public function __construct(SDKCredentialsInterface $credentials);
+    public function __construct(SDKCredentialsInterface $credentials, ClassMapFactoryInterface $factory);
 
     /**
      * Get a client to fulfil requests

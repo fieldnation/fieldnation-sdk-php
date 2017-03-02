@@ -34,7 +34,8 @@ class WorkOrderTest extends \PHPUnit_Framework_TestCase
     {
         $this->clientMock = $this->createMock(ClientInterface::class);
         $this->woId = rand();
-        $this->wo = new WorkOrder($this->clientMock);
+        $this->wo = new WorkOrder();
+        $this->wo->setClient($this->clientMock);
         $this->wo->setId($this->woId);
     }
 
@@ -84,14 +85,12 @@ class WorkOrderTest extends \PHPUnit_Framework_TestCase
 
     public function testCanGetTheWholeWorkOrder()
     {
-
         $this->wo->setId($this->woId);
         $this->clientMock
              ->expects($this->once())
              ->method('getWorkOrder')
              ->with($this->equalTo($this->woId))
              ->willReturn($this->wo);
-
         $expected = $this->wo->get();
         $this->assertEquals($expected, $this->wo);
         $this->assertInstanceOf(WorkOrderInterface::class, $this->wo);
@@ -302,14 +301,12 @@ class WorkOrderTest extends \PHPUnit_Framework_TestCase
     public function testCanApprove()
     {
         $expected = $this->createMock(ResultInterface::class);
-        $wo = new WorkOrder($this->clientMock);
-        $wo->setId($this->woId);
         $this->clientMock
             ->expects($this->once())
             ->method('approveWorkOrder')
             ->with($this->woId)
             ->willReturn($expected);
-        $actual = $wo->approve();
+        $actual = $this->wo->approve();
         $this->assertEquals($expected, $actual);
     }
 

@@ -10,6 +10,7 @@ class SDK implements SDKInterface
 {
     private $credentials;
     private $client;
+    private static $classMap = null;
 
     /**
      * FieldNation\SDK constructor.
@@ -21,7 +22,6 @@ class SDK implements SDKInterface
         SDKCredentialsInterface $credentials,
         FactoryInjectorInterface $factoryInjector = null
     ) {
-    
         $this->credentials = $credentials;
         $this->load($factoryInjector);
     }
@@ -96,8 +96,21 @@ class SDK implements SDKInterface
         if ($factoryInjector) {
             $this->client = $factoryInjector->getClientFactory()->getClient();
         } else {
-            $clientFactory = new SoapClientFactory($this->credentials);
+            $clientFactory = new SoapClientFactory($this->credentials, self::$classMap);
             $this->client = $clientFactory->getClient();
         }
+    }
+
+    /**
+     * Inject client-implemented classes into the classMapFactory
+     * @param callable $callback
+     * @return void
+     */
+    public static function configure(callable $callback)
+    {
+        if (self::$classMap == null) {
+            self::$classMap = ClassMapFactory::get();
+        }
+        $callback(self::$classMap);
     }
 }

@@ -55,4 +55,10 @@ interface SDKInterface
      * @return DocumentInterface[]
      */
     public function getDocuments();
+
+    /**
+     * @param callable $callback
+     * @return void
+     */
+    public static function configure(callable $callback);
 }
