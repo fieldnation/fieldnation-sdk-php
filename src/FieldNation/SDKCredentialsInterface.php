@@ -52,4 +52,19 @@ interface SDKCredentialsInterface
      * @return string|NULL
      */
     public function getEffectiveUser();
+
+    /**
+     * Set which environment to target
+     *
+     * @param string $env
+     * @return self
+     */
+    public function setEnvironment($env);
+
+    /**
+     * Get the environment we should target
+     *
+     * @return string
+     */
+    public function getEnvironment();
 }

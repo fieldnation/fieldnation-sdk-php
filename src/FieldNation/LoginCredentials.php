@@ -11,6 +11,7 @@ class LoginCredentials implements SDKCredentialsInterface
     private $apiKey;
     private $customerId;
     private $effectiveUser;
+    private $environment;
 
     public function __construct($customerId, $apiKey, $effectiveUser = null)
     {
@@ -50,5 +51,27 @@ class LoginCredentials implements SDKCredentialsInterface
     public function getEffectiveUser()
     {
         return $this->effectiveUser;
+    }
+
+    /**
+     * Set which environment to target
+     *
+     * @param string $env
+     * @return self
+     */
+    public function setEnvironment($env)
+    {
+        $this->environment = $env;
+        return $this;
+    }
+
+    /**
+     * Get the environment we should target
+     *
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        return $this->environment;
     }
 }

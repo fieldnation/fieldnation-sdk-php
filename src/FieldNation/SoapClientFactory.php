@@ -28,7 +28,12 @@ class SoapClientFactory implements ClientFactoryInterface
     public function getClient($version = null)
     {
         $version = $version ?: $this->getClientVersion();
-        return new SoapClient($this->credentials, $this->classMapFactory, $version);
+        return new SoapClient(
+            $this->credentials,
+            $this->classMapFactory,
+            $version,
+            $this->credentials->getEnvironment()
+        );
     }
 
     /**

@@ -11,6 +11,7 @@ class SDK implements SDKInterface
     private $credentials;
     private $client;
     private static $classMap = null;
+    private static $version = null;
 
     /**
      * FieldNation\SDK constructor.
@@ -94,10 +95,10 @@ class SDK implements SDKInterface
     private function load(FactoryInjectorInterface $factoryInjector = null)
     {
         if ($factoryInjector) {
-            $this->client = $factoryInjector->getClientFactory()->getClient();
+            $this->client = $factoryInjector->getClientFactory()->getClient(self::$version);
         } else {
             $clientFactory = new SoapClientFactory($this->credentials, self::$classMap);
-            $this->client = $clientFactory->getClient();
+            $this->client = $clientFactory->getClient(self::$version);
         }
     }
 
@@ -112,5 +113,18 @@ class SDK implements SDKInterface
             self::$classMap = ClassMapFactory::get();
         }
         $callback(self::$classMap);
+    }
+
+    /**
+     * Override the version the client will use.
+     * Make sure you understand what versions the client uses for the SDK version.
+     * The SDK will die a horrific death if you get the version wrong.
+     * Proceed with caution, here be dragons.
+     *
+     * @param $version
+     */
+    public static function overrideClientVersion($version)
+    {
+        self::$version = $version;
     }
 }
