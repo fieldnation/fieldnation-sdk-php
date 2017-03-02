@@ -23,6 +23,21 @@ interface ShipmentInterface extends IdentifiableInterface, DescribableInterface
      */
     public function getVendor();
 
+    /*
+     * Set the tracking id
+     *
+     * @param string $id
+     * @return self
+     */
+    public function setTrackingId($id);
+
+    /**
+     * Get the tracking id
+     *
+     * @return string
+     */
+    public function getTrackingId();
+
     /**
      * Set the shipping status.
      *

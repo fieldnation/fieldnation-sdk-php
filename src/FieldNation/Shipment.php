@@ -14,6 +14,7 @@ class Shipment implements ShipmentInterface
     private $vendor;
     private $status;
     private $lastActivityDate;
+    private $trackingId;
 
     /**
      * Set the shipping vendor.
@@ -35,6 +36,26 @@ class Shipment implements ShipmentInterface
     public function getVendor()
     {
         return $this->vendor;
+    }
+
+    /*
+     * Set the tracking id
+     *
+     * @param string $id
+     * @return self
+     */
+    public function setTrackingId($id) {
+        $this->trackingId = $id;
+        return $this;
+    }
+
+    /**
+     * Get the tracking id
+     *
+     * @return string
+     */
+    public function getTrackingId() {
+        return $this->trackingId;
     }
 
     /**

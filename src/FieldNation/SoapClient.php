@@ -694,7 +694,7 @@ class SoapClient implements ClientInterface
             $workOrderId,
             $shipment->getDescription(),
             $shipment->getVendor(),
-            $shipment->getId(), // tracking id
+            $shipment->getTrackingId(),
             null, // history entry description will default to 'New shipment added'
             'to_site'
         );
