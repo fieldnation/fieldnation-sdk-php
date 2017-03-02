@@ -2,29 +2,59 @@
 # Field Nation PHP SDK
 * [Build Status](#build-status)
 * [Installation](#installation)
+    * [PHP Support](#php-support)
     * [PHP Requirements](#php-requirements)
     * [Installation with Composer](#installation-with-composer)
 * [Usage](#usage)
     * [Authentication](#authentication)
     * [Create a Work Order](#create-a-work-order)
-    * [Update a Work Order](#update-a-work-order)
-* [Interfaces](#interfaces)
+    * [Work Order Actions and Metadata](#work-order-actions)
+        * [Publish](#publish)
+        * [Route to Provider](#route-to-provider)
+        * [Route to Group](#route-to-group)
+        * [Approve](#approve)
+        * [Cancel](#cancel)
+        * [Attach Documents](#attach-documents)
+        * [Detach Documents](#detach-documents)
+        * [Add a Message](#add-a-message)
+        * [Add a Custom Field](#add-a-custom-field)
+        * [Add a Label](#add-a-label)
+        * [Remove a Label](#remove-a-label)
+        * [Resolving a Closeout Requirements](#resolving-a-closeout-requirements)
+        * [Add a Shipment](#add-a-shipment)
+        * [Delete a Shipment](#delete-a-shipment)
+        * [Update Schedule](#update-schedule)
+        * [Get the Entire Work Order](#get-the-entire-work-order)
+        * [Get the Status](#get-the-status)
+        * [Get the Assigned Provider](#get-the-assigned-provider)
+        * [Get Progress](#get-progress)
+        * [Get Payment](#get-payment)
+        * [Get Messages](#get-messages)
+        * [Get Attached Documents](#get-attached-documents)
+        * [Get Shipments](#get-shipments)
+    * [Get Your Work Orders](#get-your-work-orders)
+    * [Get Your Projects](#get-your-projects)
+    * [Get Your Documents](#get-your-documents)
+    * [Convert a Tracking Number to a Shipping ID](#convert-a-tracking-number-to-a-shipping-id)
+    * [Using Your Classes](#using-your-classes)
 * [Contributing](#contributing)
     * [Tests](#tests)
     * [Coding Standards](#coding-standards)
 * [Changelog](#changelog)
 * [License](#license)
     
-## Build Status [![Build Status](https://jnkns.fndev.net/job/fieldnation-php-sdk/badge/icon)](https://jnkns.fndev.net/job/fieldnation-php-sdk/)
-
-| PHP 5.6 | PHP 7.0 | PHP 7.1 |  HHVM  |
-| :-----: | :-----: | :-----: | :----: |
-| shield  | shield  | shield  | shield |
+## Build Status
+[![Build Status](https://jnkns.fndev.net/job/fieldnation-php-sdk/badge/icon)](https://jnkns.fndev.net/job/fieldnation-php-sdk/)
 
 ## Installation
 
+### PHP Support
+* PHP 5.6+
+* PHP 7+
+* HHVM
+
 ### PHP Requirements
-Your php version needs to have [Soap](http://php.net/manual/en/book.soap.php) enabled.
+Your php runtime needs to have [Soap](http://php.net/manual/en/book.soap.php) enabled.
 Follow the [installation instructions](http://php.net/manual/en/soap.setup.php) for enabling the Soap module.
 
 ### Installation with Composer
@@ -35,7 +65,7 @@ $ composer require fieldnation/fieldnation-sdk
 
 ## Usage
 The key concept to successfully integrating with Field Nation is describing how your business objects
-become Field Nation objects,. We provide interfaces for describing how your data can be
+become Field Nation objects. We provide interfaces for describing how your data can be
 created on Field Nation.
 
 ### Authentication
@@ -45,7 +75,7 @@ You can create an API key at `https://app.fieldnation.com/api`. Once you have a 
 <?php
 $fnCompanyId = $_ENV['FIELD_NATION_COMPANY_ID'];
 $fnApiKey = $_ENV['FIELD_NATION_API_KEY'];
-$fnEffectiveUser = $_ENV['FIELD_NATION_EFFECTIVE_USER'];
+$fnEffectiveUser = $_ENV['FIELD_NATION_EFFECTIVE_USER']; // optional - First admin user will be used if not provided.
 $credentials = new \FieldNation\LoginCredentials($fnCompanyId, $fnApiKey, $fnEffectiveUser);
 $fn = new \FieldNation\SDK($credentials);
 ````
@@ -279,11 +309,13 @@ $fnWorkOrder = $fn->createWorkOrder($myTicket);
 $myTicket->setFieldNationId($fnWorkOrder->getId());
 ````
 
-### Update a Work Order
-Updating a work order is similar to creating a work order. There are granular actions that you can take on a work order.
+### Work Order Actions and Metadata
+Updating a work order is similar to creating a work order, but there are granular 
+actions that you can make on a work order instance.
 
-There are 2 ways of getting a Field Nation work order object. 1) If you just created one through the SDK::createWorkOrder method
-and 2) If you called the SDK::getExistingWorkOrder method.
+There are 2 ways of getting a Field Nation work order object.
+1) If you just created one through the SDK::createWorkOrder method
+2) If you called the SDK::getExistingWorkOrder method.
 ```php
 <?php
 
@@ -309,78 +341,378 @@ $ticket = $db->getTicket(1234); // pseudo code for fetching your ticket
 $fnWorkOrder = $fn->getExistingWorkOrder($ticket->fnId);
 ```
 
-Now that you have a Field Nation work order there are a lot of actions you can run on it.
-* get                    -- Get the entire Field Nation work order
-* getStatus              -- Get the status of a work order
-* getAssignedProvider    -- Get the assigned provider of a work order
-* getProgress            -- Get the progress of a work order
-* getPayment             -- Get the work order approval cost
-* getMessages            -- Get all of the messages posted to a work order
-* getAttachedDocuments   -- Get all of the attached documents for a work order
-* getShipments           -- Get all of the shipments tracked by a work order
-* publish                -- Publish the work order on Field Nation
-* routeTo                -- Route the work order to either a Provider or a Group
-* approve                -- Approve the work order
-* cancel                 -- Cancel the work order and start again
-* attach                 -- Attach an existing document to the work order
-* detach                 -- Detach a document from the work order
-* addMessage             -- Add a message to the work order
-* addAdditionalFields    -- Add a custom field to the work order
-* addLabel               -- Add a label to the work order
-* removeLabel            -- Remove a label from the work order
-* satisfyCloseoutRequest -- Mark a close out request as resolved
-* addShipment            -- Add a shipment to track to the work order
-* deleteShipment         -- Remove a tracked shipment from the work order
-* updateSchedule         -- Update the work order schedule
+Now that you have a Field Nation work order instance you can execute actions or get metadata about it.
 
-Most of these methods that provide actions (non-getters) require that you call the method with an interface describing your data.
-The interface implementation for these required objects is no different than the `WorkOrderSerializerInterface` -- they are just more specific.
-To see what is required for a specific method, please see the `WorkOrderInterface` documentation.
+#### Publish
+Publish your work order on Field Nation
+```php
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->publish();
+```
 
-## Interfaces
-All of the SDK types are described by interfaces. You can be confident that if you use classes you created
-that implement these interfaces that they will _always_ work with the SDK unless otherwise noted in the `CHANGELOG`.
-These interfaces are well documented in the source code.
+#### Route to Provider
+Route your work order to a Provider. 
+When creating a Provider object you need to set the Provider ID so it will be properly routed.
+```php
+/**
+ * Create a provider object to route to
+ */
+$provider = new \FieldNation\Technician();
+$provider->setId('1');
 
-* `AdditionalExpenseInterface`
-* `AdditionalFieldInterface`
-* `BlendedPayInterface`
-* `CheckInOutInterface`
-* `ClientFactoryInterface`
-* `ClientInterface`
-* `CustomFieldInterface`
-* `DescribableInterface`
-* `DocumentInterface`
-* `FixedPayInterface`
-* `GroupInterface`
-* `HistoryInterface`
-* `IdentifiableInterface`
-* `LabelInterface`
-* `MessageInterface`
-* `PayIntoInterface`
-* `PaymentDeductionInterface`
-* `PaymentInterface`
-* `ProblemInterface`
-* `ProgressInterface`
-* `ProjectInterface`
-* `RatePayInterface`
-* `RecipientInterface`
-* `ResultInterface`
-* `SDKCredentialsInterface`
-* `SDKInterface`
-* `ServiceDescriptionInterface`
-* `ServiceLocationInterface`
-* `ShipmentHistoryInterface`
-* `ShipmentInterface`
-* `TechnicianInterface`
-* `TechUploadInterface`
-* `TemplateInterface`
-* `TimeRangeInterface`
-* `TrackingToShipmentResultInterface`
-* `UserInterface`
-* `WorkLogInterface`
-* `WorkOrderInterface`
-* `WorkOrderSerializerInterface`
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->routeTo($provider);
+```
+
+#### Route to Group
+Route your work order to a Group.
+When creating a Group object you need to set the Group ID so it will be properly routed.
+```php
+/**
+ * Create a group to route to
+ */
+$group = new \FieldNation\Group();
+$group->setId('100');
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->routeTo($group);
+```
+
+#### Approve
+Approve your work order.
+```php
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->approve();
+```
+
+#### Cancel
+Sometimes you need to cancel your work order and start over.
+```php
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->cancel();
+```
+
+#### Attach Documents
+Attach a document to your work order.
+```php
+/**
+ * Create your document.
+ */
+ $document = new \FieldNation\Document();
+ $document->setTitle('Instructions');
+ $document->setType('application/pdf');
+ $document->setUpdateTime(new \DateTime('now', new \DateTimeZone('UTC')));
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->attach($document);
+```
+
+#### Detach Documents
+Remove a document from your work order.
+```php
+/**
+ * Create the document object
+ */
+$document = new \FieldNation\Document();
+$document->setTitle('Instructions');
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->detach($document);
+```
+
+#### Add a Custom Field
+Your work orders are yours. Make them yours by adding a custom field.
+```php
+/**
+ * One of your custom fields
+ */
+$field = new \FieldNation\CustomField();
+$field->setName('My Business Ticket ID');
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->addAdditionalField($field);
+```
+
+#### Add a Label
+Add labels to your work order.
+```php
+/**
+ * Create a label
+ */
+$label = new \FieldNation\Label();
+$label->setName('New Work');
+$label->setHideFromTech(true);
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->addLabel($label);
+```
+
+#### Remove a Label
+Remove a label from your work order.
+```php
+/**
+ * Create a label
+ */
+$label = new \FieldNation\Label();
+$label->setName('New Work');
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->removeLabel($label);
+```
+
+#### Resolving a Closeout Requirement
+Mark a closeout requirement as resolved.
+```php
+/**
+ * Closeout Requirement
+ */
+$requirement = new \FieldNation\CloseoutRequirement();
+$requirement->setName('Provider upload picture');
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->resolveCloseoutRequirement($requirement);
+```
+
+#### Add a Shipment
+Add a shipment for Field Nation to track to your work order.
+```php
+/**
+ * Shipment
+ */
+$shipment = new \FieldNation\Shipment();
+$shipment->setVendor('USPS');
+$shipment->setTrackingId('my-tracking-number');
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->addShipment($shipment);
+```
+
+#### Delete a Shipment
+If a shipment no longer needs to be tracked delete it from your work order.
+```php
+// If you don't have the Field Nation shipment id, you can get it with your tracking number
+$result = $sdk->getShippingIdFrom('my-tracking-number');
+$shipment = new \FieldNation\Shipment();
+$shipment->setId($result->getShipmentId());
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->deleteShipment($shipment);
+```
+
+#### Update Schedule
+Things change -- update the schedule for your work order.
+```php
+/**
+ * Create a TimRange object
+ */
+$schedule = new TimeRange();
+$schedule->setTimeBegin(new \DateTime('now'));
+$schedule->setTimeEnd(new \DateTime('now'));
+
+/**
+ * @returns ResultInterface
+ */
+$result = $fnWorkOrder->updateSchedule($schedule);
+```
+
+#### Get the Entire Work Order
+Occasionally it makes sense to get the entire work order. Here's how!
+
+If you need something specific you should be calling that getter directly. This action is expensive so use it when
+you really need it.
+```php
+/**
+ * @returns WorkOrderInterface
+ */
+$fnWorkOrder = $fnWorkOrder->get(); // get all metadata and reassign the existing variable
+```
+
+#### Get the Status
+Get the status of your work order
+```php
+/**
+ * @returns string from \FieldNation\WorkOrderStatuses
+ */
+$status = $fnWorkOrder->getStatus();
+```
+
+#### Get the Assigned Provider
+Get the information about the Provider that is assigned to your work order.
+```php
+/**
+ * @returns \FieldNation\TechnicianInterface
+ */
+$provider = $fnWorkOrder->getAssignedProvider();
+```
+
+#### Get Progress
+Get the progress of your work order.
+```php
+/**
+ * @returns \FieldNation\ProgressInterface
+ */
+$progress = $fnWorkOrder->getProgress();
+```
+
+#### Get Payment
+Get the payment information about your work order.
+```php
+/**
+ * @returns \FieldNation\PaymentInterface
+ */
+$payment = $fnWorkOrder->getPayment();
+```
+
+#### Get Messages
+Get the messages on your work order
+```php
+/**
+ * @returns \FieldNation\MessageInterface[]
+ */
+$messages = $fnWorkOrder->getMessages();
+```
+
+#### Get Attached Documents
+Get the attached documents on your work order.
+```php
+/**
+ * @returns from \FieldNation\Document[]
+ */
+$documents = $fnWorkOrder->getAttachedDocuments();
+```
+
+#### Get Shipments
+Get the tracked shipments for your work order.
+```php
+/**
+ * @returns \FieldNation\Shipment[]
+ */
+$shipments = $fnWorkOrder->getShipments();
+```
+
+### Get Your Work Orders
+Sometimes you need to get all of your work orders. Here's how!
+```php
+/**
+ * Optionally you can filter your query by the status of the work order.
+ * If the status is NULL we'll return all work orders.
+ * You can get statuses from the \FieldNation\WorkOrderStatuses class
+ */
+$status = \FieldNation\WorkOrderStatuses::PUBLISHED
+
+/**
+ * @returns \FieldNation\WorkOrderInterface[]
+ */
+$workOrders = $sdk->getWorkOrders($status);
+```
+
+### Get Your Projects
+Use to get all of the projects for your company.
+```php
+/**
+ * @returns \FieldNation\ProjectInterface[]
+ */
+$projects = $sdk->getProjects();
+```
+
+### Get Your Documents
+Get all of the documents for your company.
+```php
+/**
+ * @returns \FieldNation\DocumentInterface[]
+ */
+$documents = $sdk->getDocuments();
+```
+
+### Convert a Tracking Number to a Shipping ID
+If you have a tracking number for a shipment you created,
+but didn't save the Field Nation shipping ID you can get it here.
+```php
+/**
+ * @returns string
+ */
+$shippingId = $sdk->getShippingIdFrom('my-tracking-number');
+```
+
+### Using Your Classes
+
+You may be wondering if you _have_ to use our PHP classes. The good news is that you don't! We implement all of our own
+interfaces with plain ol' php objects as a set of defaults, but if your classes implement our interfaces you can
+configure the SDK to use your classes. The only hard rule we have is that your class _must_ implement the interface
+for the type you're trying to inject. If your class doesn't implement the interface we _will_ throw a `TypeError`.
+
+Example replacing our WorkOrder with your class that implements our WorkOrderInterface.
+
+```php
+use \FieldNation\SDK;
+use \FieldNation\ClassMapFactoryInterface;
+
+SDK::configure(function (ClassMapFactoryInterface $classMap) {
+    $classMap->setWorkOrder(\MyBusinessNamespace\MyClass::class);
+});
+```
+
+Here is a list of all of the classes that are considered injectable.
+
+```php
+// Default configuration
+SDK::configure(function (ClassMapFactoryInterface $classMap) {
+    $classMap->setAdditionalExpense(\FieldNation\AdditionalExpense::class);
+    $classMap->setAdditionalField(\FieldNation\AdditionalField::class);
+    $classMap->setBlendedPay(\FieldNation\BlendedPay::class);
+    $classMap->setCheckInOut(\FieldNation\CheckInOut::class);
+    $classMap->setCloseoutRequirement(\FieldNation\CloseoutRequirement::class);
+    $classMap->setCustomField(\FieldNation\CustomField::class);
+    $classMap->setDocument(\FieldNation\Document::class);
+    $classMap->setFixedPay(\FieldNation\FixedPay::class);
+    $classMap->setGroup(\FieldNation\Group::class);
+    $classMap->setHistory(\FieldNation\History::class);
+    $classMap->setLabel(\FieldNation\Label::class);
+    $classMap->setMessage(\FieldNation\Message::class);
+    $classMap->setPayInfo(\FieldNation\PayInfo::class);
+    $classMap->setPaymentDeduction(\FieldNation\PaymentDeduction::class);
+    $classMap->setPayment(\FieldNation\Payment::class);
+    $classMap->setProblem(\FieldNation\Problem::class);
+    $classMap->setProgress(\FieldNation\Progress::class);
+    $classMap->setProject(\FieldNation\Project::class);
+    $classMap->setRatePay(\FieldNation\RatePay::class);
+    $classMap->setServiceDescription(\FieldNation\ServiceDescription::class);
+    $classMap->setServiceLocation(\FieldNation\ServiceLocation::class);
+    $classMap->setShipmentHistory(\FieldNation\ShipmentHistory::class);
+    $classMap->setShipment(\FieldNation\Shipment::class);
+    $classMap->setTechnician(\FieldNation\Technician::class);
+    $classMap->setTemplate(\FieldNation\Template::class);
+    $classMap->setTimeRange(\FieldNation\TimeRange::class);
+    $classMap->setWorkLog(\FieldNation\WorkLog::class);
+    $classMap->setWorkOrder(\FieldNation\WorkOrder::class);
+});
+```
 
 ## Contributing
 
