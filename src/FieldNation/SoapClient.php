@@ -146,7 +146,7 @@ class SoapClient implements ClientInterface
                 ->setContactEmail($wo->location->contactEmail);
             $woObj->setLocation($serviceLocationObj);
 
-            $woObj->setStartTime(self::responseToTimeRange($wo->startTime));
+            $woObj->setStartTime($this->responseToTimeRange($wo->startTime));
 
             $payInfoObj = new $this->classMapFactory->getPayInfo();
             if ($wo->payInfo->fixed !== null) {
@@ -176,7 +176,7 @@ class SoapClient implements ClientInterface
             }
             $woObj->setPayInfo($payInfoObj);
 
-            $woObj->setAdditionalFields(self::responseToAdditionalFields($wo->additionalFields));
+            $woObj->setAdditionalFields($this->responseToAdditionalFields($wo->additionalFields));
 
             $labels = array();
             if (is_array($wo->labels)) {
@@ -235,7 +235,7 @@ class SoapClient implements ClientInterface
             $providerObj->setCity($provider->city);
             $providerObj->setState($provider->state);
             $providerObj->setPostalCode($provider->zip);
-            $providerObj->setAdditionalFields(self::responseToAdditionalFields($provider->additionalFields));
+            $providerObj->setAdditionalFields($this->responseToAdditionalFields($provider->additionalFields));
         }
         return $providerObj;
     }
@@ -267,14 +267,14 @@ class SoapClient implements ClientInterface
                 }
             }
             $progressObj->setUploads($uploads);
-            $progressObj->setWorkData(self::responseToAdditionalFields($progress->workData));
+            $progressObj->setWorkData($this->responseToAdditionalFields($progress->workData));
             $progressObj->setClosingNotes($progress->closingNotes);
             $progressObj->setIsAssignmentConfirmed($progress->assignmentConfirmed);
             $progressObj->setIsReadyToGo($progress->readyToGo);
             $workSchedule = array();
             if (is_array($progress->workSchedule)) {
                 foreach ($progress->workSchedule as $schedule) {
-                    $workSchedule[] = self::responseToTimeRange($schedule, 'startTime', 'endTime');
+                    $workSchedule[] = $this->responseToTimeRange($schedule, 'startTime', 'endTime');
                 }
             }
             $progressObj->setWorkSchedule($workSchedule);
@@ -365,7 +365,7 @@ class SoapClient implements ClientInterface
     public function getWorkOrderAttachedDocuments($workOrderId)
     {
         $documents = $this->client->listAttachedCompanyDocuments($this->getLogin(), $workOrderId);
-        return self::responseToDocuments($documents);
+        return $this->responseToDocuments($documents);
     }
 
     /**
@@ -403,7 +403,7 @@ class SoapClient implements ClientInterface
         $response = array();
         if (is_array($projects)) {
             foreach ($projects as $project) {
-                $response[] = self::responseToProject($this, $project);
+                $response[] = $this->responseToProject($this, $project);
             }
         }
         return $response;
@@ -421,7 +421,7 @@ class SoapClient implements ClientInterface
         $projectObj = null;
         // getProjectDetails returning array instead of just Project
         if ($project && count($project) == 1) {
-            $projectObj = self::responseToProject($this, $project[0]);
+            $projectObj = $this->responseToProject($this, $project[0]);
         }
         return $projectObj;
     }
@@ -436,7 +436,7 @@ class SoapClient implements ClientInterface
         $shippingId = $this->client->getShipmentIDFromVendorID($this->getLogin(), $trackingId);
         $shippingIdObj = null;
         if ($shippingId) {
-            $shippingIdObj = new $this->classMapFactory->getTrackingToShipmentResult();
+            $shippingIdObj = new TrackingToShipmentResult();
             $shippingIdObj->setShipmentId($shippingId->workorderShipmentId);
             $shippingIdObj->setWorkOrderId($shippingId->workorderId);
             $shippingIdObj->setSuccessful($shippingId->found);
@@ -481,7 +481,7 @@ class SoapClient implements ClientInterface
     public function getDocuments()
     {
         $documents = $this->client->listCompanyDocuments($this->getLogin());
-        return self::responseToDocuments($documents);
+        return $this->responseToDocuments($documents);
     }
 
     /**
@@ -752,9 +752,9 @@ class SoapClient implements ClientInterface
      * @param $additionalFieldResp
      * @return AdditionalFieldInterface
      */
-    private static function responseToAdditionalField($additionalFieldResp)
+    private function responseToAdditionalField($additionalFieldResp)
     {
-        $additionalField = new AdditionalField();
+        $additionalField = new $this->classMapFactory->getAdditionalField();
         $additionalField->setName($additionalFieldResp->name);
         if ($additionalFieldResp->value !== null) {
             $additionalField->setValue($additionalFieldResp->value);
@@ -768,11 +768,11 @@ class SoapClient implements ClientInterface
      * @param $additionalFieldsResp
      * @return AdditionalFieldInterface[]
      */
-    private static function responseToAdditionalFields($additionalFieldsResp)
+    private function responseToAdditionalFields($additionalFieldsResp)
     {
         $additionalFields = array();
         foreach ($additionalFieldsResp as $field) {
-            $additionalFields[] = self::responseToAdditionalField($field);
+            $additionalFields[] = $this->responseToAdditionalField($field);
         }
         return $additionalFields;
     }
@@ -785,9 +785,9 @@ class SoapClient implements ClientInterface
      * @param $endProp
      * @return TimeRangeInterface
      */
-    private static function responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd')
+    private function responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd')
     {
-        $timeRangeObj = new TimeRange();
+        $timeRangeObj = new $this->classMapFactory->getTimeRange();
         $timeRangeObj
             ->setTimeBegin(self::convertToDateTime($timeRangeResp->$startProp))
             ->setTimeEnd(self::convertToDateTime($timeRangeResp->$endProp));
@@ -813,16 +813,17 @@ class SoapClient implements ClientInterface
      * @return Project
      */
 
-    private static function responseToProject(ClientInterface $client, $projectResp)
+    private function responseToProject(ClientInterface $client, $projectResp)
     {
-        $projectObj = new Project($client);
+        $projectClass = $this->classMapFactory->getProject();
+        $projectObj = new $projectClass($client);
         $projectObj->setId($projectResp->projectId);
         $projectObj->setIsEnabled($projectResp->isEnabled);
         $projectObj->setName($projectResp->projectName);
         $templates = array();
         if (!empty($projectResp->templates)) {
             foreach ($projectResp->templates as $template) {
-                $templateObj = new Template();
+                $templateObj = new $this->classMapFactory->getTemplate();
                 $templateObj->setId($template->workorder_id);
                 $templateObj->setDescription($template->template_description);
                 $templates[] = $templateObj;
@@ -832,7 +833,7 @@ class SoapClient implements ClientInterface
         $managers = array();
         if (is_array($projectResp->managers)) {
             foreach ($projectResp->managers as $manager) {
-                $managerObj = new Manager();
+                $managerObj = new $this->classMapFactory->getManager();
                 $managerObj->setId($manager->user_id);
                 $managerObj->setFullName($manager->full_name);
                 $managers[] = $managerObj;
@@ -842,7 +843,7 @@ class SoapClient implements ClientInterface
         $customFields = array();
         if (is_array($projectResp->customFields)) {
             foreach ($projectResp->customFields as $field) {
-                $fieldObj = new CustomField();
+                $fieldObj = new $this->classMapFactory->getCustomField();
                 $fieldObj->setId($field->custom_field_id);
                 $fieldObj->setName($field->custom_field_name);
                 $customFields[] = $fieldObj;
@@ -858,12 +859,12 @@ class SoapClient implements ClientInterface
      * @param $documentsResp
      * @return Document[]
      */
-    private static function responseToDocuments($documentsResp)
+    private function responseToDocuments($documentsResp)
     {
         $response = array();
         if (is_array($documentsResp)) {
             foreach ($documentsResp as $document) {
-                $documentObj = new Document();
+                $documentObj = new $this->classMapFactory->getDocument();
                 $documentObj->setId($document->documentID);
                 $documentObj->setTitle($document->title);
                 $documentObj->setDescription($document->description);
