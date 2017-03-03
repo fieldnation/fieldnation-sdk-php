@@ -172,7 +172,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function get()
     {
-        return $this->client->getWorkOrder($this->getId());
+        return $this->getClient()->getWorkOrder($this->getId());
     }
 
     /**
@@ -191,7 +191,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getStatus()
     {
-        return $this->client->getWorkOrderStatus($this->getId());
+        return $this->getClient()->getWorkOrderStatus($this->getId());
     }
 
     /**
@@ -201,7 +201,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getAssignedProvider()
     {
-        return $this->client->getWorkOrderAssignedProvider($this->getId());
+        return $this->getClient()->getWorkOrderAssignedProvider($this->getId());
     }
 
     /**
@@ -211,7 +211,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getProgress()
     {
-        return $this->client->getWorkOrderProgress($this->getId(), $this->getAssignedProvider()->getId());
+        return $this->getClient()->getWorkOrderProgress($this->getId(), $this->getAssignedProvider()->getId());
     }
 
     /**
@@ -221,7 +221,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getPayment()
     {
-        return $this->client->getWorkOrderPayment($this->getId());
+        return $this->getClient()->getWorkOrderPayment($this->getId());
     }
 
     /**
@@ -231,7 +231,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getMessages()
     {
-        return $this->client->getWorkOrderMessages($this->getId());
+        return $this->getClient()->getWorkOrderMessages($this->getId());
     }
 
     /**
@@ -241,7 +241,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getAttachedDocuments()
     {
-        return $this->client->getWorkOrderAttachedDocuments($this->getId());
+        return $this->getClient()->getWorkOrderAttachedDocuments($this->getId());
     }
 
     /**
@@ -251,7 +251,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getShipments()
     {
-        return $this->client->getWorkOrderShipments($this->getId());
+        return $this->getClient()->getWorkOrderShipments($this->getId());
     }
 
     /**
@@ -261,7 +261,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function create()
     {
-        return $this->client->createWorkOrder($this, false);
+        return $this->getClient()->createWorkOrder($this, false);
     }
 
     /**
@@ -271,7 +271,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function publish()
     {
-        return $this->client->publishWorkOrder($this->getId());
+        return $this->getClient()->publishWorkOrder($this->getId());
     }
 
     /**
@@ -283,9 +283,9 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
     public function routeTo(RecipientInterface $recipient)
     {
         if ($recipient->isGroup()) {
-            return $this->client->routeWorkOrderToGroup($this->getId(), $recipient->getId());
+            return $this->getClient()->routeWorkOrderToGroup($this->getId(), $recipient->getId());
         } elseif ($recipient->isProvider()) {
-            return $this->client->routeWorkOrderToProvider($this->getId(), $recipient->getId());
+            return $this->getClient()->routeWorkOrderToProvider($this->getId(), $recipient->getId());
         }
 
         // Don't know how else to respond -- Failure!
@@ -303,7 +303,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function approve()
     {
-        return $this->client->approveWorkOrder($this->getId());
+        return $this->getClient()->approveWorkOrder($this->getId());
     }
 
     /**
@@ -313,7 +313,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function cancel($willAcceptFees, $reason = null)
     {
-        return $this->client->cancelWorkOrder($this->getId(), $willAcceptFees, $reason);
+        return $this->getClient()->cancelWorkOrder($this->getId(), $willAcceptFees, $reason);
     }
 
     /**
@@ -324,7 +324,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function attach(DocumentInterface $document)
     {
-        return $this->client->attachDocumentToWorkOrder($this->getId(), $document->getId());
+        return $this->getClient()->attachDocumentToWorkOrder($this->getId(), $document->getId());
     }
 
     /**
@@ -335,7 +335,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function detach(DocumentInterface $document)
     {
-        return $this->client->detachDocumentFromWorkOrder($this->getId(), $document->getId());
+        return $this->getClient()->detachDocumentFromWorkOrder($this->getId(), $document->getId());
     }
 
     /**
@@ -346,7 +346,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function addMessage(MessageInterface $message)
     {
-        return $this->client->addMessageToWorkOrder($this->getId(), $message->getMessage(), $message->getMode());
+        return $this->getClient()->addMessageToWorkOrder($this->getId(), $message->getMessage(), $message->getMode());
     }
 
     /**
@@ -357,7 +357,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function addAdditionalField(AdditionalFieldInterface $field)
     {
-        return $this->client->setCustomFieldOnWorkOrder($this->getId(), $field->getName(), $field->getValue());
+        return $this->getClient()->setCustomFieldOnWorkOrder($this->getId(), $field->getName(), $field->getValue());
     }
 
     /**
@@ -369,7 +369,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function addLabel($labelName)
     {
-        return $this->client->setLabelOnWorkOrder($this->getId(), $labelName);
+        return $this->getClient()->setLabelOnWorkOrder($this->getId(), $labelName);
     }
 
     /**
@@ -380,7 +380,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function removeLabel($labelName)
     {
-        return $this->client->unsetLabelOnWorkOrder($this->getId(), $labelName);
+        return $this->getClient()->unsetLabelOnWorkOrder($this->getId(), $labelName);
     }
 
     /**
@@ -391,7 +391,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function satisfyCloseoutRequest($name)
     {
-        return $this->client->satisfyCloseoutOnWorkOrder($this->getId(), $name);
+        return $this->getClient()->satisfyCloseoutOnWorkOrder($this->getId(), $name);
     }
 
     /**
@@ -402,7 +402,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function deleteShipment(ShipmentInterface $shipment)
     {
-        return $this->client->deleteShipment($shipment->getId());
+        return $this->getClient()->deleteShipment($shipment->getId());
     }
 
     /**
@@ -413,7 +413,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function addShipment(ShipmentInterface $shipment)
     {
-        return $this->client->addShipment($this->getId(), $shipment);
+        return $this->getClient()->addShipment($this->getId(), $shipment);
     }
 
     /**
@@ -424,7 +424,7 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function updateSchedule(TimeRangeInterface $schedule)
     {
-        return $this->client->updateWorkOrderSchedule($this->getId(), $schedule);
+        return $this->getClient()->updateWorkOrderSchedule($this->getId(), $schedule);
     }
 
     /**
@@ -561,6 +561,9 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
      */
     public function getClient()
     {
+        if (!$this->client) {
+            $this->client = SDK::getClient();
+        }
         return $this->client;
     }
 }

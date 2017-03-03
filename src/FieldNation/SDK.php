@@ -9,7 +9,7 @@ namespace FieldNation;
 class SDK implements SDKInterface
 {
     private $credentials;
-    private $client;
+    private static $client;
     private static $classMap = null;
     private static $version = null;
 
@@ -35,7 +35,7 @@ class SDK implements SDKInterface
      */
     public function getWorkOrders($status = null)
     {
-        return $this->client->getWorkOrders($status);
+        return self::$client->getWorkOrders($status);
     }
 
     /**
@@ -47,7 +47,7 @@ class SDK implements SDKInterface
      */
     public function createWorkOrder(WorkOrderSerializerInterface $wo, $useTemplate = false)
     {
-        return $this->client->createWorkOrder($wo, $useTemplate);
+        return self::$client->createWorkOrder($wo, $useTemplate);
     }
 
     /**
@@ -58,7 +58,7 @@ class SDK implements SDKInterface
      */
     public function getExistingWorkOrder($workOrderId)
     {
-        return $this->client->getWorkOrder($workOrderId);
+        return self::$client->getWorkOrder($workOrderId);
     }
 
     /**
@@ -68,7 +68,7 @@ class SDK implements SDKInterface
      */
     public function getProjects()
     {
-        return $this->client->getProjects();
+        return self::$client->getProjects();
     }
 
     /**
@@ -79,7 +79,7 @@ class SDK implements SDKInterface
      */
     public function getShippingIdFrom($trackingNumber)
     {
-        return $this->client->convertTrackingIdToShippingId($trackingNumber);
+        return self::$client->convertTrackingIdToShippingId($trackingNumber);
     }
 
     /**
@@ -89,17 +89,25 @@ class SDK implements SDKInterface
      */
     public function getDocuments()
     {
-        return $this->client->getDocuments();
+        return self::$client->getDocuments();
     }
 
     private function load(FactoryInjectorInterface $factoryInjector = null)
     {
         if ($factoryInjector) {
-            $this->client = $factoryInjector->getClientFactory()->getClient(self::$version);
+            self::$client = $factoryInjector->getClientFactory()->getClient(self::$version);
         } else {
             $clientFactory = new SoapClientFactory($this->credentials, self::$classMap);
-            $this->client = $clientFactory->getClient(self::$version);
+            self::$client = $clientFactory->getClient(self::$version);
         }
+    }
+
+    /**
+     * @return ClientInterface
+     */
+    public static function getClient()
+    {
+        return self::$client;
     }
 
     /**
