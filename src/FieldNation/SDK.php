@@ -6,50 +6,133 @@
  */
 namespace FieldNation;
 
-
-class SDK
+class SDK implements SDKInterface
 {
-    private static $CURRENT_STABLE_SOAP_VERSION = '3.15';
-    protected $version;
+    private $credentials;
+    private static $client;
+    private static $classMap = null;
+    private static $version = null;
 
     /**
      * FieldNation\SDK constructor.
-     * Access the Field Nation SDK, defaulting to CURRENT_STABLE_SOAP_VERSION
-     * @param string $version
+     * Access the Field Nation SDK.
+     * @param SDKCredentialsInterface $credentials - Authenticate to the SDK
+     * @param FactoryInjectorInterface $factoryInjector - Optionally inject a factory to resolve dependencies
      */
-    public function __construct($version='')
-    {
-        $this->version = empty($version)
-            ? self::$CURRENT_STABLE_SOAP_VERSION
-            : $version;
+    public function __construct(
+        SDKCredentialsInterface $credentials,
+        FactoryInjectorInterface $factoryInjector = null
+    ) {
+        $this->credentials = $credentials;
+        $this->load($factoryInjector);
     }
 
     /**
-     * Get the current stable version of the Field Nation SOAP API
-     * @return string
+     * Get all of your work orders
+     *
+     * @param string $status Should be a const from WorkOrderStatuses
+     * @return WorkOrderInterface[]
      */
-    public function getCurrentStableSoapVersion()
+    public function getWorkOrders($status = null)
     {
-        return self::$CURRENT_STABLE_SOAP_VERSION;
+        return self::$client->getWorkOrders($status);
     }
 
     /**
-     * Get the SOAP version the SDK is targeting
-     * @return string
+     * Create a new work order
+     *
+     * @param WorkOrderSerializerInterface $wo
+     * @param  boolean $useTemplate
+     * @return WorkOrderInterface
      */
-    public function getVersion()
+    public function createWorkOrder(WorkOrderSerializerInterface $wo, $useTemplate = false)
     {
-        return $this->version;
+        return self::$client->createWorkOrder($wo, $useTemplate);
     }
 
     /**
-     * Set the SOAP version to target
-     * @param $value
-     * @return $this
+     * Get an existing work order
+     *
+     * @param $workOrderId
+     * @return WorkOrderInterface
      */
-    public function setVersion($value)
+    public function getExistingWorkOrder($workOrderId)
     {
-        $this->version = $value;
-        return $this;
+        return self::$client->getWorkOrder($workOrderId);
+    }
+
+    /**
+     * This method will give you a high level overview of all the projects your company has in Field Nation.
+     *
+     * @return ProjectInterface[]
+     */
+    public function getProjects()
+    {
+        return self::$client->getProjects();
+    }
+
+    /**
+     * Get the shipping ID from a tracking number
+     *
+     * @param string $trackingNumber
+     * @return TrackingToShipmentResultInterface
+     */
+    public function getShippingIdFrom($trackingNumber)
+    {
+        return self::$client->convertTrackingIdToShippingId($trackingNumber);
+    }
+
+    /**
+     * Return an array of all your company documents, as well as some descriptive information.
+     *
+     * @return DocumentInterface[]
+     */
+    public function getDocuments()
+    {
+        return self::$client->getDocuments();
+    }
+
+    private function load(FactoryInjectorInterface $factoryInjector = null)
+    {
+        if ($factoryInjector) {
+            self::$client = $factoryInjector->getClientFactory()->getClient(self::$version);
+        } else {
+            $clientFactory = new SoapClientFactory($this->credentials, self::$classMap);
+            self::$client = $clientFactory->getClient(self::$version);
+        }
+    }
+
+    /**
+     * @return ClientInterface
+     */
+    public static function getClient()
+    {
+        return self::$client;
+    }
+
+    /**
+     * Inject client-implemented classes into the classMapFactory
+     * @param callable $callback
+     * @return void
+     */
+    public static function configure(callable $callback)
+    {
+        if (self::$classMap == null) {
+            self::$classMap = ClassMapFactory::get();
+        }
+        $callback(self::$classMap);
+    }
+
+    /**
+     * Override the version the client will use.
+     * Make sure you understand what versions the client uses for the SDK version.
+     * The SDK will die a horrific death if you get the version wrong.
+     * Proceed with caution, here be dragons.
+     *
+     * @param $version
+     */
+    public static function overrideClientVersion($version)
+    {
+        self::$version = $version;
     }
 }
