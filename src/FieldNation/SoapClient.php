@@ -972,7 +972,12 @@ class SoapClient implements ClientInterface
         if ($startTime) {
             $workorder->startTime = new \stdClass();
             $workorder->startTime->timeBegin = $startTime->getTimeBegin()->format(\DATE_ATOM);
-            $workorder->startTime->timeEnd = $startTime->getTimeEnd()->format(\DATE_ATOM);
+
+            // The timeEnd property is not a required field.
+            $workorder->startTime->timeEnd = null;
+            if ($endTime = $startTime->getTimeEnd()) {
+                $workorder->startTime->timeEnd = $endTime->format(\DATE_ATOM);
+            }
         }
 
         $payInfo = $wo->getPayInfo();
