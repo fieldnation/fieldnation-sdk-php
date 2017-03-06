@@ -98,7 +98,8 @@ class SoapClient implements ClientInterface
         $listWorkOrderIds = $this->client->listWorkOrders($this->getLogin(), $status);
         $response = array();
         foreach ($listWorkOrderIds as $id) {
-            $wo = new $this->classMapFactory->getWorkOrder();
+            $workOrder = $this->classMapFactory->getWorkOrder();
+            $wo = new $workOrder();
             $wo->setClient($this);
             $wo->setId($id);
             $response[] = $wo;
@@ -117,22 +118,25 @@ class SoapClient implements ClientInterface
         $wo = $this->client->getWorkOrder($this->getLogin(), $workOrderId);
         $woObj = null;
         if ($wo) {
-            $woObj = new $this->classMapFactory->getWorkOrder();
+            $workOrder = $this->classMapFactory->getWorkOrder();
+            $woObj = new $workOrder();
             $woObj->setClient($this);
             $woObj->setId($workOrderId);
             $woObj->setGroup($wo->group ?: '')
                 ->setAllowTechUploads($wo->techUploads)
                 ->setWillAlertWhenPublished($wo->alertWhenPublished)
                 ->setIsPrintable($wo->printLink);
-            
-            $serviceDescriptionObj = new $this->classMapFactory->getServiceDescription();
+
+            $serviceDescription = $this->classMapFactory->getServiceDescription();
+            $serviceDescriptionObj = new $serviceDescription();
             $serviceDescriptionObj->setCategoryId($wo->description->category)
                 ->setTitle($wo->description->title)
                 ->setDescription($wo->description->description)
                 ->setInstruction($wo->description->instructions);
             $woObj->setDescription($serviceDescriptionObj);
 
-            $serviceLocationObj = new $this->classMapFactory->getServiceDescription();
+            $serviceLocation = $this->classMapFactory->getServiceLocation();
+            $serviceLocationObj = new $serviceLocation();
             $serviceLocationObj->setType($wo->location->type)
                 ->setName($wo->location->name)
                 ->setAddress1($wo->location->address1)
@@ -148,26 +152,31 @@ class SoapClient implements ClientInterface
 
             $woObj->setStartTime($this->responseToTimeRange($wo->startTime));
 
-            $payInfoObj = new $this->classMapFactory->getPayInfo();
+            $payInfo = $this->classMapFactory->getPayInfo();
+            $payInfoObj = new $payInfo();
             if ($wo->payInfo->fixed !== null) {
-                $payFixed = new $this->classMapFactory->getFixedPay();
+                $fixedPay = $this->classMapFactory->getFixedPay();
+                $payFixed = new $fixedPay();
                 $payFixed->setAmount($wo->payInfo->fixed->amount);
                 $payInfoObj->setFixed($payFixed);
             }
             if ($wo->payInfo->perHour !== null) {
-                $payPerHour = new $this->classMapFactory->getRatePay();
+                $ratePay = $this->classMapFactory->getRatePay();
+                $payPerHour = new $ratePay();
                 $payPerHour->setRate($wo->payInfo->perHour->rate);
                 $payPerHour->setMaxUnits($wo->payInfo->perHour->maxUnits);
                 $payInfoObj->setPerHour($payPerHour);
             }
             if ($wo->payInfo->perDevice !== null) {
-                $payDevice = new $this->classMapFactory->getRatePay();
+                $ratePay = $this->classMapFactory->getRatePay();
+                $payDevice = new $ratePay();
                 $payDevice->setRate($wo->payInfo->perDevice->rate);
                 $payDevice->setMaxUnits($wo->payInfo->perDevice->maxUnits);
                 $payInfoObj->setPerDevice($payDevice);
             }
             if ($wo->payInfo->blended !== null) {
-                $payBlended = new $this->classMapFactory->getBlendedPay();
+                $blended = $this->classMapFactory->getBlendedPay();
+                $payBlended = new $blended();
                 $payBlended->setBaseAmount($wo->payInfo->blended->baseAmount);
                 $payBlended->setBaseHours($wo->payInfo->blended->baseHours);
                 $payBlended->setAdditionalHourlyRate($wo->payInfo->blended->additionalHourlyRate);
@@ -181,7 +190,8 @@ class SoapClient implements ClientInterface
             $labels = array();
             if (is_array($wo->labels)) {
                 foreach ($wo->labels as $label) {
-                    $labelObj = new $this->classMapFactory->getLabel();
+                    $label = $this->classMapFactory->getLabel();
+                    $labelObj = new $label();
                     $labelObj->setId($label->labelId);
                     $labelObj->setName($label->labelName);
                     $labelObj->setHideFromTech($label->hideFromTech);
@@ -194,7 +204,8 @@ class SoapClient implements ClientInterface
             $closeoutRequirements = array();
             if (is_array($wo->closeoutReqs)) {
                 foreach ($wo->closeoutReqs as $req) {
-                    $closeoutRequirementObj = new $this->classMapFactory->getCloseoutRequirement();
+                    $closeoutRequirement = $this->classMapFactory->getCloseoutRequirement();
+                    $closeoutRequirementObj = new $closeoutRequirement();
                     $closeoutRequirementObj->setName($req->closeout_requirement_name);
                     $closeoutRequirementObj->setDescription($req->closeout_requirement_desc);
                     $closeoutRequirementObj->setOrder($req->closeout_requirement_order);
@@ -228,7 +239,8 @@ class SoapClient implements ClientInterface
         $provider = $this->client->getAssignedTech($this->getLogin(), $workOrderId);
         $providerObj = null;
         if ($provider) {
-            $providerObj = new $this->classMapFactory->getTechnician();
+            $tech = $this->classMapFactory->getTechnician();
+            $providerObj = new $tech();
             $providerObj->setId($provider->uid);
             $providerObj->setFirstName($provider->firstName);
             $providerObj->setLastName($provider->lastName);
@@ -252,14 +264,16 @@ class SoapClient implements ClientInterface
         $progress = $this->client->getWorkOrderProgress($this->getLogin(), $workOrderId, $providerId);
         $progressObj = null;
         if ($progress) {
-            $progressObj = new $this->classMapFactory->getProgress();
+            $progressClass = $this->classMapFactory->getProgress();
+            $progressObj = new $progressClass();
             $progressObj->setTotalDevices($progress->totalDevices);
             $progressObj->setTotalHours($progress->totalHours);
             $progressObj->setLoggedWork($progress->loggedWork);
             $uploads = array();
             if (is_array($progress->uploads)) {
                 foreach ($progress->uploads as $upload) {
-                    $uploadObj = new $this->classMapFactory->getTechUpload();
+                    $techUpload = $this->classMapFactory->getTechUpload();
+                    $uploadObj = new $techUpload();
                     $uploadObj->setFileName($upload->filename);
                     $uploadObj->setFileSize($upload->filesize);
                     $uploadObj->setDownloadUrl($upload->downloadUrl);
@@ -293,12 +307,14 @@ class SoapClient implements ClientInterface
         $payment = $this->client->getWorkOrderTotalPayment($this->getLogin(), $workOrderId);
         $paymentObj = null;
         if ($payment) {
-            $paymentObj = new $this->classMapFactory->getPayment();
+            $paymentClass = $this->classMapFactory->getPayment();
+            $paymentObj = new $paymentClass();
 
             $expenses = array();
             if (is_array($payment->expenses)) {
                 foreach ($payment->expenses as $expense) {
-                    $expenseObj = new $this->classMapFactory->getAdditionalExpense();
+                    $additionalExpense = $this->classMapFactory->getAdditionalExpense();
+                    $expenseObj = new $additionalExpense();
                     $expenseObj->setId($expense->expenseID);
                     $expenseObj->setDescription($expense->description);
                     $expenseObj->setExpenseCategory($expense->expenseCategory);
@@ -315,7 +331,8 @@ class SoapClient implements ClientInterface
             $deductions = array();
             if (is_array($payment->deductions)) {
                 foreach ($payment->deductions as $deduction) {
-                    $deductionObj = new $this->classMapFactory->getPaymentDeduction();
+                    $paymentDeduction = $this->classMapFactory->getPaymentDeduction();
+                    $deductionObj = new $paymentDeduction();
                     $deductionObj->setType($deduction->type);
                     $deductionObj->setDescription($deduction->description);
                     $deductionObj->setAmount($deduction->amount);
@@ -323,7 +340,6 @@ class SoapClient implements ClientInterface
                 }
             }
             $paymentObj->setDeductions($deductions);
-
             $paymentObj->setLaborEarned($payment->laborEarned);
             $paymentObj->setTotalApprovedExpenses($payment->totalApprovedExpenses);
             $paymentObj->setTotalDeductions($payment->totalDeductions);
@@ -345,7 +361,8 @@ class SoapClient implements ClientInterface
         $response = array();
         if (is_array($messages)) {
             foreach ($messages as $message) {
-                $messageObj = new $this->classMapFactory->getMessage();
+                $messageClass = $this->classMapFactory->getMessage();
+                $messageObj = new $messageClass();
                 $messageObj->setFrom($message->from);
                 $messageObj->setFromType($message->fromType);
                 $messageObj->setDate($message->date);
@@ -380,7 +397,8 @@ class SoapClient implements ClientInterface
         $response = array();
         if (is_array($shipments)) {
             foreach ($shipments as $shipment) {
-                $shipmentObj = new $this->classMapFactory->getShipment();
+                $shipmentClass = $this->classMapFactory->getShipment();
+                $shipmentObj = new $shipmentClass();
                 $shipmentObj->setId($shipment->shipmentTrackingId);
                 $shipmentObj->setVendor($shipment->vendor);
                 $shipmentObj->setDescription($shipment->description);
@@ -453,7 +471,8 @@ class SoapClient implements ClientInterface
         $shipmentHistory = $this->client->getWorkorderShipmentHistory($this->getLogin(), $shipmentId);
         $shipmentHistoryObj = null;
         if ($shipmentHistory) {
-            $shipmentHistoryObj = new $this->classMapFactory->getShipmentHistory();
+            $shipmentHistoryClass = $this->classMapFactory->getShipmentHistory();
+            $shipmentHistoryObj = new $shipmentHistoryClass();
             $shipmentHistoryObj->setId($shipmentHistory->shipmentTrackingId);
             $shipmentHistoryObj->setVendor($shipmentHistory->vendor);
             $shipmentHistoryObj->setDescription($shipmentHistory->description);
@@ -462,7 +481,8 @@ class SoapClient implements ClientInterface
             $historys = array();
             if (is_array($shipmentHistory->shipmentHistory)) {
                 foreach ($shipmentHistory->shipmentHistory as $history) {
-                    $historyObj = new $this->classMapFactory->getHistory();
+                    $historyClass = $this->classMapFactory->getHistory();
+                    $historyObj = new $historyClass();
                     $historyObj->setEntryDate($history->entry_date);
                     $historyObj->setDescription($history->description);
                     $historys[] = $historyObj;
@@ -754,7 +774,8 @@ class SoapClient implements ClientInterface
      */
     private function responseToAdditionalField($additionalFieldResp)
     {
-        $additionalField = new $this->classMapFactory->getAdditionalField();
+        $additionalFieldClass = $this->classMapFactory->getAdditionalField();
+        $additionalField = new $additionalFieldClass();
         $additionalField->setName($additionalFieldResp->name);
         if ($additionalFieldResp->value !== null) {
             $additionalField->setValue($additionalFieldResp->value);
@@ -787,7 +808,8 @@ class SoapClient implements ClientInterface
      */
     private function responseToTimeRange($timeRangeResp, $startProp = 'timeBegin', $endProp = 'timeEnd')
     {
-        $timeRangeObj = new $this->classMapFactory->getTimeRange();
+        $timeRange = $this->classMapFactory->getTimeRange();
+        $timeRangeObj = new $timeRange();
         $timeRangeObj
             ->setTimeBegin(self::convertToDateTime($timeRangeResp->$startProp))
             ->setTimeEnd(self::convertToDateTime($timeRangeResp->$endProp));
@@ -823,7 +845,8 @@ class SoapClient implements ClientInterface
         $templates = array();
         if (!empty($projectResp->templates)) {
             foreach ($projectResp->templates as $template) {
-                $templateObj = new $this->classMapFactory->getTemplate();
+                $templateClass = $this->classMapFactory->getTemplate();
+                $templateObj = new $templateClass();
                 $templateObj->setId($template->workorder_id);
                 $templateObj->setDescription($template->template_description);
                 $templates[] = $templateObj;
@@ -833,7 +856,8 @@ class SoapClient implements ClientInterface
         $managers = array();
         if (is_array($projectResp->managers)) {
             foreach ($projectResp->managers as $manager) {
-                $managerObj = new $this->classMapFactory->getManager();
+                $managerClass = $this->classMapFactory->getManager();
+                $managerObj = new $managerClass();
                 $managerObj->setId($manager->user_id);
                 $managerObj->setFullName($manager->full_name);
                 $managers[] = $managerObj;
@@ -843,7 +867,8 @@ class SoapClient implements ClientInterface
         $customFields = array();
         if (is_array($projectResp->customFields)) {
             foreach ($projectResp->customFields as $field) {
-                $fieldObj = new $this->classMapFactory->getCustomField();
+                $fieldClass = $this->classMapFactory->getCustomField();
+                $fieldObj = new $fieldClass();
                 $fieldObj->setId($field->custom_field_id);
                 $fieldObj->setName($field->custom_field_name);
                 $customFields[] = $fieldObj;
@@ -864,7 +889,8 @@ class SoapClient implements ClientInterface
         $response = array();
         if (is_array($documentsResp)) {
             foreach ($documentsResp as $document) {
-                $documentObj = new $this->classMapFactory->getDocument();
+                $documentClass = $this->classMapFactory->getDocument();
+                $documentObj = new $documentClass();
                 $documentObj->setId($document->documentID);
                 $documentObj->setTitle($document->title);
                 $documentObj->setDescription($document->description);
