@@ -16,12 +16,12 @@ class WorkOrder implements WorkOrderInterface, RequestableInterface
     private $location;
     private $startTime;
     private $payInfo;
-    private $allowTechUploads;
-    private $willAlertWhenPublished;
-    private $isPrintable;
-    private $additionalFields;
-    private $labels;
-    private $closeoutRequirements;
+    private $allowTechUploads = true;
+    private $willAlertWhenPublished = true;
+    private $isPrintable = true;
+    private $additionalFields = array();
+    private $labels = array();
+    private $closeoutRequirements = array();
 
     /**
      * Set the name of the project the work order should be a member of.

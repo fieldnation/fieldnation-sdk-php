@@ -41,12 +41,15 @@ class SDK implements SDKInterface
     /**
      * Create a new work order
      *
+     * @throws \UnexpectedValueException - WorkOrderSerializerInterface property is not of the expected return type
+     * @throws \InvalidArgumentException - WorkOrderSerializerInterface required property is not found
      * @param WorkOrderSerializerInterface $wo
      * @param  boolean $useTemplate
      * @return WorkOrderInterface
      */
     public function createWorkOrder(WorkOrderSerializerInterface $wo, $useTemplate = false)
     {
+        TypeValidator::validateWorkOrderSerializerInterface($wo);
         return self::$client->createWorkOrder($wo, $useTemplate);
     }
 
