@@ -86,7 +86,7 @@ interface WorkOrderSerializerInterface
     /**
      * Get labels that are set on the work order.
      *
-     * @return Label[]
+     * @return LabelInterface[]
      */
     public function getLabels();
 
@@ -94,7 +94,7 @@ interface WorkOrderSerializerInterface
      * Get a list of requirements to be met before the Work Order is able to be marked Work Done.
      * Currently only configured and satisfied via the API. Should be NULL if not configured.
      *
-     * @return array|NULL
+     * @return CloseoutRequirementInterface[]|NULL
      */
     public function getCloseoutRequirements();
 }

@@ -62,7 +62,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setAdditionalExpense($additionalExpense)
     {
-        $this->validateType(AdditionalExpenseInterface::class, $additionalExpense);
+        TypeValidator::validateType(AdditionalExpenseInterface::class, $additionalExpense);
         $this->additionalExpense = $additionalExpense;
         return $this;
     }
@@ -82,7 +82,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setAdditionalField($additionalField)
     {
-        $this->validateType(AdditionalFieldInterface::class, $additionalField);
+        TypeValidator::validateType(AdditionalFieldInterface::class, $additionalField);
         $this->additionalField = $additionalField;
         return $this;
     }
@@ -102,7 +102,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setBlendedPay($blendedPay)
     {
-        $this->validateType(BlendedPayInterface::class, $blendedPay);
+        TypeValidator::validateType(BlendedPayInterface::class, $blendedPay);
         $this->blendedPay = $blendedPay;
         return $this;
     }
@@ -142,7 +142,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setCloseoutRequirement($closeoutRequirement)
     {
-        $this->validateType(CloseoutRequirementInterface::class, $closeoutRequirement);
+        TypeValidator::validateType(CloseoutRequirementInterface::class, $closeoutRequirement);
         $this->closeoutRequirement = $closeoutRequirement;
         return $this;
     }
@@ -162,7 +162,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setCustomField($customField)
     {
-        $this->validateType(CustomFieldInterface::class, $customField);
+        TypeValidator::validateType(CustomFieldInterface::class, $customField);
         $this->customField = $customField;
         return $this;
     }
@@ -182,7 +182,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setDocument($document)
     {
-        $this->validateType(DocumentInterface::class, $document);
+        TypeValidator::validateType(DocumentInterface::class, $document);
         $this->document = $document;
         return $this;
     }
@@ -202,7 +202,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setFixedPay($fixedPay)
     {
-        $this->validateType(FixedPayInterface::class, $fixedPay);
+        TypeValidator::validateType(FixedPayInterface::class, $fixedPay);
         $this->fixedPay = $fixedPay;
         return $this;
     }
@@ -222,7 +222,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setGroup($group)
     {
-        $this->validateType(GroupInterface::class, $group);
+        TypeValidator::validateType(GroupInterface::class, $group);
         $this->group = $group;
         return $this;
     }
@@ -242,7 +242,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setHistory($history)
     {
-        $this->validateType(HistoryInterface::class, $history);
+        TypeValidator::validateType(HistoryInterface::class, $history);
         $this->history = $history;
         return $this;
     }
@@ -262,7 +262,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setLabel($label)
     {
-        $this->validateType(LabelInterface::class, $label);
+        TypeValidator::validateType(LabelInterface::class, $label);
         $this->label = $label;
         return $this;
     }
@@ -282,7 +282,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setMessage($message)
     {
-        $this->validateType(MessageInterface::class, $message);
+        TypeValidator::validateType(MessageInterface::class, $message);
         $this->message = $message;
         return $this;
     }
@@ -302,7 +302,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setPayInfo($payInfo)
     {
-        $this->validateType(PayInfoInterface::class, $payInfo);
+        TypeValidator::validateType(PayInfoInterface::class, $payInfo);
         $this->payInfo = $payInfo;
         return $this;
     }
@@ -322,7 +322,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setPaymentDeduction($paymentDeduction)
     {
-        $this->validateType(PaymentDeductionInterface::class, $paymentDeduction);
+        TypeValidator::validateType(PaymentDeductionInterface::class, $paymentDeduction);
         $this->paymentDeduction = $paymentDeduction;
         return $this;
     }
@@ -342,7 +342,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setPayment($payment)
     {
-        $this->validateType(PaymentInterface::class, $payment);
+        TypeValidator::validateType(PaymentInterface::class, $payment);
         $this->payment = $payment;
         return $this;
     }
@@ -362,7 +362,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setProblem($problem)
     {
-        $this->validateType(ProblemInterface::class, $problem);
+        TypeValidator::validateType(ProblemInterface::class, $problem);
         $this->problem = $problem;
         return $this;
     }
@@ -382,7 +382,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setProgress($progress)
     {
-        $this->validateType(ProgressInterface::class, $progress);
+        TypeValidator::validateType(ProgressInterface::class, $progress);
         $this->progress = $progress;
         return $this;
     }
@@ -402,7 +402,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setProject($project)
     {
-        $this->validateType(ProjectInterface::class, $project);
+        TypeValidator::validateType(ProjectInterface::class, $project);
         $this->project = $project;
         return $this;
     }
@@ -422,7 +422,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setRatePay($ratePay)
     {
-        $this->validateType(RatePayInterface::class, $ratePay);
+        TypeValidator::validateType(RatePayInterface::class, $ratePay);
         $this->ratePay = $ratePay;
         return $this;
     }
@@ -442,7 +442,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setServiceDescription($serviceDescription)
     {
-        $this->validateType(ServiceDescriptionInterface::class, $serviceDescription);
+        TypeValidator::validateType(ServiceDescriptionInterface::class, $serviceDescription);
         $this->serviceDescription = $serviceDescription;
         return $this;
     }
@@ -462,7 +462,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setServiceLocation($serviceLocation)
     {
-        $this->validateType(ServiceLocationInterface::class, $serviceLocation);
+        TypeValidator::validateType(ServiceLocationInterface::class, $serviceLocation);
         $this->serviceLocation = $serviceLocation;
         return $this;
     }
@@ -482,7 +482,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setShipmentHistory($shipmentHistory)
     {
-        $this->validateType(ShipmentInterface::class, $shipmentHistory);
+        TypeValidator::validateType(ShipmentInterface::class, $shipmentHistory);
         $this->shipmentHistory = $shipmentHistory;
         return $this;
     }
@@ -502,7 +502,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setShipment($shipment)
     {
-        $this->validateType(ShipmentInterface::class, $shipment);
+        TypeValidator::validateType(ShipmentInterface::class, $shipment);
         $this->shipment = $shipment;
         return $this;
     }
@@ -522,7 +522,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setTechnician($technician)
     {
-        $this->validateType(TechnicianInterface::class, $technician);
+        TypeValidator::validateType(TechnicianInterface::class, $technician);
         $this->technician = $technician;
         return $this;
     }
@@ -542,7 +542,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setTechUpload($techUpload)
     {
-        $this->validateType(TechUploadInterface::class, $techUpload);
+        TypeValidator::validateType(TechUploadInterface::class, $techUpload);
         $this->techUpload = $techUpload;
         return $this;
     }
@@ -562,7 +562,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setTemplate($template)
     {
-        $this->validateType(TemplateInterface::class, $template);
+        TypeValidator::validateType(TemplateInterface::class, $template);
         $this->template = $template;
         return $this;
     }
@@ -582,7 +582,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setTimeRange($timeRange)
     {
-        $this->validateType(TimeRangeInterface::class, $timeRange);
+        TypeValidator::validateType(TimeRangeInterface::class, $timeRange);
         $this->timeRange = $timeRange;
         return $this;
     }
@@ -602,7 +602,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setWorkLog($workLog)
     {
-        $this->validateType(WorkLogInterface::class, $workLog);
+        TypeValidator::validateType(WorkLogInterface::class, $workLog);
         $this->workLog = $workLog;
         return $this;
     }
@@ -622,7 +622,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function setWorkOrder($wo)
     {
-        $this->validateType(WorkOrderInterface::class, $wo);
+        TypeValidator::validateType(WorkOrderInterface::class, $wo);
         $this->workOrder = $wo;
         return $this;
     }
@@ -633,18 +633,5 @@ class ClassMapFactory implements ClassMapFactoryInterface
     public function getWorkOrder()
     {
         return $this->workOrder;
-    }
-
-    /**
-     * @throws \TypeError
-     * @param $expected - The expected interface
-     * @param $actual - The class that was given
-     */
-    private function validateType($expected, $actual)
-    {
-        $implementations = class_implements($actual);
-        if (!in_array($expected, $implementations)) {
-            throw new \TypeError('The injected class ' . $actual . ' does not implement ' . $expected);
-        }
     }
 }

@@ -11,10 +11,15 @@ use FieldNation\ClientFactoryInterface;
 use FieldNation\ClientInterface;
 use FieldNation\DocumentInterface;
 use FieldNation\FactoryInjectorInterface;
+use FieldNation\PayInfoInterface;
 use FieldNation\ProjectInterface;
 use FieldNation\SDKCredentialsInterface;
 use FieldNation\SDK;
 use FieldNation\SDKInterface;
+use FieldNation\ServiceDescription;
+use FieldNation\ServiceDescriptionInterface;
+use FieldNation\ServiceLocationInterface;
+use FieldNation\TimeRangeInterface;
 use FieldNation\WorkOrderInterface;
 use FieldNation\WorkOrderSerializerInterface;
 
@@ -63,6 +68,15 @@ class SDKTest extends \PHPUnit_Framework_TestCase
     {
         $wo = $this->createMock(WorkOrderSerializerInterface::class);
         $expected = $this->createMock(WorkOrderInterface::class);
+
+        $wo->method('getDescription')->willReturn($this->createMock(ServiceDescriptionInterface::class));
+        $wo->method('getLocation')->willReturn($this->createMock(ServiceLocationInterface::class));
+        $wo->method('getStartTime')->willReturn($this->createMock(TimeRangeInterface::class));
+        $wo->method('getPayInfo')->willReturn($this->createMock(PayInfoInterface::class));
+        $wo->method('getAllowTechUploads')->willReturn(true);
+        $wo->method('getWillAlertWhenPublished')->willReturn(true);
+        $wo->method('getIsPrintable')->willReturn(true);
+
         $this->client
              ->expects($this->once())
              ->method('createWorkOrder')
@@ -138,5 +152,14 @@ class SDKTest extends \PHPUnit_Framework_TestCase
     {
         $sdk = new SDK($this->login, $this->injector);
         $this->assertInstanceOf(SDKInterface::class, $sdk);
+    }
+
+    public function testWillThrowErrorIfRequiredFieldIsMissing()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('FieldNation\ServiceDescriptionInterface is required but is NULL.');
+
+        $wo = $this->createMock(WorkOrderSerializerInterface::class);
+        $this->sdk->createWorkOrder($wo);
     }
 }

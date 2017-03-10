@@ -9,6 +9,8 @@ namespace FieldNation\Tests;
 use FieldNation\AdditionalFieldInterface;
 use FieldNation\ClientInterface;
 use FieldNation\DocumentInterface;
+use FieldNation\GroupInterface;
+use FieldNation\LabelInterface;
 use FieldNation\MessageInterface;
 use FieldNation\PayInfoInterface;
 use FieldNation\PaymentInterface;
@@ -46,7 +48,7 @@ class WorkOrderTest extends \PHPUnit_Framework_TestCase
 
     public function testAllPropertiesCanBeSet()
     {
-        $group = 'foo';
+        $group = $this->createMock(GroupInterface::class);
         $description = $this->createMock(ServiceDescriptionInterface::class);
         $location = $this->createMock(ServiceLocationInterface::class);
         $startTime = $this->createMock(TimeRangeInterface::class);
@@ -55,7 +57,10 @@ class WorkOrderTest extends \PHPUnit_Framework_TestCase
         $willAlertWhenPublished = false;
         $isPrintable = true;
         $additionalFields = array();
-        $labels = array('bar', 'baz');
+        $labels = array(
+            $this->createMock(LabelInterface::class),
+            $this->createMock(LabelInterface::class)
+        );
         $closeoutRequirements = array();
 
         $this->wo->setGroup($group)
