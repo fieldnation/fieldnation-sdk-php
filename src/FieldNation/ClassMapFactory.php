@@ -512,7 +512,7 @@ class ClassMapFactory implements ClassMapFactoryInterface
      */
     public function getShipment()
     {
-        return $this->getShipment();
+        return $this->shipment;
     }
 
     /**
