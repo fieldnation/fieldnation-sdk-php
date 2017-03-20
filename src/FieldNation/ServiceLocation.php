@@ -19,6 +19,7 @@ class ServiceLocation implements ServiceLocationInterface
     private $contactName;
     private $contactPhone;
     private $contactEmail;
+    private $isRemote;
 
     /**
      * Set the location type.
@@ -261,5 +262,24 @@ class ServiceLocation implements ServiceLocationInterface
     public function getContactEmail()
     {
         return $this->contactEmail;
+    }
+
+    /**
+     * Set the is remote flag
+     *
+     * @param boolean $flag
+     * @return self
+     */
+    public function setIsRemote($flag) {
+        $this->isRemote = (boolean) $flag;
+    }
+
+    /**
+     * Get the is remote flag
+     *
+     * @return boolean
+     */
+    public function getIsRemote() {
+        return $this->isRemote;
     }
 }

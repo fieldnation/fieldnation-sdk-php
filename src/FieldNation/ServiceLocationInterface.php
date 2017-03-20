@@ -173,4 +173,19 @@ interface ServiceLocationInterface
      * @return string
      */
     public function getContactEmail();
+
+    /**
+     * Set the is remote flag
+     *
+     * @param boolean $flag
+     * @return self
+     */
+    public function setIsRemote($flag);
+
+    /**
+     * Get the is remote flag
+     *
+     * @return boolean
+     */
+    public function getIsRemote();
 }
