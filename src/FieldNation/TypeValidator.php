@@ -73,7 +73,7 @@ class TypeValidator
         self::validate('bool', $wo->getIsPrintable(), 'validatePrimitive', true, 'isPrintable');
 
         // Optional Fields
-        self::validate('string', $wo->getGroup(), 'validatePrimitive', false, 'group');
+        self::validate(GroupInterface::class, $wo->getGroup(), 'validateType', false, 'group');
         self::validate(AdditionalFieldInterface::class, $wo->getAdditionalFields(), 'validateCollection', false);
         self::validate(LabelInterface::class, $wo->getLabels(), 'validateCollection', false);
         self::validate(
