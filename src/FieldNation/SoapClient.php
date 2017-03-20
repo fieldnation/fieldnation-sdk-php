@@ -685,7 +685,11 @@ class SoapClient implements ClientInterface
     public function satisfyCloseoutOnWorkOrder($workOrderId, $closeoutName)
     {
         $result = $this->client->satisfyCloseout($this->getLogin(), $workOrderId, $closeoutName);
-        return self::responseToResult($result);
+        // converting response from string to Result
+        $resultObj = new \stdClass();
+        $resultObj->message = $result;
+        $resultObj->success = $resultObj->message === 'Closeout Requirement Satisfied';
+        return self::responseToResult($resultObj);
     }
 
     /**
