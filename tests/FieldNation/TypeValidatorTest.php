@@ -36,7 +36,6 @@ class TypeValidatorTest extends \PHPUnit_Framework_TestCase
     public function testWorkOrderSerializerInterfaceIsValidated()
     {
         $wo = $this->createMock(WorkOrderSerializerInterface::class);
-        $group = $this->createMock(GroupInterface::class);
         $description = $this->createMock(ServiceDescriptionInterface::class);
         $location = $this->createMock(ServiceLocationInterface::class);
         $time = $this->createMock(TimeRangeInterface::class);
@@ -57,7 +56,6 @@ class TypeValidatorTest extends \PHPUnit_Framework_TestCase
             $this->createMock(CloseoutRequirementInterface::class)
         );
 
-        $wo->method('getGroup')->willReturn($group);
         $wo->method('getDescription')->willReturn($description);
         $wo->method('getLocation')->willReturn($location);
         $wo->method('getStartTime')->willReturn($time);
