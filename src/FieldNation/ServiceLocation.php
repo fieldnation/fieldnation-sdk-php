@@ -270,7 +270,8 @@ class ServiceLocation implements ServiceLocationInterface
      * @param boolean $flag
      * @return self
      */
-    public function setIsRemote($flag) {
+    public function setIsRemote($flag)
+    {
         $this->isRemote = (boolean) $flag;
     }
 
@@ -279,7 +280,8 @@ class ServiceLocation implements ServiceLocationInterface
      *
      * @return boolean
      */
-    public function getIsRemote() {
+    public function getIsRemote()
+    {
         return $this->isRemote;
     }
 }
