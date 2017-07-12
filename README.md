@@ -7,6 +7,7 @@
     * [Installation with Composer](#installation-with-composer)
 * [Usage](#usage)
     * [Authentication](#authentication)
+    * [Environment](#environment)
     * [Create a Work Order](#create-a-work-order)
     * [Work Order Actions and Metadata](#work-order-actions)
         * [Publish](#publish)
@@ -79,6 +80,18 @@ $fnEffectiveUser = $_ENV['FIELD_NATION_EFFECTIVE_USER']; // optional - First adm
 $credentials = new \FieldNation\LoginCredentials($fnCompanyId, $fnApiKey, $fnEffectiveUser);
 $fn = new \FieldNation\SDK($credentials);
 ````
+
+### Environment
+The default environment for the SDK is set to production. If you would like to use another 
+environment for testing you can do so by setting the value on the credentials object.
+```php
+<?php
+$fnCompanyId = $_ENV['FIELD_NATION_COMPANY_ID'];
+$fnApiKey = $_ENV['FIELD_NATION_API_KEY'];
+$credentials = new \FieldNation\LoginCredentials($fnCompanyId, $fnApiKey, $fnEffectiveUser);
+$credentials->setEnvironment("https://stable.fieldnation.com");
+$fn = new \FieldNation\SDK($credentials);
+```
 
 ### Create a Work Order
 First, let's create a simple example of what _your_ data model _might_ look like.
