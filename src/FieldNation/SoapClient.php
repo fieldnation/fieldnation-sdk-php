@@ -190,8 +190,8 @@ class SoapClient implements ClientInterface
             $labels = array();
             if (is_array($wo->labels)) {
                 foreach ($wo->labels as $label) {
-                    $label = $this->classMapFactory->getLabel();
-                    $labelObj = new $label();
+                    $labelClass = $this->classMapFactory->getLabel();
+                    $labelObj = new $labelClass();
                     $labelObj->setId($label->labelId);
                     $labelObj->setName($label->labelName);
                     $labelObj->setHideFromTech($label->hideFromTech);
