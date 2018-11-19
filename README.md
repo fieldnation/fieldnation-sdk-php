@@ -1,3 +1,5 @@
+# WE do not support SOAP API for new developement, This code is for reference only #
+
 ![Field Nation Logo](images/logo.png)
 # Field Nation PHP SDK
 * [Build Status](#build-status)
